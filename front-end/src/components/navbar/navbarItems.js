@@ -7,7 +7,6 @@ import CurrencyExchangeRoundedIcon from "@mui/icons-material/CurrencyExchangeRou
 import ScoreRoundedIcon from "@mui/icons-material/ScoreRounded";
 import SummarizeRoundedIcon from "@mui/icons-material/SummarizeRounded";
 import LeaderboardRoundedIcon from "@mui/icons-material/LeaderboardRounded";
-import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 export const mainNavbarItems = [
   {
     id: 0,

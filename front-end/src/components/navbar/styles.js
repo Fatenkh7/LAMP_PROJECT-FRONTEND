@@ -17,6 +17,7 @@ export const navbarStyles = {
       marginTop: "20px",
       marginBottom: "20px",
       borderRadius: "20px",
+      boxShadow: "0 5px 60px 10px rgba(0, 0, 0, 0.4)",
       transition: "0.5s ease",
     },
     "& .Mui-selected": {

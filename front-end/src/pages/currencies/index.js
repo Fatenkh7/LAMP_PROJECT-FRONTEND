@@ -2,11 +2,7 @@ import React from "react";
 import Grid from "@mui/material/Grid";
 
 function Currencies() {
-  return (
-    <Grid item xs={8}>
-      Currencies
-    </Grid>
-  );
+  return <div>Currencies</div>;
 }
 
 export default Currencies;

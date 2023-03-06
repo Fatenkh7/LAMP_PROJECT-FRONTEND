@@ -2,11 +2,7 @@ import React from "react";
 import Grid from "@mui/material/Grid";
 
 function ProfitGoal() {
-  return (
-    <Grid item xs={8}>
-      ProfitGoal
-    </Grid>
-  );
+  return <div>ProfitGoal</div>;
 }
 
 export default ProfitGoal;
