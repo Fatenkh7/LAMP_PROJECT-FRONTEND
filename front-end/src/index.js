@@ -12,11 +12,13 @@ import FixedTransactions from "./pages/fixed-transactions/index";
 import RecurringTransactions from "./pages/recurring-transactions/index";
 import ProfitGoal from "./pages/profit-goals/index";
 import Reports from "./pages/reports/index";
+import Dashboard from "./pages/dashboard/index";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<App />}>
+        <Route path="dashboard" element={<Dashboard />} />
         <Route path="admins" element={<Admins />} />
         <Route path="categories" element={<Categories />} />
         <Route path="currencies" element={<Currencies />} />
