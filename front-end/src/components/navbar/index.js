@@ -18,12 +18,18 @@ import KeyboardArrowLeftRoundedIcon from "@mui/icons-material/KeyboardArrowLeftR
 import "./style.css";
 import AccountRoundedIcon from "@mui/icons-material/AccountCircle";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
+import { Link, NavLink } from "react-router-dom";
 
 const NavBar = () => {
   const navigate = useNavigate();
 
   const close = () => {
     document.querySelector(".sidebar").classList.toggle("close");
+  };
+
+  let activeStyle = {
+    backgroundColor: "rgba(201,201,201)",
+    color: "#111",
   };
 
   return (
@@ -40,14 +46,16 @@ const NavBar = () => {
       <nav className="sidebar-nav">
         {mainNavbarItems.map((item, index) => {
           return (
-            <div
+            <NavLink
+              style={({ isActive }) => (isActive ? activeStyle : undefined)}
+              to={item.route}
               key={item.id}
-              onClick={() => navigate(item.route)}
+              // onClick={() => navigate(item.route)}
               className="sidebar-links spacing"
             >
               <p>{item.icon}</p>
-              <p className="sidebar-nav-text">{item.label}</p>
-            </div>
+              <p className="sidebar-nav-text sidebar-hide">{item.label}</p>
+            </NavLink>
           );
         })}
       </nav>
