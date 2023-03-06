@@ -1,4 +1,4 @@
-.sidebar-button {
+/* .sidebar-button {
   position: absolute;
   top: 0;
   right: 10%;
@@ -31,4 +31,84 @@
 
 .MuiDrawer-paper.close .sidebar-nav-icon {
   margin-left: 15px;
+} */
+
+.sidebar {
+  box-sizing: border-box;
+  width: 300px;
+  height: 95vh;
+  padding: 20px 0;
+  margin-top: 20px;
+  margin-left: 20px;
+  background-color: #3d0066;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  position: relative;
+  transition: 0.5s ease;
+}
+
+.sidebar-close-btn {
+  position: absolute;
+  top: 10px;
+  right: -10px;
+  background-color: #111;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  transition: 0.5s ease;
+}
+
+.sidebar.close {
+  width: 70px;
+}
+
+.sidebar.close .sidebar-close-btn {
+  rotate: 180deg;
+}
+
+.sidebar.close .sidebar-hide {
+  display: none;
+}
+
+.sidebar-nav {
+  width: 100%;
+}
+
+.sidebar-links p {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.sidebar-links p:not(:last-child) {
+  margin-right: 10px;
+}
+
+.sidebar-admin-profile p,
+.sidebar-admin-profile span {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.sidebar-admin-profile span {
+  margin-left: auto;
+  scale: 1.2;
+}
+
+.sidebar-admin-profile {
+  padding-right: 10px;
+}
+
+.spacing {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding-left: 25px;
+  cursor: pointer;
+}
+
+.spacing:hover {
+  background-color: #ffffff11;
 }
