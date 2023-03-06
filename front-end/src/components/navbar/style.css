@@ -1,0 +1,34 @@
+.sidebar-button {
+  position: absolute;
+  top: 3%;
+  right: 10%;
+  text-decoration: none;
+  color: #fff;
+  border-radius: 50%;
+  padding: 8px;
+  transition: 0.5s ease;
+}
+
+.MuiDrawer-paper {
+  width: 300px;
+}
+
+.MuiDrawer-paper.close {
+  width: 88px;
+}
+
+.MuiDrawer-paper.close .sidebar-button {
+  rotate: 180deg;
+}
+
+.sidebar-nav-text {
+  transition: 0.5s ease;
+}
+
+.MuiDrawer-paper.close .sidebar-nav-text {
+  opacity: 0;
+}
+
+.MuiDrawer-paper.close .sidebar-nav-icon {
+  margin-left: 15px;
+}

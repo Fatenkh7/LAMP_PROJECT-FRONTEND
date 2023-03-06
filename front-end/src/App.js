@@ -1,25 +1,13 @@
-import logo from './logo.svg';
-import './App.css';
+import * as React from "react";
+import NavBar from "./components/navbar/index";
+import { Outlet } from "react-router-dom";
+import Grid from "@mui/material/Grid";
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Grid container>
+      <NavBar />
+      <Outlet />
+    </Grid>
   );
 }
-
-export default App;
