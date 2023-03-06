@@ -79,8 +79,12 @@
   width: 100%;
 }
 
-.sidebar-links p {
+.sidebar-links {
   color: rgba(255, 255, 255, 0.7);
+}
+
+.sidebar-links p {
+  color: inherit;
 }
 
 .sidebar-links p:not(:last-child) {
@@ -107,6 +111,7 @@
   gap: 15px;
   padding-left: 25px;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .spacing:hover {
