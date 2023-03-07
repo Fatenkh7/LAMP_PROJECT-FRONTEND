@@ -6,7 +6,7 @@ import "./App.css";
 
 export default function App() {
   return (
-    <Grid container>
+    <Grid container style={{ flexWrap: "nowrap" }}>
       <NavBar />
       <Outlet />
     </Grid>
