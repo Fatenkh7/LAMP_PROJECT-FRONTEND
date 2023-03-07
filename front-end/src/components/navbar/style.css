@@ -45,6 +45,7 @@
   display: flex;
   justify-content: space-between;
   flex-direction: column;
+  flex-wrap: nowrap;
   position: relative;
   transition: 0.5s ease;
 }
@@ -54,6 +55,7 @@
   top: 10px;
   right: -10px;
   background-color: #111;
+  color: rgba(255, 255, 255, 0.7);
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -91,9 +93,14 @@
   margin-right: 10px;
 }
 
+.sidebar-admin-profile {
+  background-color: rgba(255, 255, 255, 0.6);
+  color: #111;
+}
+
 .sidebar-admin-profile p,
 .sidebar-admin-profile span {
-  color: rgba(255, 255, 255, 0.7);
+  color: inherit;
 }
 
 .sidebar-admin-profile span {
@@ -105,15 +112,21 @@
   padding-right: 10px;
 }
 
+.sidebar-logout {
+  color: rgba(255, 255, 255, 0.7);
+}
+
 .spacing {
   display: flex;
   align-items: center;
   gap: 15px;
-  padding-left: 25px;
+  padding-left: 15px;
   cursor: pointer;
   text-decoration: none;
+  margin: 0 10px;
+  border-radius: 10px;
 }
 
-.spacing:hover {
+.hover:hover {
   background-color: #ffffff11;
 }

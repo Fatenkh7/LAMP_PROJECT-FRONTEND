@@ -28,7 +28,7 @@ const NavBar = () => {
   };
 
   let activeStyle = {
-    backgroundColor: "rgba(201,201,201)",
+    backgroundColor: "rgba(255,255,255, 0.7)",
     color: "#111",
   };
 
@@ -39,10 +39,10 @@ const NavBar = () => {
           <AccountRoundedIcon />
         </p>
         <p className="sidebar-hide">Abdellatif</p>
-        <span onClick={close} className="sidebar-close-btn toggle">
-          <KeyboardArrowLeftRoundedIcon />
-        </span>
       </div>
+      <span onClick={close} className="sidebar-close-btn toggle">
+        <KeyboardArrowLeftRoundedIcon />
+      </span>
       <nav className="sidebar-nav">
         {mainNavbarItems.map((item, index) => {
           return (
@@ -51,7 +51,7 @@ const NavBar = () => {
               to={item.route}
               key={item.id}
               // onClick={() => navigate(item.route)}
-              className="sidebar-links spacing"
+              className="sidebar-links spacing hover"
             >
               <p>{item.icon}</p>
               <p className="sidebar-nav-text sidebar-hide">{item.label}</p>
@@ -60,7 +60,7 @@ const NavBar = () => {
         })}
       </nav>
       <nav className="sidebar-bottom-nav">
-        <div className="sidebar-admin-profile spacing">
+        <div className="sidebar-logout spacing hover">
           <p>
             <LogoutRoundedIcon />
           </p>
