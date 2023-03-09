@@ -7,7 +7,7 @@ import AddIcon from '@mui/icons-material/Add';
 import "./Categories.css";
 // import { useNavigate } from "react-router-dom";
 import { Box } from '@mui/material';
-import Popup from '../currencies/Popup';
+import Popup from '../../components/pop-up/Popup';
 import { useState } from 'react';
 import TextField from '@mui/material/TextField';
 // import { height } from '@mui/system';
