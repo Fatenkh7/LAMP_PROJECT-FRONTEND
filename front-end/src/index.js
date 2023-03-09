@@ -14,6 +14,7 @@ import ProfitGoal from "./pages/profit-goals/index";
 import Reports from "./pages/reports/index";
 import Dashboard from "./pages/dashboard/index";
 
+import Login from "./pages/login/index";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
@@ -33,6 +34,7 @@ root.render(
         <Route path="reports" element={<Reports />} />
 
       </Route>
+      <Route path="/login" element={<Login />} />
     </Routes>
   </BrowserRouter>
   // document.getElementById("root")
