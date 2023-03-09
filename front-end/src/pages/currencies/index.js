@@ -16,7 +16,7 @@ import CloseIcon from '@mui/icons-material/Close';
 
 
 
-export default function DataTable() {
+export default function Currencies() {
 
   const [addPop, setAddPop] = useState(false);
   const [editPop, setEditPop] = useState(false);
@@ -147,7 +147,7 @@ export default function DataTable() {
             id="outlined-uncontrolled"
             label="Add Rate"
           />
-          <Button variant="contained" disableElevation style={{ height: 55 }} onClick={() => {
+          <Button variant="contained" disableElevation style={{ height: 55 }} sx={{backgroundColor:"#3d0066"}} onClick={() => {
             setEditPop(false)
           }}>
             Submit

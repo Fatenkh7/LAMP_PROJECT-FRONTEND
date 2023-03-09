@@ -1,4 +1,4 @@
-.currencies-container{
+.categories-container{
     background-color: white;
     height: 85vh;
       padding: 20px 100px;
@@ -7,18 +7,18 @@
       justify-content: center;
       position: relative;     
 }
-.add-currencies{
+.add-categories{
     margin:0px auto 20px;
     width: 650px;
     display: flex;
     justify-content: flex-start;
 }
-.table-currency{
+.table-categories{
     /* width: 1000px; */
     margin: auto;
 border: 1px solid #3d0066;
 }
-.add-currencies button {
+.add-categories button {
     padding: 10px 15px;
     border-radius: 5px;
     outline: none;
@@ -29,23 +29,37 @@ border: 1px solid #3d0066;
     cursor: pointer;
     margin-left: auto;
 }
-.add-currencies button:hover{
+.add-categories button:hover{
     background-color: #b199c2;
 }
-.add-currency-box{
+.add-categories-box{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     gap: 20px;
     width: 600px;
 }
-.add-currency-box  button:hover{
+.add-categories-box button:hover{
     background-color: #b199c2;
 }
-.currencies-close-popup{    
+.categories-close-popup{    
     position: absolute;
     top: 20px;
     right: 20px;
     font-size: 22px;
     cursor: pointer;
+}
+.categories-close-popup button:hover{
+    background-color: #b199c2;
+}
+.categories-admin{
+   width: 100%;
+  display: flex;
+  flex-direction: row;
+ justify-content: space-between;
+ /* gap: 10px; */
+
+}
+.categories-admin button:hover{
+    background-color: #b199c2;
 }
