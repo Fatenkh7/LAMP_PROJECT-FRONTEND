@@ -1,0 +1,136 @@
+.login-page {
+  display: flex;
+  box-sizing: border-box;
+  min-height: 100vh;
+  isolation: isolate;
+}
+
+.login-page:has(p, h2) {
+  color: #333;
+}
+
+.login-image-logo {
+  height: 100vh;
+  width: 75%;
+  /* background-color: #f4f5fa; */
+  backdrop-filter: blur(10px);
+}
+
+.login-logo {
+  width: 60px;
+  height: 60px;
+  margin-left: 40px;
+  margin-top: 20px;
+}
+
+.login-form-logo {
+  width: 60px;
+  height: 60px;
+  margin-left: 40px;
+  margin-top: 20px;
+}
+
+.image {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.image h2 {
+  font-size: 2rem;
+}
+
+.login-image {
+  width: 800px;
+}
+
+.login-form {
+  box-sizing: border-box;
+  min-width: 25%;
+  background-color: #ffffff;
+  /* backdrop-filter: blur(2px); */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.login-form-title {
+  width: 75%;
+}
+
+.login-form-title h2 {
+  font-size: 1.75rem;
+}
+
+.login-form-design {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.login-form-design:has(div) {
+  width: 75%;
+}
+
+.login-form-design:has(div) input,
+.login-form-design:has(div) button {
+  width: 100%;
+  padding: 20px 10px;
+  box-sizing: border-box;
+  border-radius: 6px;
+  border: 1px solid #999;
+  font-size: 1.05rem;
+  letter-spacing: 1px;
+}
+
+.login-form-design div input:focus {
+  outline-color: #3d0066;
+}
+
+.login-form-design div button {
+  background-color: #3d0066;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.login-form-design div button:hover {
+  background-color: #3d0066de;
+}
+
+.login-animated-background {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 50px;
+  left: 0;
+  z-index: -1;
+}
+
+@media (max-width: 1200px) {
+  .login-image {
+    width: 550px;
+  }
+}
+
+@media (max-width: 768px) {
+  .login-image-logo .image {
+    display: none;
+  }
+
+  .login-image-logo .login-logo {
+    opacity: 0;
+  }
+
+  .login-image-logo {
+    width: 0;
+  }
+
+  .login-form {
+    width: 100%;
+  }
+}
