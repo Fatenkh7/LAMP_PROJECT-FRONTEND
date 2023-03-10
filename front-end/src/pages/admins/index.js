@@ -19,6 +19,7 @@ import Popup from "../../components/pop-up/Popup";
 import CloseIcon from "@mui/icons-material/Close";
 import TextField from "@mui/material/TextField";
 import { Box } from "@mui/material";
+import DataTable from "../../components/data-table/index";
 
 export default function Admins() {
   // const [isAdd, setAdd] = useState(false);
@@ -294,18 +295,7 @@ export default function Admins() {
             Add Admin
           </button>
         </div>
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
-          // checkboxSelection
-          sx={{
-            border: "1px solid #3d0066",
-            borderRadius: "20px",
-            boxShadow: "0 2px 15px rgba(0,0,0,0.4)",
-          }}
-        />
+        <DataTable rows={rows} columns={columns} />
       </div>
     </div>
   );
