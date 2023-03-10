@@ -7,8 +7,8 @@ import PostAddIcon from "@mui/icons-material/PostAdd";
 import TextField from "@mui/material/TextField";
 import SendIcon from "@mui/icons-material/Send";
 import Button from "@mui/material/Button";
-import CancelPresentationRoundedIcon from '@mui/icons-material/CancelPresentationRounded';
-import './Box.css'
+import CancelPresentationRoundedIcon from "@mui/icons-material/CancelPresentationRounded";
+import "./Box.css";
 
 const profit = [
   {
@@ -46,67 +46,80 @@ const profit = [
     title: "hbibi",
     description:
       "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
-  },{
+  },
+  {
     id: 2,
     title: "hbibi",
     description:
       "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
-  },{
+  },
+  {
     id: 2,
     title: "hbibi",
     description:
       "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
-  },{
+  },
+  {
     id: 2,
     title: "hbibi",
     description:
       "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
-  },{
+  },
+  {
     id: 2,
     title: "hbibi",
     description:
       "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
-  },{
+  },
+  {
     id: 2,
     title: "hbibi",
     description:
       "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
-  },{
+  },
+  {
     id: 2,
     title: "hbibi",
     description:
       "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
-  },{
+  },
+  {
     id: 2,
     title: "hbibi",
     description:
       "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
-  },{
+  },
+  {
     id: 2,
     title: "hbibi",
     description:
       "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
-  },{
+  },
+  {
     id: 2,
     title: "hbibi",
     description:
       "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
-  },{
+  },
+  {
     id: 2,
     title: "hbibi",
     description:
       "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
-  },{
+  },
+  {
     id: 2,
     title: "hbibi",
     description:
       "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
-  },{
+  },
+  {
     id: 2,
     title: "hbibi",
     description:
       "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
-  },{
+  },
+  {
     id: 2,
     title: "hbibi",
     description:
@@ -137,30 +150,29 @@ function ProfitGoal() {
 
   const [visibleEdit, setvisibleEdit] = useState(false);
 
-  const isvisibleForIcon =()=>{
-    if (visible === false){
-      setvisible(true)
-    }else{
-        setvisible(false)
+  const isvisibleForIcon = () => {
+    if (visible === false) {
+      setvisible(true);
+    } else {
+      setvisible(false);
     }
-  }
+  };
 
-   const isvisibleEdit= ()=>{
-    if (visible === false){
-      setvisibleEdit(true)
-    }else{
-        setvisibleEdit(false)
+  const isvisibleEdit = () => {
+    if (visible === false) {
+      setvisibleEdit(true);
+    } else {
+      setvisibleEdit(false);
     }
-  }
-      
+  };
+
   return (
     <Box>
       <Box
         sx={{
-
           width: "97%",
           height: "87.5vh",
-          overflowY : 'scroll',
+          overflowY: "scroll",
           backgroundColor: "transparent",
           borderRadius: "20px",
           margin: "0px 0px 0px 20px ",
@@ -174,36 +186,33 @@ function ProfitGoal() {
           }}
         >
           <Button
-            onClick = {isvisibleForIcon} sx={{color:"#3d0066" ,marginBottom:'15px'}} >
-        <PostAddIcon
-             sx={{
-              fontSize: "50px",color:"#3d0066" }}
-        />
-        </Button>
-          <div
-            className="cardsContainer"
-            style={{gap:20}}
+            onClick={isvisibleForIcon}
+            sx={{ color: "#3d0066", marginBottom: "15px" }}
           >
-            
+            <PostAddIcon
+              sx={{
+                fontSize: "50px",
+                color: "#3d0066",
+              }}
+            />
+          </Button>
+          <div className="cardsContainer" style={{ gap: 20 }}>
             {profit.map((ele) => {
               return (
                 <div className="sampleContainer">
-                <Cards
-                  
-                  title={ele.title}
-                  description={ele.description}
-                  id={ele.id}
-                  edit = {isvisibleEdit}
-                />
+                  <Cards
+                    title={ele.title}
+                    description={ele.description}
+                    id={ele.id}
+                    edit={isvisibleEdit}
+                  />
                 </div>
               );
             })}
-            
           </div>
         </Box>
-        
 
-        {visible&&
+        {visible && (
           <div className="hide-back">
             <Box
               sx={{
@@ -218,41 +227,43 @@ function ProfitGoal() {
                 justifyContent: "center",
               }}
             >
-              
               <Box
                 sx={{
                   display: "flex",
                   flexDirection: "column",
                   width: "50%",
                   marginTop: "25px",
-                  gap:'20px'
+                  gap: "20px",
                 }}
               >
-                <Box sx={{display : 'flex' , justifyContent:'space-between'}}>
-                <Typography variant="h4"> Add Cards</Typography>
-                <Button sx={{color : '#3d0066'}} onClick={isvisibleForIcon}>
-                < CancelPresentationRoundedIcon sx={{fontSize:'40px'}}/>
-                </Button>
+                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                  <Typography variant="h4"> Add Cards</Typography>
+                  <Button sx={{ color: "#3d0066" }} onClick={isvisibleForIcon}>
+                    <CancelPresentationRoundedIcon sx={{ fontSize: "40px" }} />
+                  </Button>
                 </Box>
-                <TextField
-                  id="title"
-                  label="title"
-                  variant="filled"
-                  
-                />
+                <TextField id="title" label="title" variant="filled" />
                 <TextField
                   id="description"
                   label="description"
                   variant="filled"
-                  
                 />
-                <Button  variant="outlined" sx={{color:'#3d0066' , borderColor:'#3d0066' }}  endIcon={<SendIcon />} onClick={()=>{setvisible(false)}}>
+                <Button
+                  variant="outlined"
+                  sx={{ color: "#3d0066", borderColor: "#3d0066" }}
+                  endIcon={<SendIcon />}
+                  onClick={() => {
+                    setvisible(false);
+                  }}
+                >
                   Send
                 </Button>
               </Box>
             </Box>
-          </div>}
-          {visibleEdit&&<div className="hide-back">
+          </div>
+        )}
+        {visibleEdit && (
+          <div className="hide-back">
             <Box
               sx={{
                 width: "500px",
@@ -266,44 +277,46 @@ function ProfitGoal() {
                 justifyContent: "center",
               }}
             >
-              
               <Box
                 sx={{
                   display: "flex",
                   flexDirection: "column",
                   width: "50%",
                   marginTop: "25px",
-                  gap:'20px'
+                  gap: "20px",
                 }}
               >
-                <Box sx={{display : 'flex' , justifyContent:'space-between'}}>
-                <Typography variant="h4"> Edit Cards</Typography>
-                <Button sx={{color : '#3d0066'}} onClick={()=>{
-                  setvisibleEdit(false)
-                }}>
-                < CancelPresentationRoundedIcon sx={{fontSize:'40px'}}/>
-                </Button>
+                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                  <Typography variant="h4"> Edit Cards</Typography>
+                  <Button
+                    sx={{ color: "#3d0066" }}
+                    onClick={() => {
+                      setvisibleEdit(false);
+                    }}
+                  >
+                    <CancelPresentationRoundedIcon sx={{ fontSize: "40px" }} />
+                  </Button>
                 </Box>
-                <TextField
-                  id="title"
-                  label="title"
-                  variant="filled"
-                  
-                />
+                <TextField id="title" label="title" variant="filled" />
                 <TextField
                   id="description"
                   label="description"
                   variant="filled"
-                  
                 />
-                <Button  variant="outlined" sx={{color:'#3d0066' , borderColor:'#3d0066' }}  endIcon={<SendIcon />} onClick={()=>{setvisible(false)}}>
+                <Button
+                  variant="outlined"
+                  sx={{ color: "#3d0066", borderColor: "#3d0066" }}
+                  endIcon={<SendIcon />}
+                  onClick={() => {
+                    setvisible(false);
+                  }}
+                >
                   Send
                 </Button>
               </Box>
             </Box>
-          </div>}
-          
-          
+          </div>
+        )}
       </Box>
     </Box>
   );

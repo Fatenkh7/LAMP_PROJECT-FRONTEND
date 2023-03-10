@@ -12,6 +12,7 @@ import { useState } from "react";
 import TextField from "@mui/material/TextField";
 // import { height } from '@mui/system';
 import CloseIcon from "@mui/icons-material/Close";
+import DataTable from "../../components/data-table/index";
 
 export default function Currencies() {
   const [addPop, setAddPop] = useState(false);
@@ -70,8 +71,8 @@ export default function Currencies() {
   ];
 
   return (
-    <div>
-      <div className="currencies-container">
+    <div className="admin-data">
+      <div className="currencies-container pages-container">
         <div className="add-currencies">
           <Button
             variant="contained"
@@ -85,14 +86,14 @@ export default function Currencies() {
             Add Currency
           </Button>
         </div>
-        <DataGrid
+        <DataTable
           rows={rows}
           columns={columns}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
-          checkboxSelection
-          className="table-currency"
-          sx={{ border: "1px solid #3d0066", borderRadius: "20px" }}
+          // pageSize={5}
+          // rowsPerPageOptions={[5]}
+          // checkboxSelection
+          // className="table-currency"
+          // sx={{ border: "1px solid #3d0066", borderRadius: "20px" }}
         />
         {/* </div> */}
       </div>
