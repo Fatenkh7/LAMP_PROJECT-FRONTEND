@@ -7,6 +7,7 @@ import CurrencyExchangeRoundedIcon from "@mui/icons-material/CurrencyExchangeRou
 import ScoreRoundedIcon from "@mui/icons-material/ScoreRounded";
 import SummarizeRoundedIcon from "@mui/icons-material/SummarizeRounded";
 import LeaderboardRoundedIcon from "@mui/icons-material/LeaderboardRounded";
+import BalanceRoundedIcon from "@mui/icons-material/BalanceRounded";
 export const mainNavbarItems = [
   {
     id: 0,
@@ -61,5 +62,11 @@ export const mainNavbarItems = [
     icon: <SummarizeRoundedIcon />,
     label: "Reports",
     route: "reports",
+  },
+  {
+    id: 9,
+    icon: <BalanceRoundedIcon />,
+    label: "Balance",
+    route: "balance",
   },
 ];

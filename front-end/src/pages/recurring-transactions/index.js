@@ -16,52 +16,79 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import PopUp from "../../components/popup/index";
 import DataTable from "../../components/data-table/index";
+import Popup from "../../components/pop-up/Popup";
+import CloseIcon from "@mui/icons-material/Close";
+import TextField from "@mui/material/TextField";
+import { Box } from "@mui/material";
 
 export default function RecurringTransactions() {
-  const [isAdd, setAdd] = useState(false);
-  const [isEdit, setEdit] = useState(false);
+  const [addPop, setAddPop] = useState(false);
+  const [editPop, setEditPop] = useState(false);
 
-  const addVisible = () => {
-    if (isAdd === false) {
-      setAdd(true);
-    }
-  };
-  const editVisible = () => {
-    if (isEdit === false) {
-      setEdit(true);
-    }
+  const closePop = () => {
+    setAddPop(false);
+    setEditPop(false);
   };
 
   const columns = [
-    { field: "id", headerName: "ID", width: 70 },
-    { field: "firstName", headerName: "First name", width: 130 },
-    { field: "lastName", headerName: "Last name", width: 130 },
-    { field: "username", headerName: "Username", width: 130 },
+    { field: "id", headerName: "ID", width: 40 },
+    { field: "name", headerName: "Name", width: 100 },
+    { field: "description", headerName: "Description", width: 160 },
+    { field: "type", headerName: "Type", width: 80 },
 
     {
-      field: "email",
-      headerName: "Email",
-      type: "email",
-      width: 160,
+      field: "isPaid",
+      headerName: "Is Paid",
+      width: 70,
     },
     {
-      field: "fullName",
-      headerName: "Full name",
-      description: "This column has a value getter and is not sortable.",
-      sortable: false,
-      width: 160,
-      valueGetter: (params) =>
-        `${params.row.firstName || ""} ${params.row.lastName || ""}`,
+      field: "amount",
+      headerName: "Amount",
+      width: 70,
     },
+    {
+      field: "startDate",
+      headerName: "Start Date",
+      width: 100,
+    },
+    {
+      field: "endDate",
+      headerName: "End Date",
+      width: 100,
+    },
+    {
+      field: "currenciesId",
+      headerName: "Currencies ID",
+      width: 10,
+    },
+    {
+      field: "adminsId",
+      headerName: "Admins ID",
+      width: 10,
+    },
+    {
+      field: "categoriesId",
+      headerName: "Categories ID",
+      width: 10,
+    },
+    // {
+    //   field: "fullName",
+    //   headerName: "Full name",
+    //   description: "This column has a value getter and is not sortable.",
+    //   sortable: false,
+    //   width: 160,
+    //   valueGetter: (params) =>
+    //     `${params.row.firstName || ""} ${params.row.lastName || ""}`,
+    // },
     {
       field: "edit",
       headerName: "Edit",
-      width: 70,
+      width: 10,
       renderCell: (params) => (
         <div>
           <EditIcon
             sx={{ color: "#3d0066" }}
-            onClick={editVisible}
+            onClick={() => setEditPop(true)}
             style={{ cursor: "pointer" }}
           />
         </div>
@@ -70,7 +97,7 @@ export default function RecurringTransactions() {
     {
       field: "delete",
       headerName: "Delete",
-      width: 70,
+      width: 10,
       renderCell: (params) => (
         <div>
           <DeleteIcon sx={{ color: "#3d0066" }} style={{ cursor: "pointer" }} />
@@ -82,162 +109,311 @@ export default function RecurringTransactions() {
   const rows = [
     {
       id: 1,
-      lastName: "Snow",
-      firstName: "Jon",
-      username: "example",
-      email: "example@gmail.com",
+      name: "Snow",
+      description: "Jon",
+      type: "example",
+      isPaid: "false",
+      amount: "1000",
+      startDate: "2020-12-12",
+      endDate: "2020-12-22",
+      currenciesId: 1,
+      adminsId: 1,
+      categoriesId: 1,
     },
     {
       id: 2,
-      lastName: "Lannister",
-      firstName: "Cersei",
-      username: "example",
-      email: "example@gmail.com",
+      name: "Snow",
+      description: "Jon",
+      type: "example",
+      isPaid: "false",
+      amount: "1000",
+      startDate: "2020-12-12",
+      endDate: "2020-12-22",
+      currenciesId: 1,
+      adminsId: 1,
+      categoriesId: 1,
     },
     {
       id: 3,
-      lastName: "Lannister",
-      firstName: "Jaime",
-      username: "example",
-      email: "example@gmail.com",
+      name: "Snow",
+      description: "Jon",
+      type: "example",
+      isPaid: "false",
+      amount: "1000",
+      startDate: "2020-12-12",
+      endDate: "2020-12-22",
+      currenciesId: 1,
+      adminsId: 1,
+      categoriesId: 1,
     },
     {
       id: 4,
-      lastName: "Stark",
-      firstName: "Arya",
-      username: "example",
-      email: "example@gmail.com",
+      name: "Snow",
+      description: "Jon",
+      type: "example",
+      isPaid: "false",
+      amount: "1000",
+      startDate: "2020-12-12",
+      endDate: "2020-12-22",
+      currenciesId: 1,
+      adminsId: 1,
+      categoriesId: 1,
     },
     {
       id: 5,
-      lastName: "Targaryen",
-      firstName: "Daenerys",
-      username: "example",
-      email: "example@gmail.com",
+      name: "Snow",
+      description: "Jon",
+      type: "example",
+      isPaid: "false",
+      amount: "1000",
+      startDate: "2020-12-12",
+      endDate: "2020-12-22",
+      currenciesId: 1,
+      adminsId: 1,
+      categoriesId: 1,
     },
     {
       id: 6,
-      lastName: "Melisandre",
-      firstName: "Jordan",
-      username: "example",
-      email: "example@gmail.com",
+      name: "Snow",
+      description: "Jon",
+      type: "example",
+      isPaid: "false",
+      amount: "1000",
+      startDate: "2020-12-12",
+      endDate: "2020-12-22",
+      currenciesId: 1,
+      adminsId: 1,
+      categoriesId: 1,
     },
     {
       id: 7,
-      lastName: "Clifford",
-      firstName: "Ferrara",
-      username: "example",
-      email: "example@gmail.com",
+      name: "Snow",
+      description: "Jon",
+      type: "example",
+      isPaid: "false",
+      amount: "1000",
+      startDate: "2020-12-12",
+      endDate: "2020-12-22",
+      currenciesId: 1,
+      adminsId: 1,
+      categoriesId: 1,
     },
     {
       id: 8,
-      lastName: "Frances",
-      firstName: "Rossini",
-      username: "example",
-      email: "example@gmail.com",
+      name: "Snow",
+      description: "Jon",
+      type: "example",
+      isPaid: "false",
+      amount: "1000",
+      startDate: "2020-12-12",
+      endDate: "2020-12-22",
+      currenciesId: 1,
+      adminsId: 1,
+      categoriesId: 1,
     },
     {
       id: 9,
-      lastName: "Roxie",
-      firstName: "Harvey",
-      username: "example",
-      email: "example@gmail.com",
+      name: "Snow",
+      description: "Jon",
+      type: "example",
+      isPaid: "false",
+      amount: "1000",
+      startDate: "2020-12-12",
+      endDate: "2020-12-22",
+      currenciesId: 1,
+      adminsId: 1,
+      categoriesId: 1,
     },
   ];
 
   return (
     <div className="admin-data">
-      {isAdd && (
-        <PopUp>
-          <button className="admin-close-btn" onClick={() => setAdd(false)}>
-            x
-          </button>
-          <h2>Add Admin</h2>
-          <div className="admin-add-card-content">
-            <div>
-              <input type="text" placeholder="First Name" />
-            </div>
-            <div>
-              <input type="text" placeholder="Last Name" />
-            </div>
-            <div>
-              <input type="text" placeholder="Username" />
-            </div>
-            <div>
-              <input type="username" placeholder="Email" />
-            </div>
-            <div>
-              <input type="password" placeholder="Password" />
-            </div>
-            <div className="add-admin-btns-container">
-              <button
-                className="admin-add-cancel-btn"
-                onClick={() => setAdd(false)}
-              >
-                Cancel
-              </button>
-              <button className="admin-add-save-btn">Save</button>
-            </div>
+      {addPop && (
+        <Popup close={closePop}>
+          <div
+            className="currencies-close-popup"
+            onClick={() => {
+              setAddPop(false);
+            }}
+          >
+            <CloseIcon />
           </div>
-        </PopUp>
+          <Box
+            className="add-currency-box"
+            component="form"
+            // sx={{
+            //   '& > :not(style)': { m: 1, width: '25ch' },
+            // }}
+            noValidate
+            autoComplete="off"
+          >
+            <h2>Add Recurring Transaction</h2>
+            <TextField
+              id="outlined-controlled"
+              label="Name"
+              color="secondary"
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="Description"
+              color="secondary"
+              multiline
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="Type"
+              color="secondary"
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="isPaid"
+              color="secondary"
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="Amount"
+              color="secondary"
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="Start Date"
+              color="secondary"
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="End Date"
+              color="secondary"
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="Currencies ID"
+              color="secondary"
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="Admins ID"
+              color="secondary"
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="Categories ID"
+              color="secondary"
+            />
+            <Button
+              variant="contained"
+              disableElevation
+              style={{ margin: 0, padding: 10 }}
+              sx={{ backgroundColor: "#3d0066" }}
+              onClick={() => {
+                setAddPop(false);
+              }}
+            >
+              Submit
+            </Button>
+          </Box>
+        </Popup>
       )}
-      {isEdit && (
-        <PopUp>
-          <button className="admin-close-btn" onClick={() => setEdit(false)}>
-            x
-          </button>
-          <h2>Edit Admin</h2>
-          <div className="admin-add-card-content">
-            <div>
-              <input type="text" placeholder="First Name" />
-            </div>
-            <div>
-              <input type="text" placeholder="Last Name" />
-            </div>
-            <div>
-              <input type="text" placeholder="Username" />
-            </div>
-            <div>
-              <input type="username" placeholder="Email" />
-            </div>
-            <div>
-              <input type="password" placeholder="Password" />
-            </div>
-            <div className="add-admin-btns-container">
-              <button
-                className="admin-add-cancel-btn"
-                onClick={() => setEdit(false)}
-              >
-                Cancel
-              </button>
-              <button className="admin-add-save-btn">Save</button>
-            </div>
+      {editPop && (
+        <Popup close={closePop}>
+          <div
+            className="currencies-close-popup"
+            onClick={() => {
+              setEditPop(false);
+            }}
+          >
+            <CloseIcon />
           </div>
-        </PopUp>
+          <Box
+            className="add-currency-box"
+            component="form"
+            // sx={{
+            //   '& > :not(style)': { m: 1, width: '25ch' },
+            // }}
+            noValidate
+            autoComplete="off"
+          >
+            <h2>Edit Recurring Transactions</h2>
+            <TextField
+              id="outlined-controlled"
+              label="Name"
+              color="secondary"
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="Description"
+              color="secondary"
+              multiline
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="Type"
+              color="secondary"
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="isPaid"
+              color="secondary"
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="Amount"
+              color="secondary"
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="Start Date"
+              color="secondary"
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="End Date"
+              color="secondary"
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="Currencies ID"
+              color="secondary"
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="Admins ID"
+              color="secondary"
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="Categories ID"
+              color="secondary"
+            />
+            <Button
+              variant="contained"
+              disableElevation
+              style={{ height: 55 }}
+              sx={{ backgroundColor: "#3d0066" }}
+              onClick={() => {
+                setEditPop(false);
+              }}
+            >
+              Submit
+            </Button>
+          </Box>
+        </Popup>
       )}
       <div
         style={{
           height: 600,
-          width: 1000,
+          width: 1050,
         }}
       >
         <div className="admin-add-button">
-          <button onClick={addVisible}>Add Admin</button>
+          <button
+            onClick={() => {
+              setAddPop(true);
+            }}
+          >
+            Add Rec Trans
+          </button>
         </div>
-        <DataTable
-          rows={rows}
-          columns={columns}
-          // rows={rows}
-          // columns={columns}
-          // pageSize={5}
-          // rowsPerPageOptions={[5]}
-          // checkboxSelection
-          // sx={{
-          //   border: "1px solid #3d0066",
-          //   borderRadius: "20px",
-          //   boxShadow: "0 2px 15px rgba(0,0,0,0.4)",
-          // }}
-        />
+        <DataTable rows={rows} columns={columns} />
       </div>
     </div>
   );

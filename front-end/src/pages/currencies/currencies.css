@@ -1,51 +1,56 @@
-.currencies-container{
-    background-color: white;
-    height: 85vh;
-      padding: 20px 100px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      position: relative;     
+.currencies-container {
+  background-color: white;
+  height: 85vh;
+  padding: 20px 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
 }
-.add-currencies{
-    margin:0px auto 20px;
-    width: 650px;
-    display: flex;
-    justify-content: flex-start;
+.add-currencies {
+  margin: 0px auto 20px;
+  width: 650px;
+  display: flex;
+  justify-content: flex-start;
 }
-.table-currency{
-    /* width: 1000px; */
-    margin: auto;
-border: 1px solid #3d0066;
+.table-currency {
+  /* width: 1000px; */
+  margin: auto;
+  border: 1px solid #3d0066;
 }
 .add-currencies button {
-    padding: 10px 15px;
-    border-radius: 5px;
-    outline: none;
-    border: none;
-    background-color: #3d0066;
-    color: white;
-    font-size: 15px;
-    cursor: pointer;
-    margin-left: auto;
+  padding: 10px 15px;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+  background-color: #3d0066;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+  margin-left: auto;
 }
-.add-currencies button:hover{
-    background-color: #b199c2;
+.add-currencies button:hover {
+  background-color: #b199c2;
 }
-.add-currency-box{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    gap: 20px;
-    width: 600px;
+.add-currency-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 20px;
+  width: 600px;
 }
-.add-currency-box  button:hover{
-    background-color: #b199c2;
+.add-currency-box button:hover {
+  background-color: #b199c2;
 }
-.currencies-close-popup{    
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    font-size: 22px;
-    cursor: pointer;
+.currencies-close-popup {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.pages-container {
+  height: 600px;
+  width: 80%;
 }
