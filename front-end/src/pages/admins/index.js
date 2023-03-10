@@ -277,10 +277,13 @@ export default function Admins() {
         </Popup>
       )}
       <div
-        style={{
-          height: 600,
-          width: 1000,
-        }}
+        style={
+          {
+            // height: 600,
+            // width: 1000,
+          }
+        }
+        className="pages-container"
       >
         <div className="admin-add-button">
           <button
@@ -296,7 +299,7 @@ export default function Admins() {
           columns={columns}
           pageSize={5}
           rowsPerPageOptions={[5]}
-          checkboxSelection
+          // checkboxSelection
           sx={{
             border: "1px solid #3d0066",
             borderRadius: "20px",
