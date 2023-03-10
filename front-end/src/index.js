@@ -13,6 +13,7 @@ import RecurringTransactions from "./pages/recurring-transactions/index";
 import ProfitGoal from "./pages/profit-goals/index";
 import Reports from "./pages/reports/index";
 import Dashboard from "./pages/dashboard/index";
+import Balance from "./pages/balance/index";
 
 import Login from "./pages/login/index";
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -32,7 +33,7 @@ root.render(
         />
         <Route path="profitgoals" element={<ProfitGoal />} />
         <Route path="reports" element={<Reports />} />
-
+        <Route path="balance" element={<Balance />} />
       </Route>
       <Route path="/login" element={<Login />} />
     </Routes>
