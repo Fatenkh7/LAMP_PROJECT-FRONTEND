@@ -399,10 +399,13 @@ export default function RecurringTransactions() {
         </Popup>
       )}
       <div
-        style={{
-          height: 600,
-          width: 1050,
-        }}
+        style={
+          {
+            // height: 600,
+            // width: 1050,
+          }
+        }
+        className="pages-container"
       >
         <div className="admin-add-button">
           <button

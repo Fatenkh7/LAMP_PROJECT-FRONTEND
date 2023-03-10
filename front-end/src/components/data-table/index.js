@@ -8,7 +8,7 @@ function DataTable(props) {
       columns={props.columns}
       pageSize={5}
       rowsPerPageOptions={[5]}
-      checkboxSelection
+      // checkboxSelection
       sx={{
         border: "1px solid #3d0066",
         borderRadius: "20px",

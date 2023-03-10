@@ -33,18 +33,18 @@ export default function RecurringTransactions() {
   const columns = [
     { field: "id", headerName: "ID", width: 40 },
     { field: "title", headerName: "Title", width: 100 },
-    { field: "description", headerName: "Description", width: 200 },
-    { field: "type", headerName: "Type", width: 100 },
+    { field: "description", headerName: "Description", width: 160 },
+    { field: "type", headerName: "Type", width: 80 },
 
     {
       field: "isPaid",
       headerName: "Is Paid",
-      width: 100,
+      width: 70,
     },
     {
       field: "amount",
       headerName: "Amount",
-      width: 100,
+      width: 70,
     },
     {
       field: "Date",
@@ -54,22 +54,22 @@ export default function RecurringTransactions() {
     {
       field: "currenciesId",
       headerName: "Currencies ID",
-      width: 100,
+      width: 10,
     },
     {
       field: "adminsId",
       headerName: "Admins ID",
-      width: 100,
+      width: 10,
     },
     {
       field: "categoriesId",
       headerName: "Categories ID",
-      width: 100,
+      width: 10,
     },
     {
       field: "fixedKeysId",
       headerName: "FixedKeys ID",
-      width: 100,
+      width: 10,
     },
     // {
     //   field: "fullName",
@@ -83,7 +83,7 @@ export default function RecurringTransactions() {
     {
       field: "edit",
       headerName: "Edit",
-      width: 100,
+      width: 10,
       renderCell: (params) => (
         <div>
           <EditIcon
@@ -97,7 +97,7 @@ export default function RecurringTransactions() {
     {
       field: "delete",
       headerName: "Delete",
-      width: 100,
+      width: 10,
       renderCell: (params) => (
         <div>
           <DeleteIcon sx={{ color: "#3d0066" }} style={{ cursor: "pointer" }} />
