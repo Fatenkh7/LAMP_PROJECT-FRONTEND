@@ -1,17 +1,13 @@
-.currencies-container{
-    background-color: white;
-    height: 85vh;
-      padding: 20px 100px;
+.currencies-main-container{
       display: flex;
-      flex-direction: column;
       justify-content: center;
-      position: relative;     
+      align-items: center;
 }
 .add-currencies{
-    margin:0px auto 20px;
-    width: 650px;
+    width: 100%;
     display: flex;
-    justify-content: flex-start;
+    margin-bottom: 10px;
+    
 }
 .table-currency{
     /* width: 1000px; */

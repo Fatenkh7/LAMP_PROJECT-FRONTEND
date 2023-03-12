@@ -1,19 +1,19 @@
-.categories-container{
+.fixedkeys-container{
     display: flex;
     justify-content: center;
     align-items: center;    
 }
-.add-categories{
+.add-fixedkeys{
     width: 100%;
     display: flex;
     margin-bottom: 10px;
 }
-.table-categories{
+.table-fixedkeys{
     /* width: 1000px; */
     margin: auto;
 border: 1px solid #3d0066;
 }
-.add-categories button {
+.add-fixedkeys button {
     padding: 10px 15px;
     border-radius: 5px;
     outline: none;
@@ -24,30 +24,30 @@ border: 1px solid #3d0066;
     cursor: pointer;
     margin-left: auto;
 }
-.add-categories button:hover{
+.add-fixedkeys button:hover{
     background-color: #b199c2;
 }
-.add-categories-box{
+.add-fixedkeys-box{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     gap: 20px;
     width: 600px;
 }
-.add-categories-box button:hover{
+.add-fixedkeys-box button:hover{
     background-color: #b199c2;
 }
-.categories-close-popup{    
+.fixedkeys-close-popup{    
     position: absolute;
     top: 20px;
     right: 20px;
     font-size: 22px;
     cursor: pointer;
 }
-.categories-close-popup button:hover{
+.fixedkeys-close-popup button:hover{
     background-color: #b199c2;
 }
-.categories-admin{
+.fixedkeys-admin{
    width: 100%;
   display: flex;
   flex-direction: row;
@@ -55,6 +55,11 @@ border: 1px solid #3d0066;
  /* gap: 10px; */
 
 }
-.categories-admin button:hover{
+.fixedkeys-admin button:hover{
     background-color: #b199c2;
+}
+.is-active{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
 }

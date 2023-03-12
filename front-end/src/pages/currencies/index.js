@@ -27,14 +27,14 @@ export default function Currencies() {
   }
 
   const columns = [
-    { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'currency', headerName: 'Currency', width: 200 },
-    { field: 'rate', headerName: 'Rate', width: 200 },
+    { field: 'id', headerName: 'ID', width: 90 },
+    { field: 'currency', headerName: 'Currency', width: 300 },
+    { field: 'rate', headerName: 'Rate', width: 300 },
 
     {
       field: 'delete',
       headerName: 'Delete',
-      width: 70,
+      width: 100,
       renderCell: (params) => (
         <DeleteIcon
         sx={{color:"#3d0066"}}
@@ -46,7 +46,7 @@ export default function Currencies() {
     {
       field: 'edit',
       headerName: 'Edit',
-      width: 80,
+      width: 100,
       renderCell: (params) => (
         <div>
           <EditIcon
@@ -76,8 +76,11 @@ export default function Currencies() {
 
 
   return (
-    <div>
-      <div className='currencies-container'   >
+    <div className='currencies-main-container'>
+      <div className='currencies-container' style={{
+          height: 600,
+          width: 1000,
+        }}  >
 
         <div className='add-currencies'>
           <Button variant="contained" disableElevation className='add-currencies-btn' onClick={() => { setAddPop(true) }} >

@@ -27,14 +27,14 @@ export default function Categories() {
   }
 
   const columns = [
-    { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'category', headerName: 'Category', width: 200 },
-    { field: 'description', headerName: 'Description', width: 200 },
+    { field: 'id', headerName: 'ID', width: 90 },
+    { field: 'category', headerName: 'Category', width: 300 },
+    { field: 'description', headerName: 'Description', width: 300 },
 
     {
       field: 'delete',
       headerName: 'Delete',
-      width: 70,
+      width: 100,
       renderCell: (params) => (
         <DeleteIcon
           sx={{ color: "#3d0066" }}
@@ -46,7 +46,7 @@ export default function Categories() {
     {
       field: 'edit',
       headerName: 'Edit',
-      width: 80,
+      width: 100,
       renderCell: (params) => (
         <div>
           <EditIcon
@@ -76,8 +76,10 @@ export default function Categories() {
 
 
   return (
-    <div>
-      <div className='categories-container'   >
+    <div className='categories-container'>
+      <div  style={{
+          height: 600,
+          width: 1000,}} >
 
         <div className='add-categories'>
           <Button variant="contained" disableElevation className='add-categories-btn' onClick={() => { setAddPop(true) }} >
