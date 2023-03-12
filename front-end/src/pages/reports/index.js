@@ -1,34 +1,33 @@
 import React from "react";
-import Grid from "@mui/material/Grid";
-import { Drawer, Typography } from "@mui/material"
-import { Box, color, width } from "@mui/system";
-import Paper from '@mui/material/Paper';
-import "../reports/reports.css"
-import {
-  ArgumentAxis,
-  ValueAxis,
-  Chart,
-  LineSeries,
-} from '@devexpress/dx-react-chart-material-ui';
+import { Chart, LineSeries, ArgumentAxis, ValueAxis } from '@devexpress/dx-react-chart-material-ui';
 import { Animation } from '@devexpress/dx-react-chart';
 
 const data = [
-  { argument: '2000', value: 1200 },
-  { argument: '2005', value: 2000 },
-  { argument: '2010', value: 1700 },
-  { argument: '2015', value: 2500 },
-  { argument: '2020', value: 1200 },
-  { argument: '2023', value: 10000 },
+  { argument: 'Jan', value: 100 },
+  { argument: 'Feb', value: 200 },
+  { argument: 'Mar', value: 300 },
+  { argument: 'Apr', value: 400 },
+  { argument: 'May', value: 500 },
+  { argument: 'Jun', value: 600 },
+  { argument: 'Jul', value: 700 },
+  { argument: 'Aug', value: 800 },
+  { argument: 'Sep', value: 900 },
+  { argument: 'Oct', value: 1000 },
+  { argument: 'Nov', value: 1100 },
+  { argument: 'Dec', value: 1200 },
 ];
 
-
-function ProfitGoal() {
+function ReportChart() {
   return (
-    <Box>
-      
-    </Box>
-    
+    <Chart
+      data={data}
+    >
+      <ArgumentAxis />
+      <ValueAxis />
+      <LineSeries valueField="value" argumentField="argument" color="#3d0066" />
+      <Animation />
+    </Chart>
   );
 }
 
-export default ProfitGoal;
+export default ReportChart;
