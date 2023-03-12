@@ -1,15 +1,20 @@
-.currencies-container {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  gap: 20px;
+
+.currencies-main-container{
+      display: flex;
+      justify-content: center;
+      align-items: center;
 }
-.add-currencies {
-  width: 100%;
-  display: flex;
+.add-currencies{
+    width: 100%;
+    display: flex;
+    margin-bottom: 10px;
+    
 }
-.table-currency {
-  border: 1px solid #3d0066;
+.table-currency{
+    /* width: 1000px; */
+    margin: auto;
+border: 1px solid #3d0066;
+
 }
 .add-currencies button {
   padding: 10px 15px;

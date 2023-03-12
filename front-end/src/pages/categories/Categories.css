@@ -1,12 +1,18 @@
+
+.categories-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+}
+.add-categories{
+    width: 100%;
+    display: flex;
+    margin-bottom: 10px;
+    }
 .categories-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
-}
-.add-categories {
-  width: 100%;
-  display: flex;
-  margin-bottom: 20px;
 }
 
 .add-categories button {
