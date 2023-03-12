@@ -115,6 +115,14 @@
   .login-image {
     width: 550px;
   }
+
+  .login-form {
+    width: 50%;
+  }
+
+  .login-image-logo {
+    width: 50%;
+  }
 }
 
 @media (max-width: 768px) {

@@ -1,21 +1,14 @@
 .currencies-container {
-  background-color: white;
-  height: 85vh;
-  padding: 20px 100px;
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  position: relative;
+  flex-direction: column;
+  gap: 20px;
 }
 .add-currencies {
-  margin: 0px auto 20px;
-  width: 650px;
+  width: 100%;
   display: flex;
-  justify-content: flex-start;
 }
 .table-currency {
-  /* width: 1000px; */
-  margin: auto;
   border: 1px solid #3d0066;
 }
 .add-currencies button {
@@ -24,7 +17,7 @@
   outline: none;
   border: none;
   background-color: #3d0066;
-  color: white;
+  color: rgb(201, 201, 201);
   font-size: 15px;
   cursor: pointer;
   margin-left: auto;
@@ -52,5 +45,18 @@
 
 .pages-container {
   height: 600px;
-  width: 80%;
+  width: 55%;
+  animation: fade 0.5s ease-in;
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

@@ -1,9 +1,20 @@
 .main-header {
-  width: 100%;
+  width: 98%;
   box-sizing: border-box;
   display: flex;
-  margin-top: 20px;
+  margin: 20px 0 20px 20px;
+  border-radius: 20px;
   padding: 20px;
+  /* background-color: #3d0066; */
+  background-image: linear-gradient(
+    45deg,
+    rgb(201, 201, 201),
+    rgb(201, 201, 201),
+    rgb(201, 201, 201),
+    rgb(201, 201, 201),
+    rgb(201, 201, 201),
+    #3d0066
+  );
 }
 
 .main-header .header-icons {
@@ -18,5 +29,5 @@
 
 .main-header .header-icons div {
   scale: 1.3;
-  color: #111;
+  color: rgb(221, 221, 221);
 }
