@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
+import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -13,11 +13,11 @@ import RecurringTransactions from "./pages/recurring-transactions/index";
 import ProfitGoal from "./pages/profit-goals/index";
 import Reports from "./pages/reports/index";
 import Dashboard from "./pages/dashboard/index";
-import Balance from "./pages/balance/index";
+import { Balance, BalanceYearly } from "./pages/balance/index";
 
 import Login from "./pages/login/index";
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(
+
+ReactDOM.render(
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<App />}>
@@ -34,14 +34,12 @@ root.render(
         <Route path="profitgoals" element={<ProfitGoal />} />
         <Route path="reports" element={<Reports />} />
         <Route path="balance" element={<Balance />} />
+        <Route path="balance-yearly" element={<BalanceYearly />} />
       </Route>
       <Route path="/login" element={<Login />} />
     </Routes>
-  </BrowserRouter>
-  // document.getElementById("root")
+  </BrowserRouter>,
+  document.getElementById("root")
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
