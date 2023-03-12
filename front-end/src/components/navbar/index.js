@@ -60,12 +60,12 @@ const NavBar = () => {
         })}
       </nav>
       <nav className="sidebar-bottom-nav">
-        <div className="sidebar-logout spacing hover">
+        <NavLink to="/login" className="sidebar-logout spacing hover">
           <p>
             <LogoutRoundedIcon />
           </p>
           <p className="sidebar-hide">Logout</p>
-        </div>
+        </NavLink>
       </nav>
       {/* <div>
           <span>0</span>

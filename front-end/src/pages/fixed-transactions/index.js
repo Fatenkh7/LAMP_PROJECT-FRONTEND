@@ -1,94 +1,423 @@
-import React, { useState } from "react";
-import Grid from "@mui/material/Grid";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Checkbox from "@mui/material/Checkbox";
-import { Box, IconButton } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import Button from '@mui/material/Button';
+// import React from "react";
+// import Grid from "@mui/material/Grid";
 
-function FixedTransactions() {
-  const [rows, setRows] = useState([
-    { id: 1, name: "Item 1", price: "$5.00", checked: false },
-    { id: 2, name: "Item 2", price: "$10.00", checked: false },
-    { id: 3, name: "Item 3", price: "$10.00", checked: false },
-  ]);
+// function Admins() {
+//   return <div>Admins</div>;
+// }
 
-  const handleDelete = (id) => {
-    const updatedRows = rows.filter((row) => row.id !== id);
-    setRows(updatedRows);
+// export default Admins;
+
+import * as React from "react";
+import { DataGrid } from "@mui/x-data-grid";
+import { Button } from "@mui/material";
+// import "./style.css";
+import { useState } from "react";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import PopUp from "../../components/popup/index";
+import DataTable from "../../components/data-table/index";
+import Popup from "../../components/pop-up/Popup";
+import CloseIcon from "@mui/icons-material/Close";
+import TextField from "@mui/material/TextField";
+import { Box } from "@mui/material";
+
+export default function RecurringTransactions() {
+  const [addPop, setAddPop] = useState(false);
+  const [editPop, setEditPop] = useState(false);
+
+  const closePop = () => {
+    setAddPop(false);
+    setEditPop(false);
   };
 
-  const handleCheck = (id) => {
-    const updatedRows = rows.map((row) => {
-      if (row.id === id) {
-        return { ...row, checked: !row.checked };
-      }
-      return row;
-    });
-    setRows(updatedRows);
-  };
+  const columns = [
+    { field: "id", headerName: "ID", width: 40 },
+    { field: "title", headerName: "Title", width: 100 },
+    { field: "description", headerName: "Description", width: 160 },
+    { field: "type", headerName: "Type", width: 80 },
 
-  const handleView = (id) => {
-    const item = rows.find((row) => row.id === id);
-    alert(`Viewing ${item.name} - ${item.price}`);
-  };
+    {
+      field: "isPaid",
+      headerName: "Is Paid",
+      width: 70,
+    },
+    {
+      field: "amount",
+      headerName: "Amount",
+      width: 70,
+    },
+    {
+      field: "Date",
+      headerName: "Date",
+      width: 100,
+    },
+    {
+      field: "currenciesId",
+      headerName: "Currencies ID",
+      width: 10,
+    },
+    {
+      field: "adminsId",
+      headerName: "Admins ID",
+      width: 10,
+    },
+    {
+      field: "categoriesId",
+      headerName: "Categories ID",
+      width: 10,
+    },
+    {
+      field: "fixedKeysId",
+      headerName: "FixedKeys ID",
+      width: 10,
+    },
+    // {
+    //   field: "fullName",
+    //   headerName: "Full name",
+    //   description: "This column has a value getter and is not sortable.",
+    //   sortable: false,
+    //   width: 160,
+    //   valueGetter: (params) =>
+    //     `${params.row.firstName || ""} ${params.row.lastName || ""}`,
+    // },
+    {
+      field: "edit",
+      headerName: "Edit",
+      width: 10,
+      renderCell: (params) => (
+        <div>
+          <EditIcon
+            sx={{ color: "#3d0066" }}
+            onClick={() => setEditPop(true)}
+            style={{ cursor: "pointer" }}
+          />
+        </div>
+      ),
+    },
+    {
+      field: "delete",
+      headerName: "Delete",
+      width: 10,
+      renderCell: (params) => (
+        <div>
+          <DeleteIcon sx={{ color: "#3d0066" }} style={{ cursor: "pointer" }} />
+        </div>
+      ),
+    },
+  ];
 
-  const handleNext = () => {
-    const selectedItems = rows.filter((row) => row.checked);
-    alert(`Moving to next page with ${selectedItems.length} items`);
-  };
+  const rows = [
+    {
+      id: 1,
+      title: "Snow",
+      description: "Jon",
+      type: "example",
+      isPaid: "false",
+      amount: "1000",
+      Date: "2020-12-12",
+      currenciesId: 1,
+      adminsId: 1,
+      categoriesId: 1,
+      fixedKeysId: 1,
+    },
+    {
+      id: 2,
+      title: "Snow",
+      description: "Jon",
+      type: "example",
+      isPaid: "false",
+      amount: "1000",
+      Date: "2020-12-12",
+      currenciesId: 1,
+      adminsId: 1,
+      categoriesId: 1,
+      fixedKeysId: 1,
+    },
+    {
+      id: 3,
+      title: "Snow",
+      description: "Jon",
+      type: "example",
+      isPaid: "false",
+      amount: "1000",
+      Date: "2020-12-12",
+      currenciesId: 1,
+      adminsId: 1,
+      categoriesId: 1,
+      fixedKeysId: 1,
+    },
+    {
+      id: 4,
+      title: "Snow",
+      description: "Jon",
+      type: "example",
+      isPaid: "false",
+      amount: "1000",
+      Date: "2020-12-12",
+      currenciesId: 1,
+      adminsId: 1,
+      categoriesId: 1,
+      fixedKeysId: 1,
+    },
+    {
+      id: 5,
+      title: "Snow",
+      description: "Jon",
+      type: "example",
+      isPaid: "false",
+      amount: "1000",
+      Date: "2020-12-12",
+      currenciesId: 1,
+      adminsId: 1,
+      categoriesId: 1,
+      fixedKeysId: 1,
+    },
+    {
+      id: 6,
+      title: "Snow",
+      description: "Jon",
+      type: "example",
+      isPaid: "false",
+      amount: "1000",
+      Date: "2020-12-12",
+      currenciesId: 1,
+      adminsId: 1,
+      categoriesId: 1,
+      fixedKeysId: 1,
+    },
+    {
+      id: 7,
+      title: "Snow",
+      description: "Jon",
+      type: "example",
+      isPaid: "false",
+      amount: "1000",
+      Date: "2020-12-12",
+      currenciesId: 1,
+      adminsId: 1,
+      categoriesId: 1,
+      fixedKeysId: 1,
+    },
+    {
+      id: 8,
+      title: "Snow",
+      description: "Jon",
+      type: "example",
+      isPaid: "false",
+      amount: "1000",
+      Date: "2020-12-12",
+      currenciesId: 1,
+      adminsId: 1,
+      categoriesId: 1,
+      fixedKeysId: 1,
+    },
+    {
+      id: 9,
+      title: "Snow",
+      description: "Jon",
+      type: "example",
+      isPaid: "false",
+      amount: "1000",
+      Date: "2020-12-12",
+      currenciesId: 1,
+      adminsId: 1,
+      categoriesId: 1,
+      fixedKeysId: 1,
+    },
+  ];
 
   return (
-    <Grid xs = {9}>
-    <TableContainer  sx={{width : "100%" , height : '95vh'  , alignContent: "center" , margin:'20px 20px 20px 20px' ,borderRadius:"20px"  } }>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Checklist</TableCell>
-                <TableCell>Item Name</TableCell>
-                <TableCell>Price</TableCell>
-                <TableCell>View</TableCell>
-                <TableCell>Delete</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows.map((row) => (
-                <TableRow key={row.id}>
-                  <TableCell>
-                    <Checkbox
-                      checked={row.checked}
-                      onChange={() => handleCheck(row.id)}
-                      inputProps={{ "aria-label": "controlled" }}
-                    />
-                  </TableCell>
-                  <TableCell>{row.name}</TableCell>
-                  <TableCell>{row.price}</TableCell>
-                  <TableCell>
-                    <IconButton onClick={() => handleView(row.id)}>
-                      <VisibilityIcon />
-                    </IconButton>
-                  </TableCell>
-                  <TableCell>
-                    <IconButton onClick={() => handleDelete(row.id)}>
-                      <DeleteIcon />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-          <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: '10px' }}>
-            <Button variant="contained" onClick={handleNext} disabled={!rows.some((row) => row.checked)}>Next</Button>
+    <div className="admin-data">
+      {addPop && (
+        <Popup close={closePop}>
+          <div
+            className="currencies-close-popup"
+            onClick={() => {
+              setAddPop(false);
+            }}
+          >
+            <CloseIcon />
+          </div>
+          <Box
+            className="add-currency-box"
+            component="form"
+            // sx={{
+            //   '& > :not(style)': { m: 1, width: '25ch' },
+            // }}
+            noValidate
+            autoComplete="off"
+          >
+            <h2>Add Fixed Transaction</h2>
+            <TextField
+              id="outlined-controlled"
+              label="Title"
+              color="secondary"
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="Description"
+              color="secondary"
+              multiline
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="Type"
+              color="secondary"
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="isPaid"
+              color="secondary"
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="Amount"
+              color="secondary"
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="Date"
+              color="secondary"
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="Currencies ID"
+              color="secondary"
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="Admins ID"
+              color="secondary"
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="Categories ID"
+              color="secondary"
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="Fixed Keys ID"
+              color="secondary"
+            />
+            <Button
+              variant="contained"
+              disableElevation
+              style={{ height: 55 }}
+              sx={{ backgroundColor: "#3d0066" }}
+              onClick={() => {
+                setAddPop(false);
+              }}
+            >
+              Submit
+            </Button>
           </Box>
-        </TableContainer>
-      </Grid>
+        </Popup>
+      )}
+      {editPop && (
+        <Popup close={closePop}>
+          <div
+            className="currencies-close-popup"
+            onClick={() => {
+              setEditPop(false);
+            }}
+          >
+            <CloseIcon />
+          </div>
+          <Box
+            className="add-currency-box"
+            component="form"
+            // sx={{
+            //   '& > :not(style)': { m: 1, width: '25ch' },
+            // }}
+            noValidate
+            autoComplete="off"
+          >
+            <h2>Edit Fixed Transactions</h2>
+            <TextField
+              id="outlined-controlled"
+              label="Title"
+              color="secondary"
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="Description"
+              color="secondary"
+              multiline
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="Type"
+              color="secondary"
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="isPaid"
+              color="secondary"
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="Amount"
+              color="secondary"
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="Date"
+              color="secondary"
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="Currencies ID"
+              color="secondary"
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="Admins ID"
+              color="secondary"
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="Categories ID"
+              color="secondary"
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="Fixed Keys ID"
+              color="secondary"
+            />
+            <Button
+              variant="contained"
+              disableElevation
+              style={{ height: 55 }}
+              sx={{ backgroundColor: "#3d0066" }}
+              onClick={() => {
+                setEditPop(false);
+              }}
+            >
+              Submit
+            </Button>
+          </Box>
+        </Popup>
+      )}
+      <div
+        style={
+          {
+            // height: 600,
+            // width: 1050,
+          }
+        }
+        className="pages-container"
+      >
+        <div className="admin-add-button">
+          <button
+            onClick={() => {
+              setAddPop(true);
+            }}
+          >
+            Add Fixed Trans
+          </button>
+        </div>
+        <DataTable rows={rows} columns={columns} />
+      </div>
+    </div>
   );
 }
-
-export default FixedTransactions;

@@ -14,21 +14,34 @@ import "./style.css";
 import { useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import PopUp from "../../components/popup/index";
+// import PopUp from "../../components/popup/index";
+import Popup from "../../components/pop-up/Popup";
+import CloseIcon from "@mui/icons-material/Close";
+import TextField from "@mui/material/TextField";
+import { Box } from "@mui/material";
+import DataTable from "../../components/data-table/index";
 
 export default function Admins() {
-  const [isAdd, setAdd] = useState(false);
-  const [isEdit, setEdit] = useState(false);
+  // const [isAdd, setAdd] = useState(false);
+  // const [isEdit, setEdit] = useState(false);
 
-  const addVisible = () => {
-    if (isAdd === false) {
-      setAdd(true);
-    }
-  };
-  const editVisible = () => {
-    if (isEdit === false) {
-      setEdit(true);
-    }
+  // const addVisible = () => {
+  //   if (isAdd === false) {
+  //     setAdd(true);
+  //   }
+  // };
+  // const editVisible = () => {
+  //   if (isEdit === false) {
+  //     setEdit(true);
+  //   }
+  // };
+
+  const [addPop, setAddPop] = useState(false);
+  const [editPop, setEditPop] = useState(false);
+
+  const closePop = () => {
+    setAddPop(false);
+    setEditPop(false);
   };
 
   const columns = [
@@ -60,7 +73,7 @@ export default function Admins() {
         <div>
           <EditIcon
             sx={{ color: "#3d0066" }}
-            onClick={editVisible}
+            onClick={() => setEditPop(true)}
             style={{ cursor: "pointer" }}
           />
         </div>
@@ -146,95 +159,143 @@ export default function Admins() {
 
   return (
     <div className="admin-data">
-      {isAdd && (
-        <PopUp>
-          <button className="admin-close-btn" onClick={() => setAdd(false)}>
-            x
-          </button>
-          <h2>Add Admin</h2>
-          <div className="admin-add-card-content">
-            <div>
-              <input type="text" placeholder="First Name" />
-            </div>
-            <div>
-              <input type="text" placeholder="Last Name" />
-            </div>
-            <div>
-              <input type="text" placeholder="Username" />
-            </div>
-            <div>
-              <input type="username" placeholder="Email" />
-            </div>
-            <div>
-              <input type="password" placeholder="Password" />
-            </div>
-            <div className="add-admin-btns-container">
-              <button
-                className="admin-add-cancel-btn"
-                onClick={() => setAdd(false)}
-              >
-                Cancel
-              </button>
-              <button className="admin-add-save-btn">Save</button>
-            </div>
+      {addPop && (
+        <Popup close={closePop}>
+          <div
+            className="currencies-close-popup"
+            onClick={() => {
+              setAddPop(false);
+            }}
+          >
+            <CloseIcon />
           </div>
-        </PopUp>
+          <Box
+            className="add-currency-box"
+            component="form"
+            // sx={{
+            //   '& > :not(style)': { m: 1, width: '25ch' },
+            // }}
+            noValidate
+            autoComplete="off"
+          >
+            <h2>Add Admin</h2>
+            <TextField
+              id="outlined-controlled"
+              label="First Name"
+              color="secondary"
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="Last Name"
+              color="secondary"
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="Username"
+              color="secondary"
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="Email"
+              color="secondary"
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="Password"
+              color="secondary"
+            />
+            <Button
+              variant="contained"
+              disableElevation
+              style={{ height: 55 }}
+              sx={{ backgroundColor: "#3d0066" }}
+              onClick={() => {
+                setAddPop(false);
+              }}
+            >
+              Submit
+            </Button>
+          </Box>
+        </Popup>
       )}
-      {isEdit && (
-        <PopUp>
-          <button className="admin-close-btn" onClick={() => setEdit(false)}>
-            x
-          </button>
-          <h2>Edit Admin</h2>
-          <div className="admin-add-card-content">
-            <div>
-              <input type="text" placeholder="First Name" />
-            </div>
-            <div>
-              <input type="text" placeholder="Last Name" />
-            </div>
-            <div>
-              <input type="text" placeholder="Username" />
-            </div>
-            <div>
-              <input type="username" placeholder="Email" />
-            </div>
-            <div>
-              <input type="password" placeholder="Password" />
-            </div>
-            <div className="add-admin-btns-container">
-              <button
-                className="admin-add-cancel-btn"
-                onClick={() => setEdit(false)}
-              >
-                Cancel
-              </button>
-              <button className="admin-add-save-btn">Save</button>
-            </div>
+      {editPop && (
+        <Popup close={closePop}>
+          <div
+            className="currencies-close-popup"
+            onClick={() => {
+              setEditPop(false);
+            }}
+          >
+            <CloseIcon />
           </div>
-        </PopUp>
+          <Box
+            className="add-currency-box"
+            component="form"
+            // sx={{
+            //   '& > :not(style)': { m: 1, width: '25ch' },
+            // }}
+            noValidate
+            autoComplete="off"
+          >
+            <h2>Edit Admin</h2>
+            <TextField
+              id="outlined-controlled"
+              label="First Name"
+              color="secondary"
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="Last Name"
+              color="secondary"
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="Username"
+              color="secondary"
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="Email"
+              color="secondary"
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="Password"
+              color="secondary"
+            />
+            <Button
+              variant="contained"
+              disableElevation
+              style={{ height: 55 }}
+              sx={{ backgroundColor: "#3d0066" }}
+              onClick={() => {
+                setEditPop(false);
+              }}
+            >
+              Submit
+            </Button>
+          </Box>
+        </Popup>
       )}
       <div
-        style={{
-          height: 600,
-          width: 1000,
-        }}
+        style={
+          {
+            // height: 600,
+            // width: 1000,
+          }
+        }
+        className="pages-container"
       >
         <div className="admin-add-button">
-          <button onClick={addVisible}>Add Admin</button>
+          <button
+            onClick={() => {
+              setAddPop(true);
+            }}
+          >
+            Add Admin
+          </button>
         </div>
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
-          checkboxSelection
-          sx={{
-            border: "1px solid #3d0066",
-            borderRadius: "20px",
-            boxShadow: "0 2px 15px rgba(0,0,0,0.4)",
-          }}
-        />
+        <DataTable rows={rows} columns={columns} />
       </div>
     </div>
   );
