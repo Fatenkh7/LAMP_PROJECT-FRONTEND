@@ -26,9 +26,9 @@ export function Balance() {
 
   return (
     <div>
-      <button onClick={handleSwitchChart}>Switch Chart</button>
+      <button className="switch-btn" onClick={handleSwitchChart}>Switch Chart</button>
       {!isPolar ? (
-        <ApexChart options={chartOptions} series={chartSeries} type="bar" height={350} width={1550} />
+        <ApexChart options={chartOptions} series={chartSeries} type="bar" height={350} width={1650} />
       ) : (
         <BalanceYearly />
       )}
