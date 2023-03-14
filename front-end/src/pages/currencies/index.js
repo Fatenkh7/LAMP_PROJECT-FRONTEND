@@ -10,12 +10,15 @@ import Popup from "../../components/pop-up/Popup";
 import { useState, useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import CloseIcon from "@mui/icons-material/Close";
+import ErrorBoundary from "../../components/componentDidCatch";
 import axios from "axios";
 
 export default function Currencies() {
   const [addPop, setAddPop] = useState(false);
   const [editPop, setEditPop] = useState(false);
   const [currencyData, setCurrencyData] = useState([]);
+  const [currencyInput, setCurrencyInput] = useState("");
+  const [rateInput, setRateInput] = useState("");
 
   const closePop = () => {
     setAddPop(false);
@@ -23,59 +26,66 @@ export default function Currencies() {
   };
 
   const columns = [
-    { field: "currency", headerName: "Currency", width: 300 },
-    { field: "rate", headerName: "Rate", width: 300 },
     {
-      field: "delete",
-      headerName: "Delete",
-      width: 100,
-
-      renderCell: (params) => (
-        <DeleteIcon
-          sx={{ color: "#3d0066" }}
-          style={{ cursor: "pointer" }}
-          onClick={() => console.log(`Deleting row ${params.id}`)}
-        />
-      ),
+      field: "currency",
+      headerName: "Currency",
+      width: 200,
+      sortable: false,
     },
     {
-      field: "edit",
-      headerName: "Edit",
-      width: 100,
-
-      renderCell: (params) => (
-        <div>
-          <EditIcon
-            onClick={() => {
-              setEditPop(true);
-            }}
-            sx={{ color: "#3d0066" }}
-            style={{ cursor: "pointer" }}
-          />
-        </div>
-      ),
+      field: "rate",
+      headerName: "Rate",
+      width: 200,
+      sortable: false,
     },
   ];
 
   useEffect(() => {
-    axios
-      .get("http://127.0.0.1:8000/api/currency")
-      .then((response) => {
-        setCurrencyData(response.data.message.data);
-      })
-      .catch((error) => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://127.0.0.1:8000/api/currency");
+        const currencyDataWithId = response.data.message.data.map(
+          (currency) => {
+            return {
+              ...currency,
+              id: currency.id,
+            };
+          }
+        );
+        setCurrencyData(currencyDataWithId);
+      } catch (error) {
         console.log(error);
-      });
+      }
+    };
+    fetchData();
   }, []);
+
+  const handleCurrencyInputChange = (event) => {
+    setCurrencyInput(event.target.value);
+  };
+
+  const handleRateInputChange = (event) => {
+    setRateInput(event.target.value);
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const response = await axios.post("http://127.0.0.1:8000/api/currency", {
+        currency: currencyInput,
+        rate: rateInput,
+      });
+      setCurrencyData([...currencyData, response.data]);
+      setAddPop(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="currencies-main-container">
       <div
         className="currencies-container"
-        style={{
-          height: 600,
-          width: 1000,
-        }}
+        style={{ height: 600, width: 1000 }}
       >
         <div className="add-currencies">
           <Button
@@ -90,15 +100,18 @@ export default function Currencies() {
             Add Currency
           </Button>
         </div>
-        <DataGrid
-          rows={currencyData}
-          columns={columns}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
-          checkboxSelection
-          className="table-currency"
-          sx={{ border: "1px solid #3d0066", borderRadius: "20px" }}
-        />
+        <ErrorBoundary>
+          <DataGrid
+            rows={currencyData}
+            columns={columns}
+            pageSize={5}
+            rowsPerPageOptions={[5]}
+            checkboxSelection
+            className="table-currency"
+            sx={{ border: "1px solid #3d0066", borderRadius: "20px" }}
+            getRowId={(row) => row.id} // add this line
+          />
+        </ErrorBoundary>
       </div>
       {addPop && (
         <Popup close={closePop}>
@@ -117,22 +130,31 @@ export default function Currencies() {
             autoComplete="off"
           >
             <h2>Add Currency</h2>
-            <TextField id="outlined-controlled" label="Add Currency" />
-            <TextField id="outlined-uncontrolled" label="Add Rate" />
+            <TextField
+              id="outlined-controlled"
+              label="Add Currency"
+              value={currencyInput}
+              onChange={handleCurrencyInputChange}
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="Add Rate"
+              value={rateInput}
+              onChange={handleRateInputChange}
+            />
             <Button
               variant="contained"
               disableElevation
               style={{ height: 55 }}
               sx={{ backgroundColor: "#3d0066" }}
-              onClick={() => {
-                setAddPop(false);
-              }}
+              onClick={handleSubmit}
             >
               Submit
             </Button>
           </Box>
         </Popup>
       )}
+
       {editPop && (
         <Popup close={closePop}>
           <div
