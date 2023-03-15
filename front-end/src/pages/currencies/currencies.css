@@ -1,20 +1,18 @@
-
-.currencies-main-container{
-      display: flex;
-      justify-content: center;
-      align-items: center;
+.currencies-main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fade 0.5s ease-in;
 }
-.add-currencies{
-    width: 100%;
-    display: flex;
-    margin-bottom: 10px;
-    
+.add-currencies {
+  width: 100%;
+  display: flex;
+  margin-bottom: 10px;
 }
-.table-currency{
-    /* width: 1000px; */
-    margin: auto;
-border: 1px solid #3d0066;
-
+.table-currency {
+  /* width: 1000px; */
+  margin: auto;
+  border: 1px solid #3d0066;
 }
 .add-currencies button {
   padding: 10px 15px;
@@ -27,9 +25,9 @@ border: 1px solid #3d0066;
   cursor: pointer;
   margin-left: auto;
 }
-.add-currencies button:hover {
+/* .add-currencies button:hover {
   background-color: #b199c2;
-}
+} */
 .add-currency-box {
   display: flex;
   flex-direction: column;
@@ -37,9 +35,9 @@ border: 1px solid #3d0066;
   gap: 20px;
   width: 600px;
 }
-.add-currency-box button:hover {
+/* .add-currency-box button:hover {
   background-color: #b199c2;
-}
+} */
 .currencies-close-popup {
   position: absolute;
   top: 20px;

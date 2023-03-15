@@ -10,10 +10,10 @@ function Header() {
       <header className="main-header">
         <div className="header-icons">
           <div>
-            <NotificationsIcon />
+            <AccountRoundedIcon />
           </div>
           <div>
-            <AccountRoundedIcon />
+            <span className="main-header-admin-name">AbdellatifAlKerde</span>
           </div>
         </div>
       </header>

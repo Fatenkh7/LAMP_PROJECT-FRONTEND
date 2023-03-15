@@ -1,63 +1,57 @@
-.ContentReports{
-    width:97%;
-    height:85vh;
-    display: grid;
-    grid-template-columns: 50% 50%;
-    grid-template-rows: 50% 50%;
+.ContentReports {
+  width: 97%;
+  height: 85vh;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 50% 50%;
+  animation: fade 0.5s ease-in;
 }
-.scroll-title{
-    overflow-y: scroll;
-}
-
-  .scroll-title::-webkit-scrollbar {
-    
-    width: 5px;
-  }
-  
-  /* Track */
-  .scroll-title::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 5px;
-  }
-  
-  /* Handle */
-  .scroll-title::-webkit-scrollbar-thumb {
-    border-radius: 5px;
-    background: #3d0066;
-    
-    
-  }
-  
-  /* Handle on hover */
-  .scroll-admins::-webkit-scrollbar-thumb:hover {
-    background: #8306d7;
-  }
-
-
-  .scroll-admins{
-    overflow-y: scroll;
+.scroll-title {
+  overflow-y: scroll;
 }
 
-  .scroll-admins::-webkit-scrollbar {
-    
-    width: 5px;
-  }
-  
-  /* Track */
-  .scroll-admins::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 5px;
-  }
-  
-  /* Handle */
-  .scroll-admins::-webkit-scrollbar-thumb {
-    border-radius: 5px;
-    background: #3d0066;
-    
-    
-  }
-  
-  /* Handle on hover */
-  .scroll-admins::-webkit-scrollbar-thumb:hover {
-    background: #8306d7;
-  }
+.scroll-title::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+.scroll-title::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 5px;
+}
+
+/* Handle */
+.scroll-title::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background: #3d0066;
+}
+
+/* Handle on hover */
+.scroll-admins::-webkit-scrollbar-thumb:hover {
+  background: #8306d7;
+}
+
+.scroll-admins {
+  overflow-y: scroll;
+}
+
+.scroll-admins::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+.scroll-admins::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 5px;
+}
+
+/* Handle */
+.scroll-admins::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background: #3d0066;
+}
+
+/* Handle on hover */
+.scroll-admins::-webkit-scrollbar-thumb:hover {
+  background: #8306d7;
+}

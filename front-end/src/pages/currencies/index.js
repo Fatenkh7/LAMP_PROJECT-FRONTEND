@@ -13,6 +13,7 @@ import TextField from "@mui/material/TextField";
 // import { height } from '@mui/system';
 import CloseIcon from "@mui/icons-material/Close";
 import DataTable from "../../components/data-table/index";
+import MainButton from "../../components/main-button/index";
 
 export default function Currencies() {
   const [addPop, setAddPop] = useState(false);
@@ -24,14 +25,12 @@ export default function Currencies() {
   };
 
   const columns = [
-
-    { field: 'id', headerName: 'ID', width: 90 },
-    { field: 'currency', headerName: 'Currency', width: 300 },
-    { field: 'rate', headerName: 'Rate', width: 300 },
+    { field: "currency", headerName: "Currency", width: 300 },
+    { field: "rate", headerName: "Rate", width: 300 },
 
     {
-      field: 'delete',
-      headerName: 'Delete',
+      field: "delete",
+      headerName: "Delete",
       width: 100,
 
       renderCell: (params) => (
@@ -43,9 +42,8 @@ export default function Currencies() {
       ),
     },
     {
-
-      field: 'edit',
-      headerName: 'Edit',
+      field: "edit",
+      headerName: "Edit",
       width: 100,
 
       renderCell: (params) => (
@@ -75,18 +73,16 @@ export default function Currencies() {
   ];
 
   return (
-
-    <div className='currencies-main-container'>
-      <div className='currencies-container' style={{
+    <div className="currencies-main-container">
+      <div
+        className="currencies-container"
+        style={{
           height: 600,
           width: 1000,
-        }}  >
-
-        <div className='add-currencies'>
-          <Button variant="contained" disableElevation className='add-currencies-btn' onClick={() => { setAddPop(true) }} >
-            <AddIcon />
-            Add Currency
-          </Button>
+        }}
+      >
+        <div className="add-currencies">
+          <MainButton name="Add Currency" onClick={() => setAddPop(true)} />
         </div>
         <DataTable
           rows={rows}
@@ -119,19 +115,21 @@ export default function Currencies() {
             autoComplete="off"
           >
             <h2>Add Currency</h2>
-            <TextField id="outlined-controlled" label="Add Currency" />
-            <TextField id="outlined-uncontrolled" label="Add Rate" />
-            <Button
-              variant="contained"
-              disableElevation
-              style={{ height: 55 }}
-              sx={{ backgroundColor: "#3d0066" }}
-              onClick={() => {
-                setAddPop(false);
-              }}
-            >
-              Submit
-            </Button>
+            <form className="pop-up-form">
+              <TextField id="outlined-controlled" label="Add Currency" />
+              <TextField id="outlined-uncontrolled" label="Add Rate" />
+              <Button
+                variant="contained"
+                disableElevation
+                style={{ height: 55 }}
+                sx={{ backgroundColor: "#3d0066" }}
+                onClick={() => {
+                  setAddPop(false);
+                }}
+              >
+                Submit
+              </Button>
+            </form>
           </Box>
         </Popup>
       )}
@@ -155,19 +153,21 @@ export default function Currencies() {
             autoComplete="off"
           >
             <h2>Eddit Currency</h2>
-            <TextField id="outlined-controlled" label="Add Currency" />
-            <TextField id="outlined-uncontrolled" label="Add Rate" />
-            <Button
-              variant="contained"
-              disableElevation
-              style={{ height: 55 }}
-              sx={{ backgroundColor: "#3d0066" }}
-              onClick={() => {
-                setEditPop(false);
-              }}
-            >
-              Submit
-            </Button>
+            <form className="pop-up-form">
+              <TextField id="outlined-controlled" label="Add Currency" />
+              <TextField id="outlined-uncontrolled" label="Add Rate" />
+              <Button
+                variant="contained"
+                disableElevation
+                style={{ height: 55 }}
+                sx={{ backgroundColor: "#3d0066" }}
+                onClick={() => {
+                  setEditPop(false);
+                }}
+              >
+                Submit
+              </Button>
+            </form>
           </Box>
         </Popup>
       )}

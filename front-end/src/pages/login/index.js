@@ -115,7 +115,6 @@ function Login() {
           </svg>
         </div>
         <div className="image">
-          <h2>Hi, Welcome Back</h2>
           <div className="login-image">
             <img src={LoginImage2} width="100%" height="100%" />
           </div>
