@@ -6,13 +6,13 @@ import EditIcon from "@mui/icons-material/Edit";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import "./currencies.css";
-import { Box } from "@mui/material";
+import { Box, TablePagination } from "@mui/material";
 import Popup from "../../components/pop-up/Popup";
 import { useState, useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import CloseIcon from "@mui/icons-material/Close";
 import ErrorBoundary from "../../components/componentDidCatch";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 import axios from "axios";
 
 export default function Currencies() {
@@ -75,8 +75,8 @@ export default function Currencies() {
     const fetchData = async () => {
       try {
         const response = await axios.get("http://127.0.0.1:8000/api/currency");
-        setCurrencyData(response.data.message.data);
-        console.log(response.data.message);
+        setCurrencyData(response.data.message);
+        console.log(response.data);
       } catch (error) {
         console.log(error);
       }
@@ -92,14 +92,18 @@ export default function Currencies() {
     setRateInput(event.target.value);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     try {
-      const response = await axios.post("http://127.0.0.1:8000/api/currency", {
-        currency: currencyInput,
-        rate: rateInput,
-      });
-      setCurrencyData([...currencyData, response.data.message.data]);
-      setAddPop(false);
+      axios
+        .post("http://127.0.0.1:8000/api/currency", {
+          currency: currencyInput,
+          rate: rateInput,
+        })
+        .then((response) => {
+          setCurrencyData([...currencyData, response.data.message.data]);
+          setAddPop(false);
+        });
+
       Swal.fire({
         icon: "success",
         title: "Added Successfully",
@@ -109,7 +113,7 @@ export default function Currencies() {
     } catch (error) {
       console.log(error);
     }
-  };  
+  };
 
   const handleDelete = async (id) => {
     Swal.fire({
@@ -124,15 +128,17 @@ export default function Currencies() {
       if (result.isConfirmed) {
         try {
           await axios.delete(`http://127.0.0.1:8000/api/currency/${id}`);
-          setCurrencyData(currencyData.filter((currency) => currency.id !== id));
+          setCurrencyData(
+            currencyData.filter((currency) => currency.id !== id)
+          );
         } catch (error) {
           console.log(error);
         }
         Swal.fire("Deleted!", "Your file has been deleted.", "success");
       }
-    });    
+    });
   };
-  
+
   const handleEditPopupSubmit = async () => {
     const newCurrency = { currency: currencyInput, rate: rateInput };
     setSubmitEdit(newCurrency);
@@ -152,7 +158,7 @@ export default function Currencies() {
       console.log(error.response.data.message);
     }
   };
-  
+
   const handleEdit = async (id) => {
     try {
       const response = await axios.patch(
@@ -168,7 +174,7 @@ export default function Currencies() {
       console.log(error);
     }
   };
-  
+
   return (
     <div className="currencies-main-container">
       <div
@@ -192,9 +198,15 @@ export default function Currencies() {
           <DataGrid
             rows={currencyData}
             columns={columns}
-            pageSize={5}
-            rowsPerPageOptions={[5]}
             className="table-currency"
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 10,
+                },
+              },
+            }}
+            pageSizeOptions={[10]}
             sx={{ border: "1px solid #3d0066", borderRadius: "20px" }}
           />
         </ErrorBoundary>
