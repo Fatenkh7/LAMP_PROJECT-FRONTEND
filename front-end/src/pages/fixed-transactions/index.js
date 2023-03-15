@@ -20,6 +20,7 @@ import Popup from "../../components/pop-up/Popup";
 import CloseIcon from "@mui/icons-material/Close";
 import TextField from "@mui/material/TextField";
 import { Box } from "@mui/material";
+import MainButton from "../../components/main-button/index";
 
 export default function RecurringTransactions() {
   const [addPop, setAddPop] = useState(false);
@@ -31,7 +32,6 @@ export default function RecurringTransactions() {
   };
 
   const columns = [
-    { field: "id", headerName: "ID", width: 40 },
     { field: "title", headerName: "Title", width: 100 },
     { field: "description", headerName: "Description", width: 160 },
     { field: "type", headerName: "Type", width: 80 },
@@ -248,68 +248,70 @@ export default function RecurringTransactions() {
             autoComplete="off"
           >
             <h2>Add Fixed Transaction</h2>
-            <TextField
-              id="outlined-controlled"
-              label="Title"
-              color="secondary"
-            />
-            <TextField
-              id="outlined-uncontrolled"
-              label="Description"
-              color="secondary"
-              multiline
-            />
-            <TextField
-              id="outlined-uncontrolled"
-              label="Type"
-              color="secondary"
-            />
-            <TextField
-              id="outlined-uncontrolled"
-              label="isPaid"
-              color="secondary"
-            />
-            <TextField
-              id="outlined-uncontrolled"
-              label="Amount"
-              color="secondary"
-            />
-            <TextField
-              id="outlined-uncontrolled"
-              label="Date"
-              color="secondary"
-            />
-            <TextField
-              id="outlined-uncontrolled"
-              label="Currencies ID"
-              color="secondary"
-            />
-            <TextField
-              id="outlined-uncontrolled"
-              label="Admins ID"
-              color="secondary"
-            />
-            <TextField
-              id="outlined-uncontrolled"
-              label="Categories ID"
-              color="secondary"
-            />
-            <TextField
-              id="outlined-uncontrolled"
-              label="Fixed Keys ID"
-              color="secondary"
-            />
-            <Button
-              variant="contained"
-              disableElevation
-              style={{ height: 55 }}
-              sx={{ backgroundColor: "#3d0066" }}
-              onClick={() => {
-                setAddPop(false);
-              }}
-            >
-              Submit
-            </Button>
+            <form className="pop-up-form">
+              <TextField
+                id="outlined-controlled"
+                label="Title"
+                color="secondary"
+              />
+              <TextField
+                id="outlined-uncontrolled"
+                label="Description"
+                color="secondary"
+                multiline
+              />
+              <TextField
+                id="outlined-uncontrolled"
+                label="Type"
+                color="secondary"
+              />
+              <TextField
+                id="outlined-uncontrolled"
+                label="isPaid"
+                color="secondary"
+              />
+              <TextField
+                id="outlined-uncontrolled"
+                label="Amount"
+                color="secondary"
+              />
+              <TextField
+                id="outlined-uncontrolled"
+                label="Date"
+                color="secondary"
+              />
+              <TextField
+                id="outlined-uncontrolled"
+                label="Currencies ID"
+                color="secondary"
+              />
+              <TextField
+                id="outlined-uncontrolled"
+                label="Admins ID"
+                color="secondary"
+              />
+              <TextField
+                id="outlined-uncontrolled"
+                label="Categories ID"
+                color="secondary"
+              />
+              <TextField
+                id="outlined-uncontrolled"
+                label="Fixed Keys ID"
+                color="secondary"
+              />
+              <Button
+                variant="contained"
+                disableElevation
+                style={{ height: 55 }}
+                sx={{ backgroundColor: "#3d0066" }}
+                onClick={() => {
+                  setAddPop(false);
+                }}
+              >
+                Submit
+              </Button>
+            </form>
           </Box>
         </Popup>
       )}
@@ -333,68 +335,70 @@ export default function RecurringTransactions() {
             autoComplete="off"
           >
             <h2>Edit Fixed Transactions</h2>
-            <TextField
-              id="outlined-controlled"
-              label="Title"
-              color="secondary"
-            />
-            <TextField
-              id="outlined-uncontrolled"
-              label="Description"
-              color="secondary"
-              multiline
-            />
-            <TextField
-              id="outlined-uncontrolled"
-              label="Type"
-              color="secondary"
-            />
-            <TextField
-              id="outlined-uncontrolled"
-              label="isPaid"
-              color="secondary"
-            />
-            <TextField
-              id="outlined-uncontrolled"
-              label="Amount"
-              color="secondary"
-            />
-            <TextField
-              id="outlined-uncontrolled"
-              label="Date"
-              color="secondary"
-            />
-            <TextField
-              id="outlined-uncontrolled"
-              label="Currencies ID"
-              color="secondary"
-            />
-            <TextField
-              id="outlined-uncontrolled"
-              label="Admins ID"
-              color="secondary"
-            />
-            <TextField
-              id="outlined-uncontrolled"
-              label="Categories ID"
-              color="secondary"
-            />
-            <TextField
-              id="outlined-uncontrolled"
-              label="Fixed Keys ID"
-              color="secondary"
-            />
-            <Button
-              variant="contained"
-              disableElevation
-              style={{ height: 55 }}
-              sx={{ backgroundColor: "#3d0066" }}
-              onClick={() => {
-                setEditPop(false);
-              }}
-            >
-              Submit
-            </Button>
+            <form className="pop-up-form">
+              <TextField
+                id="outlined-controlled"
+                label="Title"
+                color="secondary"
+              />
+              <TextField
+                id="outlined-uncontrolled"
+                label="Description"
+                color="secondary"
+                multiline
+              />
+              <TextField
+                id="outlined-uncontrolled"
+                label="Type"
+                color="secondary"
+              />
+              <TextField
+                id="outlined-uncontrolled"
+                label="isPaid"
+                color="secondary"
+              />
+              <TextField
+                id="outlined-uncontrolled"
+                label="Amount"
+                color="secondary"
+              />
+              <TextField
+                id="outlined-uncontrolled"
+                label="Date"
+                color="secondary"
+              />
+              <TextField
+                id="outlined-uncontrolled"
+                label="Currencies ID"
+                color="secondary"
+              />
+              <TextField
+                id="outlined-uncontrolled"
+                label="Admins ID"
+                color="secondary"
+              />
+              <TextField
+                id="outlined-uncontrolled"
+                label="Categories ID"
+                color="secondary"
+              />
+              <TextField
+                id="outlined-uncontrolled"
+                label="Fixed Keys ID"
+                color="secondary"
+              />
+              <Button
+                variant="contained"
+                disableElevation
+                style={{ height: 55 }}
+                sx={{ backgroundColor: "#3d0066" }}
+                onClick={() => {
+                  setEditPop(false);
+                }}
+              >
+                Submit
+              </Button>
+            </form>
           </Box>
         </Popup>
       )}
@@ -408,13 +412,7 @@ export default function RecurringTransactions() {
         className="pages-container"
       >
         <div className="admin-add-button">
-          <button
-            onClick={() => {
-              setAddPop(true);
-            }}
-          >
-            Add Fixed Trans
-          </button>
+          <MainButton name="Add Fixed Trans" onClick={() => setAddPop(true)} />
         </div>
         <DataTable rows={rows} columns={columns} />
       </div>

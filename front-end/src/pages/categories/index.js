@@ -3,7 +3,6 @@ import { DataGrid } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import Button from "@mui/material/Button";
-import AddIcon from "@mui/icons-material/Add";
 import "./Categories.css";
 // import { useNavigate } from "react-router-dom";
 import { Box } from "@mui/material";
@@ -13,6 +12,7 @@ import TextField from "@mui/material/TextField";
 // import { height } from '@mui/system';
 import CloseIcon from "@mui/icons-material/Close";
 import DataTable from "../../components/data-table/index";
+import MainButton from "../../components/main-button/index";
 
 export default function Categories() {
   const [addPop, setAddPop] = useState(false);
@@ -24,14 +24,12 @@ export default function Categories() {
   };
 
   const columns = [
-
-    { field: 'id', headerName: 'ID', width: 90 },
-    { field: 'category', headerName: 'Category', width: 300 },
-    { field: 'description', headerName: 'Description', width: 300 },
+    { field: "category", headerName: "Category", width: 300 },
+    { field: "description", headerName: "Description", width: 300 },
 
     {
-      field: 'delete',
-      headerName: 'Delete',
+      field: "delete",
+      headerName: "Delete",
       width: 100,
 
       renderCell: (params) => (
@@ -43,9 +41,8 @@ export default function Categories() {
       ),
     },
     {
-
-      field: 'edit',
-      headerName: 'Edit',
+      field: "edit",
+      headerName: "Edit",
       width: 100,
       renderCell: (params) => (
         <div>
@@ -74,17 +71,15 @@ export default function Categories() {
   ];
 
   return (
-
-    <div className='categories-container'>
-      <div  style={{
+    <div className="categories-container">
+      <div
+        style={{
           height: 600,
-          width: 1000,}} >
-
-        <div className='add-categories'>
-          <Button variant="contained" disableElevation className='add-categories-btn' onClick={() => { setAddPop(true) }} >
-            <AddIcon />
-            Add Category
-          </Button>
+          width: 1000,
+        }}
+      >
+        <div className="add-categories">
+          <MainButton name="Add Category" onClick={() => setAddPop(true)} />
         </div>
         <DataTable rows={rows} columns={columns} />
         {/* </div> */}
@@ -109,35 +104,37 @@ export default function Categories() {
             autoComplete="off"
           >
             <h2>Add Category</h2>
-            <TextField id="outlined-controlled" label="Add Category" />
-            <TextField id="outlined-uncontrolled" label="Add Description" />
-            <div className="categories-admin">
-              <TextField
-                id="outlined-read-only"
-                label="Admin"
-                value={""}
-                readOnly
-              />
+            <form className="pop-up-form">
+              <TextField id="outlined-controlled" label="Add Category" />
+              <TextField id="outlined-uncontrolled" label="Add Description" />
+              <div className="categories-admin">
+                <TextField
+                  id="outlined-read-only"
+                  label="Admin"
+                  value={""}
+                  readOnly
+                />
+                <Button
+                  variant="contained"
+                  disableElevation
+                  style={{ height: 55 }}
+                  sx={{ backgroundColor: "#3d0066" }}
+                >
+                  Assign to me
+                </Button>
+              </div>
               <Button
                 variant="contained"
                 disableElevation
                 style={{ height: 55 }}
                 sx={{ backgroundColor: "#3d0066" }}
+                onClick={() => {
+                  setAddPop(false);
+                }}
               >
-                Assign to me
+                Submit
               </Button>
-            </div>
-            <Button
-              variant="contained"
-              disableElevation
-              style={{ height: 55 }}
-              sx={{ backgroundColor: "#3d0066" }}
-              onClick={() => {
-                setAddPop(false);
-              }}
-            >
-              Submit
-            </Button>
+            </form>
           </Box>
         </Popup>
       )}
@@ -161,18 +158,21 @@ export default function Categories() {
             autoComplete="off"
           >
             <h2>Edit Category</h2>
-            <TextField id="outlined-controlled" label="Add Category" />
-            <TextField id="outlined-uncontrolled" label="Add description" />
-            <Button
-              variant="contained"
-              disableElevation
-              style={{ height: 55 }}
-              onClick={() => {
-                setEditPop(false);
-              }}
-            >
-              Submit
-            </Button>
+            <form className="pop-up-form">
+              <TextField id="outlined-controlled" label="Add Category" />
+              <TextField id="outlined-uncontrolled" label="Add description" />
+              <Button
+                variant="contained"
+                disableElevation
+                sx={{ backgroundColor: "#3d0066" }}
+                style={{ height: 55 }}
+                onClick={() => {
+                  setEditPop(false);
+                }}
+              >
+                Submit
+              </Button>
+            </form>
           </Box>
         </Popup>
       )}

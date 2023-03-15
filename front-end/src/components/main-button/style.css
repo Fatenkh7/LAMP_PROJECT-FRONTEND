@@ -1,0 +1,19 @@
+.main-button-component {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  letter-spacing: 1px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.main-button-component:hover {
+  background-color: #3d0066c7;
+}
+
+.main-button-component-icon {
+  margin-right: 10px;
+}
