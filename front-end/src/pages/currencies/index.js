@@ -1,5 +1,6 @@
 import * as React from "react";
 import { DataGrid } from "@mui/x-data-grid";
+import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import Button from "@mui/material/Button";
@@ -19,6 +20,8 @@ export default function Currencies() {
   const [currencyData, setCurrencyData] = useState([]);
   const [currencyInput, setCurrencyInput] = useState("");
   const [rateInput, setRateInput] = useState("");
+  const [submitEdit, setSubmitEdit] = useState({});
+  const [updateSuccess, setUpdateSuccess] = useState(false);
 
   const closePop = () => {
     setAddPop(false);
@@ -38,27 +41,47 @@ export default function Currencies() {
       width: 200,
       sortable: false,
     },
+    {
+      field: "actions",
+      headerName: "Actions",
+      width: 200,
+      sortable: false,
+      renderCell: (params) => (
+        <>
+          <IconButton
+            color="secondary"
+            aria-label="delete"
+            onClick={() => handleDelete(params.row.id)}
+          >
+            <DeleteIcon />
+          </IconButton>
+          <IconButton
+            color="primary"
+            aria-label="edit"
+            onClick={() => {
+              setEditPop(true);
+              setSubmitEdit(params.row);
+            }}
+          >
+            <EditIcon />
+          </IconButton>
+        </>
+      ),
+    },
   ];
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get("http://127.0.0.1:8000/api/currency");
-        const currencyDataWithId = response.data.message.data.map(
-          (currency) => {
-            return {
-              ...currency,
-              id: currency.id,
-            };
-          }
-        );
-        setCurrencyData(currencyDataWithId);
+        setCurrencyData(response.data.message.data);
+        console.log(response.data.message);
       } catch (error) {
         console.log(error);
       }
     };
     fetchData();
-  }, []);
+  }, [setCurrencyData]);
 
   const handleCurrencyInputChange = (event) => {
     setCurrencyInput(event.target.value);
@@ -74,12 +97,56 @@ export default function Currencies() {
         currency: currencyInput,
         rate: rateInput,
       });
-      setCurrencyData([...currencyData, response.data]);
+      setCurrencyData([...currencyData, response.data.message.data]);
       setAddPop(false);
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }
   };
+
+  const handleDelete = async (id) => {
+    const confirmed = window.confirm("Do you want to delete this currency?");
+    if (confirmed) {
+      try {
+        await axios.delete(`http://127.0.0.1:8000/api/currency/${id}`);
+        setCurrencyData(currencyData.filter((currency) => currency.id !== id));
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+  
+  const handleEditPopupSubmit = async () => {
+    const newCurrency = { currency: currencyInput, rate: rateInput };
+    setSubmitEdit(newCurrency);
+    setCurrencyInput("");
+    setRateInput("");
+    setEditPop(false);
+    try {
+      await handleEdit(submitEdit.id);
+      window.location.reload();
+    } catch (error) {
+      console.log(error.response.data.message);
+    }
+  };  
+  
+  const handleEdit = async (id) => {
+    try {
+      const response = await axios.patch(
+        `http://127.0.0.1:8000/api/currency/${id}/`,
+        { currency: currencyInput, rate: rateInput }
+      );
+      const updatedCurrency = response.data;
+      const updatedData = currencyData.map((currency) =>
+        currency.id === updatedCurrency.id ? updatedCurrency : currency
+      );
+      setCurrencyData(updatedData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
 
   return (
     <div className="currencies-main-container">
@@ -106,10 +173,8 @@ export default function Currencies() {
             columns={columns}
             pageSize={5}
             rowsPerPageOptions={[5]}
-            checkboxSelection
             className="table-currency"
             sx={{ border: "1px solid #3d0066", borderRadius: "20px" }}
-            getRowId={(row) => row.id} // add this line
           />
         </ErrorBoundary>
       </div>
@@ -171,19 +236,26 @@ export default function Currencies() {
             noValidate
             autoComplete="off"
           >
-            <h2>Eddit Currency</h2>
-            <TextField id="outlined-controlled" label="Add Currency" />
-            <TextField id="outlined-uncontrolled" label="Add Rate" />
+            <h2>Edit Currency</h2>
+            <TextField
+              id="outlined-controlled"
+              label="Edit Currency"
+              value={currencyInput}
+              onChange={handleCurrencyInputChange}
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="Edit Rate"
+              value={rateInput}
+              onChange={handleRateInputChange}
+            />
             <Button
-              variant="contained"
-              disableElevation
-              style={{ height: 55 }}
-              sx={{ backgroundColor: "#3d0066" }}
               onClick={() => {
+                handleEditPopupSubmit();
                 setEditPop(false);
               }}
             >
-              Submit
+              Save
             </Button>
           </Box>
         </Popup>
