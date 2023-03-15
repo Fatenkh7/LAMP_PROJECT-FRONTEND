@@ -12,6 +12,7 @@ import { useState, useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import CloseIcon from "@mui/icons-material/Close";
 import ErrorBoundary from "../../components/componentDidCatch";
+import Swal from 'sweetalert2';
 import axios from "axios";
 
 export default function Currencies() {
@@ -99,22 +100,37 @@ export default function Currencies() {
       });
       setCurrencyData([...currencyData, response.data.message.data]);
       setAddPop(false);
-      window.location.reload();
+      Swal.fire({
+        icon: "success",
+        title: "Added Successfully",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     } catch (error) {
       console.log(error);
     }
-  };
+  };  
 
   const handleDelete = async (id) => {
-    const confirmed = window.confirm("Do you want to delete this currency?");
-    if (confirmed) {
-      try {
-        await axios.delete(`http://127.0.0.1:8000/api/currency/${id}`);
-        setCurrencyData(currencyData.filter((currency) => currency.id !== id));
-      } catch (error) {
-        console.log(error);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3d0066",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await axios.delete(`http://127.0.0.1:8000/api/currency/${id}`);
+          setCurrencyData(currencyData.filter((currency) => currency.id !== id));
+        } catch (error) {
+          console.log(error);
+        }
+        Swal.fire("Deleted!", "Your file has been deleted.", "success");
       }
-    }
+    });    
   };
   
   const handleEditPopupSubmit = async () => {
@@ -125,11 +141,17 @@ export default function Currencies() {
     setEditPop(false);
     try {
       await handleEdit(submitEdit.id);
+      Swal.fire({
+        icon: "success",
+        title: "Update Successful!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
       window.location.reload();
     } catch (error) {
       console.log(error.response.data.message);
     }
-  };  
+  };
   
   const handleEdit = async (id) => {
     try {
@@ -147,7 +169,6 @@ export default function Currencies() {
     }
   };
   
-
   return (
     <div className="currencies-main-container">
       <div
