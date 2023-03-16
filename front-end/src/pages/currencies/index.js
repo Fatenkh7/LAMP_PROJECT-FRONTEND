@@ -15,7 +15,6 @@ import ErrorBoundary from "../../components/componentDidCatch";
 import Swal from "sweetalert2";
 import axios from "axios";
 
-
 export default function Currencies() {
   const [addPop, setAddPop] = useState(false);
   const [editPop, setEditPop] = useState(false);
@@ -48,7 +47,6 @@ export default function Currencies() {
       headerName: "Actions",
       width: 200,
       sortable: false,
-
       renderCell: (params) => (
         <>
           <IconButton
@@ -177,6 +175,10 @@ export default function Currencies() {
     }
   };
 
+  return (
+    <div className="currencies-main-container">
+      <div
+        className="currencies-container"
         style={{ height: 600, width: 1000 }}
       >
         <div className="add-currencies">
@@ -288,22 +290,6 @@ export default function Currencies() {
             >
               Save
             </Button>
-            <h2>Eddit Currency</h2>
-            <form className="pop-up-form">
-              <TextField id="outlined-controlled" label="Add Currency" />
-              <TextField id="outlined-uncontrolled" label="Add Rate" />
-              <Button
-                variant="contained"
-                disableElevation
-                style={{ height: 55 }}
-                sx={{ backgroundColor: "#3d0066" }}
-                onClick={() => {
-                  setEditPop(false);
-                }}
-              >
-                Submit
-              </Button>
-            </form>
           </Box>
         </Popup>
       )}
