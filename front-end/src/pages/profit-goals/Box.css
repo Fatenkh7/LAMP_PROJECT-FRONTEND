@@ -1,11 +1,12 @@
 .cardsContainer {
   display: flex;
   flex-wrap: wrap;
+  animation: fade 0.5s ease-in;
 }
 
 /* width */
 ::-webkit-scrollbar {
-  width: 15px;
+  width: 1px;
 }
 
 /* Track */
@@ -18,11 +19,13 @@
 ::-webkit-scrollbar-thumb {
   border-radius: 5px;
   background: #3d0066;
+  background-color: rgb(210, 210, 210);
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #8306d7;
+  background-color: #999;
 }
 .blure {
   z-index: -1;
