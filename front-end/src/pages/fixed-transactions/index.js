@@ -256,7 +256,7 @@ export default function FixedTransaction() {
         } catch (error) {
           console.log(error);
         }
-        Swal.fire("Deleted!", "Your file has been deleted.", "success");
+        Swal.fire("Deleted!", "Your fixed transaction has been deleted.", "success");
       }
     });
   };
