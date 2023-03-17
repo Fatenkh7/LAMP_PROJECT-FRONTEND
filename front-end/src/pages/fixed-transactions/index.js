@@ -256,7 +256,7 @@ export default function FixedTransaction() {
             <TextField
               id="titleInput"
               label="Title"
-              color="primary-colo"
+              color="primary"
               value={inputTrans.title}
               onChange={handleInputChange}
               name="title"
@@ -264,7 +264,7 @@ export default function FixedTransaction() {
             <TextField
               id="descriptionInput"
               label="Description"
-              color="primary-colo"
+              color="primary"
               multiline
               value={inputTrans.description}
               onChange={handleInputChange}
@@ -273,7 +273,7 @@ export default function FixedTransaction() {
             <TextField
               id="typeInput"
               label="Type"
-              color="primary-colo"
+              color="primary"
               value={inputTrans.type}
               onChange={handleInputChange}
               name="type"
@@ -281,7 +281,7 @@ export default function FixedTransaction() {
             <TextField
               id="scheduleInput"
               label="Schedule"
-              color="primary-colo"
+              color="primary"
               value={inputTrans.schedule}
               onChange={handleInputChange}
               name="schedule"
@@ -289,7 +289,7 @@ export default function FixedTransaction() {
             <TextField
               id="ispaidInput"
               label="is Paid"
-              color="primary-colo"
+              color="primary"
               value={inputTrans.is_paid}
               onChange={handleInputChange}
               name="is_paid"
@@ -297,7 +297,7 @@ export default function FixedTransaction() {
             <TextField
               id="amountInput"
               label="Amount"
-              color="primary-colo"
+              color="primary"
               value={inputTrans.amount}
               onChange={handleInputChange}
               name="amount"
@@ -305,7 +305,7 @@ export default function FixedTransaction() {
             <TextField
               id="dateTimeInput"
               label="Date"
-              color="primary-colo"
+              color="primary"
               value={inputTrans.date_time}
               onChange={handleInputChange}
               name="date_time"
@@ -313,7 +313,7 @@ export default function FixedTransaction() {
             <TextField
               id="currenyInput"
               label="Currency"
-              color="primary-colo"
+              color="primary"
               value={inputTrans.currencies_id}
               onChange={handleInputChange}
               name="currencies_id"
@@ -321,7 +321,7 @@ export default function FixedTransaction() {
             <TextField
               id="adminInput"
               label="Admin"
-              color="primary-colo"
+              color="primary"
               value={inputTrans.admins_id}
               onChange={handleInputChange}
               name="admins_id"
@@ -329,7 +329,7 @@ export default function FixedTransaction() {
             <TextField
               id="categoryInput"
               label="Category"
-              color="primary-colo"
+              color="primary"
               value={inputTrans.categories_id}
               onChange={handleInputChange}
               name="categories_id"
@@ -337,7 +337,7 @@ export default function FixedTransaction() {
             <TextField
               id="fixedKeyInput"
               label="Fixed Key"
-              color="primary-colo"
+              color="primary"
               value={inputTrans.fixed_keys_id}
               onChange={handleInputChange}
               name="fixed_keys_id"
@@ -382,12 +382,14 @@ export default function FixedTransaction() {
               <TextField
                 id="outlined-controlled"
                 label="Title"
+                color="primary"
                 value={editInput.title}
                 onChange={handleEditChange}
               />
               <TextField
                 id="outlined-uncontrolled"
                 label="Description"
+                color="primary"
                 multiline
                 value={editInput.description}
                 onChange={handleEditChange}
@@ -395,54 +397,63 @@ export default function FixedTransaction() {
               <TextField
                 id="outlined-uncontrolled"
                 label="Type"
+                color="primary"
                 value={editInput.type}
                 onChange={handleEditChange}
               />
               <TextField
                 id="outlined-uncontrolled"
                 label="Schedule"
+                color="primary"
                 value={editInput.schedule}
                 onChange={handleEditChange}
               />
               <TextField
                 id="outlined-uncontrolled"
                 label="is Paid"
+                color="primary"
                 value={editInput.is_paid}
                 onChange={handleEditChange}
               />
               <TextField
                 id="outlined-uncontrolled"
                 label="Amount"
+                color="primary"
                 value={editInput.amount}
                 onChange={handleEditChange}
               />
               <TextField
                 id="outlined-uncontrolled"
                 label="Date"
+                color="primary"
                 value={editInput.date_time}
                 onChange={handleEditChange}
               />
               <TextField
                 id="outlined-uncontrolled"
                 label="Currency"
+                color="primary"
                 value={editInput.currencies_id}
                 onChange={handleEditChange}
               />
               <TextField
                 id="outlined-uncontrolled"
                 label="Admin"
+                color="primary"
                 value={editInput.admins_id}
                 onChange={handleEditChange}
               />
               <TextField
                 id="outlined-uncontrolled"
                 label="Category"
+                color="primary"
                 value={editInput.categories_id}
                 onChange={handleEditChange}
               />
               <TextField
                 id="outlined-uncontrolled"
                 label="Fixed Key"
+                color="primary"
                 value={editInput.fixed_keys_id}
                 onChange={handleEditChange}
               />
