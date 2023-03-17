@@ -104,6 +104,7 @@ export default function FixedTransaction() {
           <DeleteIcon
             color="secondary"
             aria-label="delete"
+            onClick={() => handleDelete(params.row.id)}
           />
           <EditIcon
             color="primary"
@@ -203,6 +204,7 @@ export default function FixedTransaction() {
       categories_id: "",
       fixed_keys_id: "",
     });
+    console.log("batata", setEditInput);
     setEditPop(false);
     try {
       await handleEdit(submitEdit.id);
@@ -233,6 +235,32 @@ export default function FixedTransaction() {
       console.log(error);
     }
   };
+
+
+  const handleDelete = async (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3d0066",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await axios.delete(`http://127.0.0.1:8000/api/fixedtransaction/id/${id}`);
+          setFixedTransData(
+            fixedTransData.filter((trans) => trans.id !== id)
+          );
+        } catch (error) {
+          console.log(error);
+        }
+        Swal.fire("Deleted!", "Your file has been deleted.", "success");
+      }
+    });
+  };
+
 
   return (
     <div className="admin-data">
