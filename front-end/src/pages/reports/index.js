@@ -4,11 +4,18 @@ import PostAddIcon from "@mui/icons-material/PostAdd";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import { TextField } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close"
+import CloseIcon from "@mui/icons-material/Close";
 import { width } from "@mui/system";
-
+import PopUp from "../../components/pop-up/Popup";
+import { useState } from "react";
 
 function ReportChart() {
+  const { addPopUp, setAddPopUp } = useState(false);
+
+  const closePop = () => {
+    setAddPopUp(false);
+  };
+
   const data = [
     {
       report: "hello ",
@@ -61,84 +68,95 @@ function ReportChart() {
   ];
 
   return (
-    <div style={{width:"100%" , height:"84vh",position:"relative"}}>
-    <div className="report">
-      <Button
-        sx={{
-          color: "#3d0066",
-          display: "flex",
-          justifyContent: "flex-start",
-          width: 50,
-        }}
-      >
-        <PostAddIcon
+    <div style={{ width: "100%", height: "84vh", position: "relative" }}>
+      <div className="report">
+        <Button
           sx={{
-            fontSize: "50px",
             color: "#3d0066",
+            display: "flex",
+            justifyContent: "flex-start",
+            width: 50,
           }}
-        />
-      </Button>
-      
+        >
+          <PostAddIcon
+            sx={{
+              fontSize: "50px",
+              color: "#3d0066",
+            }}
+            onClick={() => setAddPopUp(true)}
+          />
+        </Button>
+
         <div className="report-container">
-        {data.map((ele)=>{
-          return <Report report={ele.report} type={ele.type} admin={ele.admin} category={ele.category} start_date={ele.start_date} end_date={ele.end_date}/>
-        })}
+          {data.map((ele) => {
+            return (
+              <Report
+                report={ele.report}
+                type={ele.type}
+                admin={ele.admin}
+                category={ele.category}
+                start_date={ele.start_date}
+                end_date={ele.end_date}
+              />
+            );
+          })}
         </div>
-      
-    </div>
-        <div
-            className="reports-close-popup"
-          >
-          
-          <Box
-            className="add-categories-box"
-            component="form"
-            noValidate
-            autoComplete="off"
-          >
-            <h2>Add Report</h2>
-            <form className="pop-up-form">
-              <TextField
-                id="outlined-controlled"
-                label="Add Report"
-                name="report"
-              />
-              <TextField
-                id="outlined-uncontrolled"
-                label="Add Type"
-                name="type_report"
-              />
-              <TextField
-                id="outlined-read-only"
-                label="Admin"
-                name="admins_id"
-              />
-              <TextField
-                id="outlined-read-only"
-                label="Category"
-                name="categories_id"
-              />
-              <TextField
-                id="outlined-read-only"
-                label="Start date"
-                name="start_date"
-              />
-              <TextField
-                id="outlined-read-only"
-                label="End date"
-                name="end_date"
-              />
-              <Button
-                variant="contained"
-                disableElevation
-                style={{ height: 55 }}
-                sx={{ backgroundColor: "#3d0066" }}
-              >
-                Submit
-              </Button>
-            </form>
-          </Box>
+      </div>
+      {addPopUp && (
+        <PopUp close={closePop}>
+          <div className="reports-close-popup">
+            <Box
+              className="add-categories-box"
+              component="form"
+              noValidate
+              autoComplete="off"
+            >
+              <h2>Add Report</h2>
+              <form className="pop-up-form">
+                <TextField
+                  id="outlined-controlled"
+                  label="Add Report"
+                  name="report"
+                />
+                <TextField
+                  id="outlined-uncontrolled"
+                  label="Add Type"
+                  name="type_report"
+                />
+                <TextField
+                  id="outlined-read-only"
+                  label="Admin"
+                  name="admins_id"
+                />
+                <TextField
+                  id="outlined-read-only"
+                  label="Category"
+                  name="categories_id"
+                />
+                <TextField
+                  id="outlined-read-only"
+                  label="Start date"
+                  name="start_date"
+                />
+                <TextField
+                  id="outlined-read-only"
+                  label="End date"
+                  name="end_date"
+                />
+                <Button
+                  variant="contained"
+                  disableElevation
+                  style={{ height: 55 }}
+                  sx={{ backgroundColor: "#3d0066" }}
+                  onClick={() => setAddPopUp(false)}
+                >
+                  Submit
+                </Button>
+              </form>
+            </Box>
           </div>
+        </PopUp>
+      )}
     </div>
   );
 }
