@@ -4,7 +4,8 @@ import { Drawer, Typography } from "@mui/material"
 import { Box, color, width } from "@mui/system";
 import Paper from '@mui/material/Paper';
 import "./dashboard.css";
-
+import {CircularProgressbar ,buildStyles} from "react-circular-progressbar";
+import 'react-circular-progressbar/dist/styles.css';  
 import {Bar} from 'react-chartjs-2'
 import {Chart as ChartJS} from "chart.js/auto"
 
@@ -123,21 +124,29 @@ function ProfitGoal() {
   console.log(userData)
   /*************************** */
 
+
+  const percentage = 66
+
   return (
     
     <Box sx={{
     width:'97%',
 
     borderRadius:'20px',
-    margin:'20px 20px 20px 20px '}}>
+    margin:'auto'}}>
     <div className="ContentReports">
     <div className="First-Section" style={{display:"flex" , justifyContent:'center' , alignItems:'center'}} >
       <div style={{width:'90%' , height:'84%',display:"flex",flexDirection:'column'}}>
         
-          <h2 style={{fontSize:'40px',margin:'10px 0 10px 0'}}>Financial app</h2>
-          <div className="scroll-title">
-          <p style={{fontSize:'27px'}}>Financial Application means a written document filed with the authority by an applicant for the purpose of evaluating the applicant's qualifications and proposed project or projects for types of financial assistance which may be provided by the board under the act.</p>
-          </div>
+      <CircularProgressbar styles={buildStyles({
+            pathColor: `#3d0066`,
+            textColor: '#3d0066',
+            trailColor: '#d6d6d6',
+            backgroundColor: '#3e98c7',
+      })} value={percentage} text={`${percentage}%`} />
+
+
+
       </div>
     </div>
     <div className="Second-Section" style={{display:'flex' , justifyContent:"center"}}>
