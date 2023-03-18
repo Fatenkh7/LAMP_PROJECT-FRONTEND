@@ -1,12 +1,21 @@
 import React, { useState } from "react";
 import "./reports.css";
 import { CSSTransition } from "react-transition-group";
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { Button } from "@mui/material";
+import axios from "axios";
 
 function Report(props) {
     const [report, setReport] = useState(false);
     const [padding, setPadding] = useState("20px");
 
+    const[id ,setId]=useState(null)
 
+    console.log(id)
+
+    
+    
     const visible = () => {
         if (report === false || padding === "20px") {
             setReport(true);
@@ -16,6 +25,14 @@ function Report(props) {
             setPadding("20px");
         }
     };
+
+    //delete
+    const handelDelete =()=>{
+        axios.delete(`http://127.0.0.1:8000/api/report/${id}`).then((response)=>{
+          console.log(response)
+          props.useEffect()
+        })
+      }
 
     return (
         <div>
@@ -29,9 +46,21 @@ function Report(props) {
                     paddingBottom: `${padding}`,
                 }}
             >
-                <div className="title-report">
+                <div className="title-report" style={{display:'flex' , justifyContent:"space-between"}}>
+                    <div>
                     <h3>Report : {props.report}</h3>
                     <h4>Type : {props.type}</h4>
+                    </div>
+                    <div style={{width:"35%" ,display:"flex" ,justifyContent:'space-around' ,alignItems:'center'}}>
+                    <Button sx={{minWidth:20 ,color: "#3d0066",}} onClick={props.visibleEdit}>
+                    <EditIcon/>
+                    </Button>
+                    
+                    <Button sx={{minWidth:20 ,color: "#3d0066",}} onMouseEnter={()=>{setId(props.id)}} onClick={handelDelete}  >
+                    <DeleteIcon/>
+                    </Button>
+                    
+                    </div>
                 </div>
             </div>
 
