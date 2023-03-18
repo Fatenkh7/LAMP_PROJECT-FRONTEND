@@ -99,7 +99,6 @@ function ReportChart() {
     <div className="add-categories"style={{width:'90%'}}>
           <MainButton name="Add Category" onClick={show}  />
         </div>
-
       
         <div className="report-container">
         {dataReport.map((ele)=>{
