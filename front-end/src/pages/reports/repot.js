@@ -5,16 +5,14 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Button } from "@mui/material";
 import axios from "axios";
+import Reports from "./index.js"
 
 function Report(props) {
     const [report, setReport] = useState(false);
     const [padding, setPadding] = useState("20px");
-
     const[id ,setId]=useState(null)
 
-    console.log(id)
-
-    
+    // console.log(id)
     
     const visible = () => {
         if (report === false || padding === "20px") {
@@ -36,6 +34,7 @@ function Report(props) {
 
     return (
         <div>
+            {false&&<Reports />}
         <div className="card-report" onMouseEnter={visible} onMouseLeave={visible}>
             <div
                 style={{
@@ -52,7 +51,7 @@ function Report(props) {
                     <h4>Type : {props.type}</h4>
                     </div>
                     <div style={{width:"35%" ,display:"flex" ,justifyContent:'space-around' ,alignItems:'center'}}>
-                    <Button sx={{minWidth:20 ,color: "#3d0066",}} onClick={props.visibleEdit}>
+                    <Button sx={{minWidth:20 ,color: "#3d0066",}} onClick={props.visibleEdit} onMouseEnter={()=>{props.getId(props.id)}} >
                     <EditIcon/>
                     </Button>
                     

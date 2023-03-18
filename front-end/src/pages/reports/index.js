@@ -1,17 +1,15 @@
 import React,{useState , useEffect}from "react";
 import Report from "./repot";
-import PostAddIcon from "@mui/icons-material/PostAdd";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import { TextField } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close"
-import { width } from "@mui/system";
 import MainButton from "../../components/main-button/index";
 import axios from "axios"
 import Loding from "../../components/loding/Loding";
 
 
-function ReportChart() {
+function ReportChart(props) {
   
   const [visibleAdd , setVisibleAdd] = useState(false)
 
@@ -28,9 +26,21 @@ function ReportChart() {
     end_date:''
   })
 
+  const [editDataReport , seteditDataReport]=useState({
+    report:'',
+    type_report:'',
+    admins_id:'',
+    categories_id:'',
+    start_date:'',
+    end_date:''
+  })
   
+  const [editId , setEditId] = useState(null)
   
-
+  const getId =(id)=>{
+    setEditId(id)
+  }
+  console.log(editId)
   const visibleEdit = () => {
     if (showEdit === false) {
         setShowedit(true);
@@ -62,7 +72,7 @@ function ReportChart() {
   useEffect(() => {
     fetchData();
   }, []);
-  console.log(dataReport)
+
 
   //post data
 
@@ -89,12 +99,35 @@ function ReportChart() {
     })
   }
 
+  //edit 
 
+  const handleEditChange = (e) => {
+    const value = e.target.value;
+    seteditDataReport({
+      ...editDataReport,
+      [e.target.name]: value,
+    });
+  };
+  const handeleditSubmit=()=>{
+    const data = {
+      report:editDataReport.report,
+      type_report:editDataReport.type_report,
+      admins_id:editDataReport.admins_id,
+      categories_id:editDataReport.categories_id,
+      start_date:editDataReport.start_date,
+      end_date:editDataReport.end_date,
+    }
+    axios.patch(`http://127.0.0.1:8000/api/report/${editId}`,data).then((response)=>{
+      console.log(response)
+      fetchData()
+    })
+  } 
+   
 
   if(!dataReport){return <div style={{display:"flex" , justifyContent:'center', height:'80%',alignItems:'center'}}><Loding/></div>}
   return (
     <div style={{width:"100%" , height:"84vh",position:"relative"}}>
-    <div className="report">
+    <div className="report" >
  
     <div className="add-categories"style={{width:'90%'}}>
           <MainButton name="Add Category" onClick={show}  />
@@ -102,7 +135,7 @@ function ReportChart() {
       
         <div className="report-container">
         {dataReport.map((ele)=>{
-          return <Report useEffect={fetchData} visibleEdit={visibleEdit} id={ele.id}  report={ele.report} type={ele.type_report} admin={ele.admins_id} category={ele.categories_id} start_date={ele.start_date} end_date={ele.end_date}/>
+          return <Report useEffect={fetchData} getId={getId}   visibleEdit={visibleEdit} id={ele.id}  report={ele.report} type={ele.type_report} admin={ele.admins_id} category={ele.categories_id} start_date={ele.start_date} end_date={ele.end_date}/>
         })}
         </div>
       
@@ -187,37 +220,44 @@ function ReportChart() {
                 id="outlined-controlled"
                 label="Add Report"
                 name="report"
+                onChange={handleEditChange}
               />
               <TextField
                 id="outlined-uncontrolled"
                 label="Add Type"
                 name="type_report"
+                onChange={handleEditChange}
               />
               <TextField
                 id="outlined-read-only"
                 label="Admin"
                 name="admins_id"
+                onChange={handleEditChange}
               />
               <TextField
                 id="outlined-read-only"
                 label="Category"
                 name="categories_id"
+                onChange={handleEditChange}
               />
               <TextField
                 id="outlined-read-only"
                 label="Start date"
                 name="start_date"
+                onChange={handleEditChange}
               />
               <TextField
                 id="outlined-read-only"
                 label="End date"
                 name="end_date"
+                onChange={handleEditChange}
               />
               <Button
                 variant="contained"
                 disableElevation
                 style={{ height: 55 }}
                 sx={{ backgroundColor: "#3d0066" }}
+                onClick={handeleditSubmit}
               >
                 Submit
               </Button>
