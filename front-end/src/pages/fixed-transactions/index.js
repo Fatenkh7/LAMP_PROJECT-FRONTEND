@@ -1,7 +1,6 @@
 import * as React from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { Button } from "@mui/material";
-// import "./style.css";
 import { useState, useEffect } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -10,6 +9,8 @@ import TextField from "@mui/material/TextField";
 import { Box } from "@mui/material";
 import Popup from "../../components/pop-up/Popup";
 import MainButton from "../../components/main-button/index";
+import { Select, MenuItem, InputLabel } from "@mui/material";
+import { FormControl } from "react-bootstrap";
 import Swal from "sweetalert2";
 import axios from "axios";
 
@@ -18,7 +19,9 @@ export default function FixedTransaction() {
   const [editPop, setEditPop] = useState(false);
   const [fixedTransData, setFixedTransData] = useState([]);
   const [submitEdit, setSubmitEdit] = useState(null);
-  const getRowId = (row) => row.id;
+  const [currencies, setCurrencies] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [fixedKeys, setFixedKeys] = useState([]);
 
   const [inputTrans, setInputTrans] = useState({
     id: "",
@@ -75,22 +78,22 @@ export default function FixedTransaction() {
       width: 100,
     },
     {
-      field: "currenciesId",
+      field: "currencies_id",
       headerName: "Currencies ID",
       width: 10,
     },
     {
-      field: "adminsId",
+      field: "admins_id",
       headerName: "Admins ID",
       width: 10,
     },
     {
-      field: "categoriesId",
+      field: "categories_id",
       headerName: "Categories ID",
       width: 10,
     },
     {
-      field: "fixedKeysId",
+      field: "fixed_keys_id",
       headerName: "FixedKeys ID",
       width: 10,
     },
@@ -120,12 +123,59 @@ export default function FixedTransaction() {
   ];
 
   useEffect(() => {
+    const fetchCurrencies = () => {
+      axios
+        .get("http://127.0.0.1:8000/api/currency")
+        .then((response) => {
+          setCurrencies(response.data.message);
+          console.log(response.data.message);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    };
+
+    fetchCurrencies();
+  }, []);
+
+  useEffect(() => {
+    const fetchCategories = () => {
+      axios
+        .get("http://127.0.0.1:8000/api/category")
+        .then((response) => {
+          setCategories(response.data.message);
+          console.log(response.data.message);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    };
+
+    fetchCategories();
+  }, []);
+
+  useEffect(() => {
+    const fetchFixedKeys = () => {
+      axios
+        .get("http://127.0.0.1:8000/api/fixedkey")
+        .then((response) => {
+          setFixedKeys(response.data.message);
+          console.log(response.data.message);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    };
+
+    fetchFixedKeys();
+  }, []);
+
+  useEffect(() => {
     const fetchDataTrans = () => {
       axios
         .get("http://127.0.0.1:8000/api/fixedtransaction/all")
         .then((response) => {
           setFixedTransData(response.data.message);
-          console.log(response.data.message);
         })
         .catch((error) => {
           console.error(error);
@@ -172,12 +222,12 @@ export default function FixedTransaction() {
     });
   };
   const handleEditChange = (event) => {
-    const value = event.target.value;
-    setEditInput({ ...editInput, [event.target.name]: value });
+    const { name, value } = event.target;
+    setEditInput((prevInput) => ({ ...prevInput, [name]: value }));
   };
 
   const handleEditPopupSubmit = async () => {
-    const editedTransaction = {
+    const newTransaction = {
       title: editInput.title,
       description: editInput.description,
       type: editInput.type,
@@ -190,7 +240,7 @@ export default function FixedTransaction() {
       categories_id: editInput.categories_id,
       fixed_keys_id: editInput.fixed_keys_id,
     };
-    setSubmitEdit(editedTransaction);
+    setSubmitEdit(newTransaction);
     setEditInput({
       title: "",
       description: "",
@@ -204,7 +254,6 @@ export default function FixedTransaction() {
       categories_id: "",
       fixed_keys_id: "",
     });
-    console.log("batata", setEditInput);
     setEditPop(false);
     try {
       await handleEdit(submitEdit.id);
@@ -214,7 +263,6 @@ export default function FixedTransaction() {
         showConfirmButton: false,
         timer: 1500,
       });
-      window.location.reload();
     } catch (error) {
       console.log(error.response.data.message);
     }
@@ -236,7 +284,6 @@ export default function FixedTransaction() {
     }
   };
 
-
   const handleDelete = async (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -249,18 +296,21 @@ export default function FixedTransaction() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`http://127.0.0.1:8000/api/fixedtransaction/id/${id}`);
-          setFixedTransData(
-            fixedTransData.filter((trans) => trans.id !== id)
+          await axios.delete(
+            `http://127.0.0.1:8000/api/fixedtransaction/id/${id}`
           );
+          setFixedTransData(fixedTransData.filter((trans) => trans.id !== id));
         } catch (error) {
           console.log(error);
         }
-        Swal.fire("Deleted!", "Your fixed transaction has been deleted.", "success");
+        Swal.fire(
+          "Deleted!",
+          "Your fixed transaction has been deleted.",
+          "success"
+        );
       }
     });
   };
-
 
   return (
     <div className="admin-data">
@@ -298,22 +348,58 @@ export default function FixedTransaction() {
               onChange={handleInputChange}
               name="description"
             />
-            <TextField
-              id="typeInput"
-              label="Type"
-              color="primary"
-              value={inputTrans.type}
-              onChange={handleInputChange}
-              name="type"
-            />
-            <TextField
-              id="scheduleInput"
-              label="Schedule"
-              color="primary"
-              value={inputTrans.schedule}
-              onChange={handleInputChange}
-              name="schedule"
-            />
+            <InputLabel htmlFor="outlined-uncontrolled">
+              Type
+              <Select
+                label="Type"
+                name="type"
+                value={inputTrans.type}
+                onChange={handleInputChange}
+              >
+                <MenuItem value="">
+                  <em>Select transaction type</em>
+                </MenuItem>
+                <MenuItem value="Income">Income</MenuItem>
+                <MenuItem value="Expense">Expense</MenuItem>
+              </Select>
+            </InputLabel>
+
+            <InputLabel htmlFor="outlined-uncontrolled">
+              Schedule
+              <Select
+                label="Schedule"
+                name="schedule"
+                value={inputTrans.schedule}
+                onChange={handleInputChange}
+                placeholder="Select transaction Schedule"
+              >
+                <MenuItem value="Monthly">Monthly</MenuItem>
+                <MenuItem value="Weekly">Weekly</MenuItem>
+                <MenuItem value="Yearly">Yearly</MenuItem>
+              </Select>
+            </InputLabel>
+            <InputLabel htmlFor="outlined-uncontrolled">
+              Currency
+              <Select
+                labelId="currency-label"
+                id="currency"
+                name="currencies_id"
+                value={inputTrans.currencies_id}
+                onChange={(e) =>
+                  setInputTrans({
+                    ...inputTrans,
+                    currencies_id: e.target.value,
+                  })
+                }
+              >
+                {currencies.map((currency) => (
+                  <MenuItem key={currency.id} value={currency.id}>
+                    {currency.currency}
+                  </MenuItem>
+                ))}
+              </Select>
+            </InputLabel>
+
             <TextField
               id="ispaidInput"
               label="is Paid"
@@ -331,20 +417,15 @@ export default function FixedTransaction() {
               name="amount"
             />
             <TextField
-              id="dateTimeInput"
+              margin="dense"
               label="Date"
-              color="primary"
-              value={inputTrans.date_time}
-              onChange={handleInputChange}
               name="date_time"
-            />
-            <TextField
-              id="currenyInput"
-              label="Currency"
-              color="primary"
-              value={inputTrans.currencies_id}
+              fullWidth
               onChange={handleInputChange}
-              name="currencies_id"
+              type="datetime-local"
+              InputLabelProps={{
+                shrink: true,
+              }}
             />
             <TextField
               id="adminInput"
@@ -354,22 +435,50 @@ export default function FixedTransaction() {
               onChange={handleInputChange}
               name="admins_id"
             />
-            <TextField
-              id="categoryInput"
-              label="Category"
-              color="primary"
-              value={inputTrans.categories_id}
-              onChange={handleInputChange}
-              name="categories_id"
-            />
-            <TextField
-              id="fixedKeyInput"
-              label="Fixed Key"
-              color="primary"
-              value={inputTrans.fixed_keys_id}
-              onChange={handleInputChange}
-              name="fixed_keys_id"
-            />
+            <InputLabel htmlFor="outlined-uncontrolled">
+              Category
+              <Select
+                labelId="category-label"
+                id="category"
+                name="categories_id"
+                value={inputTrans.categories_id}
+                onChange={(e) =>
+                  setInputTrans({
+                    ...inputTrans,
+                    categories_id: e.target.value,
+                  })
+                }
+              >
+                {categories.map((category) => (
+                  <MenuItem key={category.id} value={category.id}>
+                    {category.category}
+                  </MenuItem>
+                ))}
+              </Select>
+            </InputLabel>
+
+            <InputLabel htmlFor="outlined-uncontrolled">
+              Fixed Key
+              <Select
+                labelId="fixedkey-label"
+                id="fixedKeyInput"
+                name="fixed_keys_id"
+                value={inputTrans.fixed_keys_id}
+                onChange={(e) =>
+                  setInputTrans({
+                    ...inputTrans,
+                    fixed_keys_id: e.target.value,
+                  })
+                }
+              >
+                {fixedKeys.map((fixedKey) => (
+                  <MenuItem key={fixedKey.id} value={fixedKey.id}>
+                    {fixedKey.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </InputLabel>
+
             <Button
               variant="contained"
               disableElevation
@@ -399,105 +508,155 @@ export default function FixedTransaction() {
           <Box
             className="add-currency-box"
             component="form"
-            // sx={{
-            //   '& > :not(style)': { m: 1, width: '25ch' },
-            // }}
             noValidate
             autoComplete="off"
           >
             <h2>Edit Fixed Transactions</h2>
-            <form className="pop-up-form">
-              <TextField
-                id="outlined-controlled"
-                label="Title"
-                color="primary"
-                value={editInput.title}
-                onChange={handleEditChange}
-              />
-              <TextField
-                id="outlined-uncontrolled"
-                label="Description"
-                color="primary"
-                multiline
-                value={editInput.description}
-                onChange={handleEditChange}
-              />
-              <TextField
-                id="outlined-uncontrolled"
+            <TextField
+              id="titleInput"
+              label="Title"
+              color="primary"
+              value={editInput.title}
+              onChange={handleEditChange}
+              name="title"
+            />
+            <TextField
+              id="descriptionInput"
+              label="Description"
+              color="primary"
+              multiline
+              value={editInput.description}
+              onChange={handleEditChange}
+              name="description"
+            />
+            <InputLabel htmlFor="outlined-uncontrolled">
+              Type
+              <Select
                 label="Type"
-                color="primary"
+                name="type"
                 value={editInput.type}
                 onChange={handleEditChange}
-              />
-              <TextField
-                id="outlined-uncontrolled"
+              >
+                <MenuItem value="">
+                  <em>Select transaction type</em>
+                </MenuItem>
+                <MenuItem value="Income">Income</MenuItem>
+                <MenuItem value="Expense">Expense</MenuItem>
+              </Select>
+            </InputLabel>
+
+            <InputLabel htmlFor="outlined-uncontrolled">
+              Schedule
+              <Select
                 label="Schedule"
-                color="primary"
+                name="schedule"
                 value={editInput.schedule}
                 onChange={handleEditChange}
-              />
-              <TextField
-                id="outlined-uncontrolled"
-                label="is Paid"
-                color="primary"
-                value={editInput.is_paid}
-                onChange={handleEditChange}
-              />
-              <TextField
-                id="outlined-uncontrolled"
-                label="Amount"
-                color="primary"
-                value={editInput.amount}
-                onChange={handleEditChange}
-              />
-              <TextField
-                id="outlined-uncontrolled"
-                label="Date"
-                color="primary"
-                value={editInput.date_time}
-                onChange={handleEditChange}
-              />
-              <TextField
-                id="outlined-uncontrolled"
-                label="Currency"
-                color="primary"
+                placeholder="Select transaction Schedule"
+              >
+                <MenuItem value="Monthly">Monthly</MenuItem>
+                <MenuItem value="Weekly">Weekly</MenuItem>
+                <MenuItem value="Yearly">Yearly</MenuItem>
+              </Select>
+            </InputLabel>
+            <InputLabel htmlFor="outlined-uncontrolled">
+              Currency
+              <Select
+                labelId="currency-label"
+                id="currency"
+                name="currencies_id"
                 value={editInput.currencies_id}
                 onChange={handleEditChange}
-              />
-              <TextField
-                id="outlined-uncontrolled"
-                label="Admin"
-                color="primary"
-                value={editInput.admins_id}
-                onChange={handleEditChange}
-              />
-              <TextField
-                id="outlined-uncontrolled"
-                label="Category"
-                color="primary"
+              >
+                {currencies.map((currency) => (
+                  <MenuItem key={currency.id} value={currency.id}>
+                    {currency.currency}
+                  </MenuItem>
+                ))}
+              </Select>
+            </InputLabel>
+
+            <TextField
+              id="ispaidInput"
+              label="is Paid"
+              color="primary"
+              value={editInput.is_paid}
+              onChange={handleEditChange}
+              name="is_paid"
+            />
+            <TextField
+              id="amountInput"
+              label="Amount"
+              color="primary"
+              value={editInput.amount}
+              onChange={handleEditChange}
+              name="amount"
+            />
+            <TextField
+              margin="dense"
+              label="Date"
+              name="date_time"
+              fullWidth
+              value={editInput.date_time}
+              onChange={handleEditChange}
+              type="datetime-local"
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+            <TextField
+              id="adminInput"
+              label="Admin"
+              color="primary"
+              value={editInput.admins_id}
+              onChange={handleEditChange}
+              name="admins_id"
+            />
+            <InputLabel htmlFor="outlined-uncontrolled">
+              Category
+              <Select
+                labelId="category-label"
+                id="category"
+                name="categories_id"
                 value={editInput.categories_id}
                 onChange={handleEditChange}
-              />
-              <TextField
-                id="outlined-uncontrolled"
-                label="Fixed Key"
-                color="primary"
+              >
+                {categories.map((category) => (
+                  <MenuItem key={category.id} value={category.id}>
+                    {category.category}
+                  </MenuItem>
+                ))}
+              </Select>
+            </InputLabel>
+            <InputLabel htmlFor="outlined-uncontrolled">
+              Fixed Key
+              <Select
+                labelId="fixedkey-label"
+                id="fixedKeyInput"
+                name="fixed_keys_id"
                 value={editInput.fixed_keys_id}
                 onChange={handleEditChange}
-              />
-              <Button
-                variant="contained"
-                disableElevation
-                style={{ height: 55 }}
-                sx={{ backgroundColor: "#3d0066" }}
-                onClick={() => {
-                  handleEditPopupSubmit();
-                  setEditPop(false);
-                }}
               >
-                Save
-              </Button>
-            </form>
+                {fixedKeys.map((fixedKey) => (
+                  <MenuItem key={fixedKey.id} value={fixedKey.id}>
+                    {fixedKey.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </InputLabel>
+
+            <Button
+              variant="contained"
+              disableElevation
+              style={{ height: 55 }}
+              sx={{ backgroundColor: "#3d0066" }}
+              onClick={() => {
+                handleEditPopupSubmit();
+                setEditPop(false);
+              }}
+            >
+              Save
+            </Button>
           </Box>
         </Popup>
       )}
@@ -516,7 +675,6 @@ export default function FixedTransaction() {
         <DataGrid
           rows={fixedTransData}
           columns={columns}
-          getRowId={getRowId}
           initialState={{
             pagination: {
               paginationModel: {
