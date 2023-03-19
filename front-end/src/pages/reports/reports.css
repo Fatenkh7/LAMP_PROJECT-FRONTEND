@@ -1,59 +1,56 @@
+.report {
+  height: 83vh;
+  width: 90%;
+  display: flex;
 
-.report{
-    height: 83vh;
-    width: 90%;
-    display: flex;
-
-    flex-direction: column;
-    margin-left: 70px;
-    margin-top: 10px;
+  flex-direction: column;
+  margin-left: 70px;
+  margin-top: 10px;
 }
-.card-report{
-    
-    width: 20rem;
-    
-    background-color: #3d0066;
-    display: flex;
-    position: relative;
-    border-radius: 5px;
-    flex-direction: column;
-}
-.title-report{
+.card-report {
+  width: 20rem;
 
-    width: 90%;
-    background-color: white;
-    position: relative;
-    top: -10px;
-    border-radius: 5px;
-
+  background-color: #3d0066;
+  display: flex;
+  position: relative;
+  border-radius: 5px;
+  flex-direction: column;
 }
-.more-info{
-    display: flex;
-    flex-direction: column;
-    margin-bottom:10px;
-    margin-top: 0;
+.title-report {
+  width: 90%;
+  background-color: white;
+  position: relative;
+  top: -10px;
+  border-radius: 5px;
+}
+.more-info {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  margin-top: 0;
 }
 .more-info p {
-    margin-top:5px;
-    margin-bottom:5px;
-    margin-left:20px ;
-    color: white;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 20px;
+  color: white;
 }
 
-.title-report h4 ,.title-report h3  {
-    margin-top:5px;
-    margin-bottom:5px;
-    margin-left:10px ;
+.title-report h4,
+.title-report h3 {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 10px;
 }
-.report-container{
-    display: flex;
-    flex-wrap:wrap ;
-    width: 93%;
-    gap: 20px;
-    padding-top:20px;
+.report-container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 93%;
+  gap: 20px;
+  padding-top: 20px;
 }
 
-.reports-close-popup{
+/* .reports-close-popup{
     height: 85vh;
     width: 100%;
     position: absolute;
@@ -64,12 +61,11 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-.add-categories-box{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    gap: 20px;
-    width: 600px;
-    
+} */
+.add-categories-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 20px;
+  width: 600px;
 }

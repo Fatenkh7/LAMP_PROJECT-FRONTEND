@@ -31,6 +31,7 @@ import {
   IconButton,
   MenuItem,
 } from "@mui/material";
+import Loding from "../../components/loding/Loding";
 
 export default function RecurringTransactions() {
   const [addPop, setAddPop] = useState(false);
@@ -264,6 +265,21 @@ export default function RecurringTransactions() {
     });
     console.log(editRecTrans);
   };
+
+  if (!Fetch) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          height: "80%",
+          alignItems: "center",
+        }}
+      >
+        <Loding />
+      </div>
+    );
+  }
 
   return (
     <div className="admin-data">
