@@ -1,9 +1,9 @@
-import * as React from 'react';
-import { DataGrid } from '@mui/x-data-grid';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import Button from '@mui/material/Button';
-import AddIcon from '@mui/icons-material/Add';
+import * as React from "react";
+import { DataGrid } from "@mui/x-data-grid";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import Button from "@mui/material/Button";
+import AddIcon from "@mui/icons-material/Add";
 import "./style.css";
 import { Box } from '@mui/material';
 import Popup from '../../components/pop-up/Popup';
@@ -13,7 +13,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import Switch from '@mui/material/Switch';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-
 
 
 
@@ -36,8 +35,8 @@ export default function FixedKeys() {
 
   const closePop = () => {
     setAddPop(false);
-    setEditPop(false)
-  }
+    setEditPop(false);
+  };
 
   const columns = [
     { field: 'id', headerName: 'ID', width: 90 },
@@ -51,14 +50,14 @@ export default function FixedKeys() {
         <Switch
           checked={params.value === 1 ? true : false}
           name="is_active"
-          inputProps={{ 'aria-label': 'Is active switch' }}
+          inputProps={{ "aria-label": "Is active switch" }}
         />
       ),
     },
 
     {
-      field: 'delete',
-      headerName: 'Delete',
+      field: "delete",
+      headerName: "Delete",
       width: 100,
       renderCell: (params) => (
         <DeleteIcon
@@ -69,8 +68,8 @@ export default function FixedKeys() {
       ),
     },
     {
-      field: 'edit',
-      headerName: 'Edit',
+      field: "edit",
+      headerName: "Edit",
       width: 100,
       renderCell: (params) => (
         <div>
@@ -80,7 +79,8 @@ export default function FixedKeys() {
             }
 
             sx={{ color: "#3d0066" }}
-            style={{ cursor: 'pointer' }} />
+            style={{ cursor: "pointer" }}
+          />
         </div>
       ),
     },
@@ -292,6 +292,5 @@ export default function FixedKeys() {
       </Popup>
       }
     </div>
-
   );
 }

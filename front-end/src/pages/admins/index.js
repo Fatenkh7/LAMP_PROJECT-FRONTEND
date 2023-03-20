@@ -1,43 +1,54 @@
-// import React from "react";
-// import Grid from "@mui/material/Grid";
-
-// function Admins() {
-//   return <div>Admins</div>;
-// }
-
-// export default Admins;
-
-import * as React from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { Button } from "@mui/material";
 import "./style.css";
-import { useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-// import PopUp from "../../components/popup/index";
 import Popup from "../../components/pop-up/Popup";
 import CloseIcon from "@mui/icons-material/Close";
-import TextField from "@mui/material/TextField";
-import { Box } from "@mui/material";
 import DataTable from "../../components/data-table/index";
+import MainButton from "../../components/main-button/index";
+import React from "react";
+import { useState, useEffect, useRef } from "react";
+import "./style.css";
+import axios from "axios";
+import MaterialReactTable from "material-react-table";
+import Swal from "sweetalert2";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  MenuItem,
+  TextField,
+} from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
 
-export default function Admins() {
-  // const [isAdd, setAdd] = useState(false);
-  // const [isEdit, setEdit] = useState(false);
-
-  // const addVisible = () => {
-  //   if (isAdd === false) {
-  //     setAdd(true);
-  //   }
-  // };
-  // const editVisible = () => {
-  //   if (isEdit === false) {
-  //     setEdit(true);
-  //   }
-  // };
+function Admins() {
+  // const [data, setData] = useState([]);
 
   const [addPop, setAddPop] = useState(false);
   const [editPop, setEditPop] = useState(false);
+  const [Fetch, SetFetch] = useState([]);
+  const [adminData, setAdminData] = useState({
+    first_name: "",
+    last_name: "",
+    username: "",
+    email: "",
+    password: "",
+    is_super: "",
+  });
+
+  const [editAdmin, setEditAdmin] = useState({
+    first_name: "",
+    last_name: "",
+    username: "",
+    email: "",
+    password: "",
+    is_super: "",
+  });
+  const [submitEdit, setSubmitEdit] = useState(null);
+  const [updateSuccess, setUpdateSuccess] = useState(false);
 
   const closePop = () => {
     setAddPop(false);
@@ -45,15 +56,23 @@ export default function Admins() {
   };
 
   const columns = [
-    { field: "id", headerName: "ID", width: 70 },
-    { field: "firstName", headerName: "First name", width: 130 },
-    { field: "lastName", headerName: "Last name", width: 130 },
+    {
+      field: "first_name",
+      headerName: "First name",
+      width: 130,
+    },
+    { field: "last_name", headerName: "Last name", width: 130 },
     { field: "username", headerName: "Username", width: 130 },
-
+    { field: "is_super", headerName: "Is Super", width: 130 },
     {
       field: "email",
       headerName: "Email",
       type: "email",
+      width: 160,
+    },
+    {
+      field: "password",
+      headerName: "Password",
       width: 160,
     },
     {
@@ -63,99 +82,147 @@ export default function Admins() {
       sortable: false,
       width: 160,
       valueGetter: (params) =>
-        `${params.row.firstName || ""} ${params.row.lastName || ""}`,
+        `${params.row.first_name || ""} ${params.row.last_name || ""}`,
     },
     {
-      field: "edit",
-      headerName: "Edit",
-      width: 70,
+      field: "actions",
+      headerName: "Actions",
+      width: 200,
+      sortable: false,
       renderCell: (params) => (
-        <div>
-          <EditIcon
-            sx={{ color: "#3d0066" }}
-            onClick={() => setEditPop(true)}
-            style={{ cursor: "pointer" }}
-          />
-        </div>
-      ),
-    },
-    {
-      field: "delete",
-      headerName: "Delete",
-      width: 70,
-      renderCell: (params) => (
-        <div>
-          <DeleteIcon sx={{ color: "#3d0066" }} style={{ cursor: "pointer" }} />
-        </div>
+        <>
+          <IconButton
+            color="secondary"
+            aria-label="delete"
+            onClick={() => handleDelete(params.row.id)}
+          >
+            <DeleteIcon />
+          </IconButton>
+          <IconButton
+            color="primary"
+            aria-label="edit"
+            onClick={() => {
+              setEditPop(true);
+              setSubmitEdit(params.id);
+            }}
+          >
+            <EditIcon />
+          </IconButton>
+        </>
       ),
     },
   ];
 
-  const rows = [
-    {
-      id: 1,
-      lastName: "Snow",
-      firstName: "Jon",
-      username: "example",
-      email: "example@gmail.com",
-    },
-    {
-      id: 2,
-      lastName: "Lannister",
-      firstName: "Cersei",
-      username: "example",
-      email: "example@gmail.com",
-    },
-    {
-      id: 3,
-      lastName: "Lannister",
-      firstName: "Jaime",
-      username: "example",
-      email: "example@gmail.com",
-    },
-    {
-      id: 4,
-      lastName: "Stark",
-      firstName: "Arya",
-      username: "example",
-      email: "example@gmail.com",
-    },
-    {
-      id: 5,
-      lastName: "Targaryen",
-      firstName: "Daenerys",
-      username: "example",
-      email: "example@gmail.com",
-    },
-    {
-      id: 6,
-      lastName: "Melisandre",
-      firstName: "Jordan",
-      username: "example",
-      email: "example@gmail.com",
-    },
-    {
-      id: 7,
-      lastName: "Clifford",
-      firstName: "Ferrara",
-      username: "example",
-      email: "example@gmail.com",
-    },
-    {
-      id: 8,
-      lastName: "Frances",
-      firstName: "Rossini",
-      username: "example",
-      email: "example@gmail.com",
-    },
-    {
-      id: 9,
-      lastName: "Roxie",
-      firstName: "Harvey",
-      username: "example",
-      email: "example@gmail.com",
-    },
-  ];
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("http://127.0.0.1:8001/api/admin");
+      SetFetch(response.data.message);
+      console.log(response.data.message);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const handleFormChange = (event) => {
+    const value = event.target.value;
+    setAdminData({ ...adminData, [event.target.name]: value });
+  };
+
+  const handleEditChange = (event) => {
+    const value = event.target.value;
+    setEditAdmin({ ...editAdmin, [event.target.name]: value });
+  };
+
+  // Delete
+
+  const handleDelete = async (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3d0066",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await axios
+            .delete(`http://127.0.0.1:8001/api/admin/${id}`)
+            .then((response) => {
+              SetFetch(Fetch);
+              console.log(response.data);
+              fetchData();
+            });
+        } catch (error) {
+          console.log(error);
+        }
+        Swal.fire("Deleted!", "Your admin has been deleted.", "success");
+      }
+    });
+  };
+  // post
+  const handleSubmit = () => {
+    const fettchdata = {
+      first_name: adminData.first_name,
+      last_name: adminData.last_name,
+      username: adminData.username,
+      email: adminData.email,
+      password: adminData.password,
+      is_super: adminData.is_super,
+    };
+
+    const response = axios
+      .post("http://localhost:8001/api/admin", fettchdata)
+      .then((response) => {
+        console.log(response.data);
+        fetchData();
+      });
+    Swal.fire({
+      icon: "success",
+      title: "Admin Added successfully",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+
+    console.log(adminData);
+  };
+
+  // Edit
+  const handleEdit = () => {
+    const editFettchdata = {
+      first_name: editAdmin.first_name,
+      last_name: editAdmin.last_name,
+      username: editAdmin.username,
+      email: editAdmin.email,
+      password: editAdmin.password,
+      is_super: editAdmin.is_super,
+    };
+
+    axios
+      .patch(`http://localhost:8001/api/admin/${submitEdit}`, editFettchdata)
+      .then((response) => {
+        console.log(response.data);
+        fetchData();
+      });
+
+    Swal.fire({
+      icon: "success",
+      title: "Admin Updated successfully",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+
+    console.log(editAdmin);
+  };
+
+  if (!adminData) {
+    return "loading";
+  }
 
   return (
     <div className="admin-data">
@@ -169,40 +236,55 @@ export default function Admins() {
           >
             <CloseIcon />
           </div>
-          <Box
-            className="add-currency-box"
-            component="form"
-            // sx={{
-            //   '& > :not(style)': { m: 1, width: '25ch' },
-            // }}
-            noValidate
-            autoComplete="off"
-          >
+          <Box className="add-currency-box" autoComplete="off">
             <h2>Add Admin</h2>
             <TextField
               id="outlined-controlled"
               label="First Name"
+              name="first_name"
               color="secondary"
+              value={adminData.first_name}
+              onChange={handleFormChange}
             />
             <TextField
               id="outlined-uncontrolled"
               label="Last Name"
+              name="last_name"
               color="secondary"
+              value={adminData.last_name}
+              onChange={handleFormChange}
             />
             <TextField
               id="outlined-uncontrolled"
               label="Username"
+              name="username"
               color="secondary"
+              value={adminData.username}
+              onChange={handleFormChange}
             />
             <TextField
               id="outlined-uncontrolled"
               label="Email"
+              name="email"
               color="secondary"
+              value={adminData.email}
+              onChange={handleFormChange}
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="Is Super"
+              name="is_super"
+              color="secondary"
+              value={adminData.is_super}
+              onChange={handleFormChange}
             />
             <TextField
               id="outlined-uncontrolled"
               label="Password"
+              name="password"
               color="secondary"
+              value={adminData.password}
+              onChange={handleFormChange}
             />
             <Button
               variant="contained"
@@ -210,6 +292,7 @@ export default function Admins() {
               style={{ height: 55 }}
               sx={{ backgroundColor: "#3d0066" }}
               onClick={() => {
+                handleSubmit();
                 setAddPop(false);
               }}
             >
@@ -231,9 +314,6 @@ export default function Admins() {
           <Box
             className="add-currency-box"
             component="form"
-            // sx={{
-            //   '& > :not(style)': { m: 1, width: '25ch' },
-            // }}
             noValidate
             autoComplete="off"
           >
@@ -242,33 +322,56 @@ export default function Admins() {
               id="outlined-controlled"
               label="First Name"
               color="secondary"
+              name="first_name"
+              // value={editAdmin.first_name}
+              onChange={handleEditChange}
             />
             <TextField
               id="outlined-uncontrolled"
               label="Last Name"
               color="secondary"
+              name="last_name"
+              // value={editAdmin.last_name}
+              onChange={handleEditChange}
             />
             <TextField
               id="outlined-uncontrolled"
               label="Username"
               color="secondary"
+              name="username"
+              // value={editAdmin.username}
+              onChange={handleEditChange}
             />
             <TextField
               id="outlined-uncontrolled"
               label="Email"
               color="secondary"
+              name="email"
+              // value={editAdmin.email}
+              onChange={handleEditChange}
+            />
+            <TextField
+              id="outlined-uncontrolled"
+              label="Is Super"
+              color="secondary"
+              name="is_super"
+              // value={editAdmin.is_super}
+              onChange={handleEditChange}
             />
             <TextField
               id="outlined-uncontrolled"
               label="Password"
               color="secondary"
+              name="password"
+              // value={editAdmin.password}
+              onChange={handleEditChange}
             />
             <Button
               variant="contained"
-              disableElevation
               style={{ height: 55 }}
               sx={{ backgroundColor: "#3d0066" }}
               onClick={() => {
+                handleEdit();
                 setEditPop(false);
               }}
             >
@@ -277,26 +380,14 @@ export default function Admins() {
           </Box>
         </Popup>
       )}
-      <div
-        style={
-          {
-            // height: 600,
-            // width: 1000,
-          }
-        }
-        className="pages-container"
-      >
+      <div style={{}} className="pages-container">
         <div className="admin-add-button">
-          <button
-            onClick={() => {
-              setAddPop(true);
-            }}
-          >
-            Add Admin
-          </button>
+          <MainButton name="Add Admin" onClick={() => setAddPop(true)} />
         </div>
-        <DataTable rows={rows} columns={columns} />
+        <DataTable rows={Fetch} columns={columns} />
       </div>
     </div>
   );
 }
+
+export default Admins;

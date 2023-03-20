@@ -36,7 +36,7 @@ ReactDOM.render(
         <Route path="balance" element={<Balance />} />
         <Route path="balance-yearly" element={<BalanceYearly />} />
       </Route>
-      <Route path="/login" element={<Login />} />
+      <Route index path="/login" element={<Login />} />
     </Routes>
   </BrowserRouter>,
   document.getElementById("root")
