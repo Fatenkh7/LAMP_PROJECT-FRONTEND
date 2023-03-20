@@ -13,7 +13,7 @@ import MainButton from "../../components/main-button/index";
 import axios from "axios";
 import Swal from "sweetalert2";
 import Loding from "../../components/loding/Loding";
-
+import Cookie from "js-cookie"
 
 export default function Categories() {
   const [addPop, setAddPop] = useState(false);
@@ -104,9 +104,16 @@ export default function Categories() {
   // fetch for get data
 
   const fetchData = async () => {
+    let token="";
+    token=Cookie.get("token");
+    let config={
+      headers:{
+        Authorization: `Bearer ${token}`
+      }
+    }
     try {
-      const response = await axios.get("http://127.0.0.1:8000/api/category");
-      setCategory(response.data.message.data);
+      const response = await axios.get("http://127.0.0.1:8000/api/category" , config);
+      setCategory(response.data.message);
       console.log(response.data);
     } catch (error) {
       console.log(error);

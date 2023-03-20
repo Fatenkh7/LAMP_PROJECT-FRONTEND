@@ -1,9 +1,60 @@
-import React from "react";
+import React,{useState} from "react";
 import "./style.css";
 import LoginImage from "../../images/auth-v2-login-illustration-light.png";
 import LoginImage2 from "../../images/login-page-image-2.png";
 
+import axios from 'axios';
+import Cookies from 'js-cookie';
+
 function Login() {
+ 
+  const [login , setlogin]=useState({
+    username:'',
+    password:'',
+})
+
+const handleloginChange = (e) => {
+  const value = e.target.value;
+  setlogin({
+    ...login,
+    [e.target.name]: value,
+  });
+};
+
+ async function handelSubmit(e){
+  e.preventDefault();
+
+  try {
+    const response = await axios.post('http://localhost:8000/api/login', {
+      username: login.username,
+      password: login.password
+    });
+
+    const token = response.data.access_token
+    ;
+    console.log(response)
+    // Set the token in the cookies
+    Cookies.set('token', token    );
+    
+    axios.create({
+
+      headers: {
+        'Authorization': `Bearer ${Cookies.get('token')}`
+      }
+    });
+    console.log(token)
+    // Redirect the user to the dashboard page
+
+    if (token) {window.location.href = 'http://localhost:3000/dashboard'};
+    
+  } catch (error) {
+    console.log(error);
+  }
+
+}
+console.log(login)
+
+
   return (
     <div className="login-page">
       <div className="login-animated-background">
@@ -81,16 +132,16 @@ function Login() {
           >
             <defs>
               <linearGradient id="BG1" x1="100%" x2="50%" y1="9.946%" y2="50%">
-                <stop offset="0%" stop-color="#3d0066"></stop>
-                <stop offset="100%" stop-color="#3d0066"></stop>
+                <stop offset="0%" stopColor="#3d0066"></stop>
+                <stop offset="100%" stopColor="#3d0066"></stop>
               </linearGradient>
               <linearGradient id="BG2" x1="50%" x2="50%" y1="0%" y2="100%">
-                <stop offset="0%" stop-color="#3d0066"></stop>
-                <stop offset="100%" stop-color="#3d0066"></stop>
+                <stop offset="0%" stopColor="#3d0066"></stop>
+                <stop offset="100%" stopColor="#3d0066"></stop>
               </linearGradient>
               <linearGradient id="BG3" x1="50%" x2="50%" y1="0%" y2="100%">
-                <stop offset="0%" stop-color="#3d0066"></stop>
-                <stop offset="100%" stop-color="#3d0066"></stop>
+                <stop offset="0%" stopColor="#3d0066"></stop>
+                <stop offset="100%" stopColor="#3d0066"></stop>
               </linearGradient>
             </defs>
             <g
@@ -138,16 +189,16 @@ function Login() {
           >
             <defs>
               <linearGradient id="BG1" x1="100%" x2="50%" y1="9.946%" y2="50%">
-                <stop offset="0%" stop-color="#3d0066"></stop>
-                <stop offset="100%" stop-color="#3d0066"></stop>
+                <stop offset="0%" stopColor="#3d0066"></stop>
+                <stop offset="100%" stopColor="#3d0066"></stop>
               </linearGradient>
               <linearGradient id="BG2" x1="50%" x2="50%" y1="0%" y2="100%">
-                <stop offset="0%" stop-color="#3d0066"></stop>
-                <stop offset="100%" stop-color="#3d0066"></stop>
+                <stop offset="0%" stopColor="#3d0066"></stop>
+                <stop offset="100%" stopColor="#3d0066"></stop>
               </linearGradient>
               <linearGradient id="BG3" x1="50%" x2="50%" y1="0%" y2="100%">
-                <stop offset="0%" stop-color="#3d0066"></stop>
-                <stop offset="100%" stop-color="#3d0066"></stop>
+                <stop offset="0%" stopColor="#3d0066"></stop>
+                <stop offset="100%" stopColor="#3d0066"></stop>
               </linearGradient>
             </defs>
             <g
@@ -175,15 +226,15 @@ function Login() {
           <h2>Welcome To Our Dashboard!</h2>
           <p>Please sign-in to your account and start the adventure</p>
         </div>
-        <form className="login-form-design">
+        <form className="login-form-design" onClick={handelSubmit} >
           <div className="login-username">
-            <input type="text" placeholder="Username" />
+            <input type="text" placeholder="Username" value={login.username} name="username" onChange={handleloginChange} />
           </div>
           <div className="login-password">
-            <input type="password" placeholder="Password" />
+            <input type="password" placeholder="Password" value={login.password} name="password"  onChange={handleloginChange}/>
           </div>
           <div className="login-form-btn">
-            <button>Login</button>
+            <button type="submit" >Login</button>
           </div>
         </form>
       </div>

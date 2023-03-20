@@ -19,6 +19,7 @@ import "./style.css";
 import AccountRoundedIcon from "@mui/icons-material/AccountCircle";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import { Link, NavLink } from "react-router-dom";
+import Cookie from "js-cookie";
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -60,7 +61,7 @@ const NavBar = () => {
         })}
       </nav>
       <nav className="sidebar-bottom-nav">
-        <NavLink to="/login" className="sidebar-logout spacing hover">
+        <NavLink to="/login" className="sidebar-logout spacing hover" onClick={()=>{Cookie.remove("token")}}>
           <p>
             <LogoutRoundedIcon />
           </p>
