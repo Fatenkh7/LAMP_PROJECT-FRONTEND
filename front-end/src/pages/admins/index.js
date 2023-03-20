@@ -23,6 +23,7 @@ import {
   TextField,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import Cookie from "js-cookie";
 
 function Admins() {
   // const [data, setData] = useState([]);
@@ -114,14 +115,23 @@ function Admins() {
   ];
 
   const fetchData = async () => {
+    let token="";
+    token=Cookie.get("token");
+    let config={
+      headers:{
+        Authorization: `Bearer ${token}`
+      }
+    }
+
     try {
-      const response = await axios.get("http://127.0.0.1:8001/api/admin");
-      SetFetch(response.data.message);
-      console.log(response.data.message);
+      const response = await axios.get("http://127.0.0.1:8000/api/admin",config);
+      SetFetch(response.data.message.data);
+      console.log(response);
     } catch (error) {
       console.log(error);
     }
   };
+
 
   useEffect(() => {
     fetchData();
@@ -140,6 +150,14 @@ function Admins() {
   // Delete
 
   const handleDelete = async (id) => {
+    let token="";
+    token=Cookie.get("token");
+    let config={
+      headers:{
+        Authorization: `Bearer ${token}`
+      }
+    }
+
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -152,7 +170,7 @@ function Admins() {
       if (result.isConfirmed) {
         try {
           await axios
-            .delete(`http://127.0.0.1:8001/api/admin/${id}`)
+            .delete(`http://127.0.0.1:8000/api/admin/${id}`,config)
             .then((response) => {
               SetFetch(Fetch);
               console.log(response.data);
@@ -176,8 +194,16 @@ function Admins() {
       is_super: adminData.is_super,
     };
 
+    let token="";
+    token=Cookie.get("token");
+    let config={
+      headers:{
+        Authorization: `Bearer ${token}`
+      }
+    }
+
     const response = axios
-      .post("http://localhost:8001/api/admin", fettchdata)
+      .post("http://localhost:8000/api/admin", fettchdata ,config)
       .then((response) => {
         console.log(response.data);
         fetchData();
@@ -203,8 +229,17 @@ function Admins() {
       is_super: editAdmin.is_super,
     };
 
+    let token="";
+    token=Cookie.get("token");
+    let config={
+      headers:{
+        Authorization: `Bearer ${token}`
+      }
+    }
+
+
     axios
-      .patch(`http://localhost:8001/api/admin/${submitEdit}`, editFettchdata)
+      .patch(`http://localhost:8000/api/admin/${submitEdit}`, editFettchdata ,config)
       .then((response) => {
         console.log(response.data);
         fetchData();

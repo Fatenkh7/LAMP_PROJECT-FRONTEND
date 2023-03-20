@@ -2,13 +2,16 @@ import React, { useState, useEffect } from "react";
 import Report from "./repot";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import { TextField } from "@mui/material";
+import { Select, TextField } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import MainButton from "../../components/main-button/index";
 import axios from "axios";
 import Loding from "../../components/loding/Loding";
 import Popup from "../../components/pop-up/Popup";
 import Swal from "sweetalert2";
+import MenuItem from '@mui/material/MenuItem';
+import InputLabel from '@mui/material/InputLabel';
+import Cookie from "js-cookie";
 
 function ReportChart(props) {
   const [visibleAdd, setVisibleAdd] = useState(false);
@@ -37,10 +40,14 @@ function ReportChart(props) {
 
   const [editId, setEditId] = useState(null);
 
+  const [adminId , setAdminId] = useState(null)
+
+  const [categoryId , setCategoryId] = useState(null)
+
   const getId = (id) => {
     setEditId(id);
   };
-  console.log(editId);
+  
   const visibleEdit = () => {
     if (showEdit === false) {
       setShowedit(true);
@@ -58,7 +65,7 @@ function ReportChart(props) {
   };
 
   //get data
-
+  
   const fetchData = async () => {
     try {
       const response = await axios.get("http://127.0.0.1:8000/api/report");
@@ -82,6 +89,9 @@ function ReportChart(props) {
   };
 
   const handelSubmit = () => {
+
+
+    
     const data = {
       report: addDataReport.report,
       type_report: addDataReport.type_report,
@@ -90,7 +100,7 @@ function ReportChart(props) {
       start_date: addDataReport.start_date,
       end_date: addDataReport.end_date,
     };
-    axios.post("http://127.0.0.1:8000/api/report", data).then((response) => {
+    axios.post("http://127.0.0.1:8000/api/report", data ).then((response) => {
       console.log(response);
       fetchData();
     });
@@ -112,6 +122,8 @@ function ReportChart(props) {
     });
   };
   const handeleditSubmit = () => {
+
+  
     const data = {
       report: editDataReport.report,
       type_report: editDataReport.type_report,
@@ -134,6 +146,46 @@ function ReportChart(props) {
     });
   };
 
+  //get admin id
+
+  const fetchIdData = async () => {
+    let token="";
+    token=Cookie.get("token");
+    let config={
+      headers:{
+        Authorization: `Bearer ${token}`
+      }
+    }
+    try {
+      const response = await axios.get("http://127.0.0.1:8000/api/admin",config);
+      setAdminId(response.data.message.data);
+      console.log(response.data.message.data)
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchIdData();
+  }, []);
+
+  //get category id
+  
+  const fetchIdcategory = async () => {
+
+    try {
+      const response = await axios.get("http://127.0.0.1:8000/api/category");
+      setCategoryId(response.data.message);
+      
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchIdcategory();
+  }, []);
+  
+console.log(editDataReport)
+ 
   if (!dataReport) {
     return (
       <div
@@ -198,35 +250,53 @@ function ReportChart(props) {
               name="report"
               onChange={handleChange}
             />
-            <TextField
+            <InputLabel id="demo-simple-select-label">Add Type</InputLabel>
+            <Select
               id="outlined-uncontrolled"
-              label="Add Type"
+              label="Type"
               name="type_report"
               onChange={handleChange}
-            />
-            <TextField
+              >
+                <MenuItem value={'weekly'}>weekly</MenuItem>
+                <MenuItem value={'monthly'}>monthly</MenuItem>
+                <MenuItem value={'yearly'}>yearly</MenuItem>
+            
+            </Select>
+            <InputLabel id="demo-simple-select-label">Admin</InputLabel>
+            <Select
               id="outlined-read-only"
               label="Admin"
               name="admins_id"
               onChange={handleChange}
-            />
-            <TextField
+            >
+              {adminId.map((ele)=>{
+                return  <MenuItem value={ele.id}>{ele.first_name}</MenuItem>
+              })}
+            </Select>
+            <InputLabel id="demo-simple-select-label">Category</InputLabel>
+            <Select
               id="outlined-read-only"
               label="Category"
               name="categories_id"
               onChange={handleChange}
-            />
+            >
+                {categoryId.map((ele)=>{
+                return  <MenuItem value={ele.id}>{ele.category}</MenuItem>
+              })}
+            </Select>
+            <InputLabel>Start Date</InputLabel>
             <TextField
               id="outlined-read-only"
-              label="Start date"
               name="start_date"
               onChange={handleChange}
+              type="date"
             />
+            <InputLabel>End Date</InputLabel>
             <TextField
               id="outlined-read-only"
-              label="End date"
               name="end_date"
               onChange={handleChange}
+              type="date"
             />
             <Button
               variant="contained"
@@ -267,35 +337,53 @@ function ReportChart(props) {
               name="report"
               onChange={handleEditChange}
             />
-            <TextField
+            <InputLabel id="demo-simple-select-label">Add Type</InputLabel>
+            <Select
               id="outlined-uncontrolled"
-              label="Add Type"
+              label="Type"
               name="type_report"
               onChange={handleEditChange}
-            />
-            <TextField
+              >
+                <MenuItem value={'weekly'}>weekly</MenuItem>
+                <MenuItem value={'monthly'}>monthly</MenuItem>
+                <MenuItem value={'yearly'}>yearly</MenuItem>
+            
+            </Select>
+            <InputLabel id="demo-simple-select-label">Admin</InputLabel>
+            <Select
               id="outlined-read-only"
               label="Admin"
               name="admins_id"
               onChange={handleEditChange}
-            />
-            <TextField
+            >
+              {adminId.map((ele)=>{
+                return  <MenuItem value={ele.id}>{ele.first_name}</MenuItem>
+              })}
+            </Select>
+            <InputLabel id="demo-simple-select-label">Admin</InputLabel>
+            <Select
               id="outlined-read-only"
               label="Category"
               name="categories_id"
               onChange={handleEditChange}
-            />
+            >
+                {categoryId.map((ele)=>{
+                return  <MenuItem value={ele.id}>{ele.category}</MenuItem>
+              })}
+            </Select>
+            <InputLabel>Start Date</InputLabel>
             <TextField
               id="outlined-read-only"
-              label="Start date"
               name="start_date"
               onChange={handleEditChange}
+              type="date"
             />
+            <InputLabel>End Date</InputLabel>
             <TextField
               id="outlined-read-only"
-              label="End date"
               name="end_date"
               onChange={handleEditChange}
+              type="date"
             />
             <Button
               variant="contained"
