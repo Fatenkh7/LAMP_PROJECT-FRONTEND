@@ -22,6 +22,11 @@ export default function FixedTransaction() {
   const [currencies, setCurrencies] = useState([]);
   const [categories, setCategories] = useState([]);
   const [fixedKeys, setFixedKeys] = useState([]);
+  const [admins, setAdmins] = useState([]);
+  const [isPaid, setIsPaid] = useState(false);
+  const updateIsPaid = (value) => {
+    setIsPaid(value);
+  };
 
   const [inputTrans, setInputTrans] = useState({
     id: "",
@@ -29,7 +34,6 @@ export default function FixedTransaction() {
     description: "",
     type: "",
     schedule: "",
-    is_paid: false,
     amount: "",
     date_time: "",
     currencies_id: "",
@@ -44,7 +48,6 @@ export default function FixedTransaction() {
     description: "",
     type: "",
     schedule: "",
-    is_paid: false,
     amount: "",
     date_time: "",
     currencies_id: "",
@@ -87,23 +90,23 @@ export default function FixedTransaction() {
     },
     {
       field: "currencies_id",
-      headerName: "Currencies ID",
-      width: 10,
+      headerName: "Currency",
+      width: 70,
     },
     {
       field: "admins_id",
-      headerName: "Admins ID",
-      width: 10,
+      headerName: "Admin",
+      width: 70,
     },
     {
       field: "categories_id",
-      headerName: "Categories ID",
-      width: 10,
+      headerName: "Category",
+      width: 70,
     },
     {
       field: "fixed_keys_id",
-      headerName: "FixedKeys ID",
-      width: 10,
+      headerName: "For",
+      width: 70,
     },
     {
       field: "actions",
@@ -129,6 +132,10 @@ export default function FixedTransaction() {
       ),
     },
   ];
+
+  const handleIsPaidChange = (event) => {
+    setIsPaid(event.target.checked);
+  };
 
   useEffect(() => {
     const fetchCurrencies = () => {
@@ -163,6 +170,22 @@ export default function FixedTransaction() {
   }, []);
 
   useEffect(() => {
+    const fetchAdmins = () => {
+      axios
+        .get("http://127.0.0.1:8000/api/admin")
+        .then((response) => {
+          setAdmins(response.data.message);
+          console.log(response.data.message);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    };
+
+    fetchAdmins();
+  }, []);
+
+  useEffect(() => {
     const fetchFixedKeys = () => {
       axios
         .get("http://127.0.0.1:8000/api/fixedkey")
@@ -184,6 +207,7 @@ export default function FixedTransaction() {
         .get("http://127.0.0.1:8000/api/fixedtransaction/all")
         .then((response) => {
           setFixedTransData(response.data.message);
+          console.log(response.data.message);
         })
         .catch((error) => {
           console.error(error);
@@ -206,7 +230,7 @@ export default function FixedTransaction() {
       description: inputTrans.description,
       type: inputTrans.type,
       schedule: inputTrans.schedule,
-      is_paid: inputTrans.is_paid,
+      is_paid: isPaid,
       amount: inputTrans.amount,
       date_time: inputTrans.date_time,
       currencies_id: inputTrans.currencies_id,
@@ -222,6 +246,7 @@ export default function FixedTransaction() {
         // calling fetchdata() will result in an error since fetchdata is an object
         // instead, you might want to fetch the data again after the post request
       });
+
     Swal.fire({
       icon: "success",
       title: "Fixed Transaction Added successfully",
@@ -238,13 +263,17 @@ export default function FixedTransaction() {
     }));
   };
 
-  const handleEdit = () => {
+  const handleEditIsPaidChange = (event) => {
+    setIsPaid(event.target.checked);
+  };
+
+  const handleEdit = (paid) => {
     const editFetchedData = {
       title: editInput.title,
       description: editInput.description,
       type: editInput.type,
       schedule: editInput.schedule,
-      is_paid: editInput.is_paid,
+      is_paid: paid !== undefined ? paid : isPaid,
       amount: editInput.amount,
       date_time: editInput.date_time,
       currencies_id: editInput.currencies_id,
@@ -269,21 +298,6 @@ export default function FixedTransaction() {
     });
     console.log(editFetchedData);
   };
-
-  // if (!Fetch) {
-  //   return (
-  //     <div
-  //       style={{
-  //         display: "flex",
-  //         justifyContent: "center",
-  //         height: "80%",
-  //         alignItems: "center",
-  //       }}
-  //     >
-  //       <Loding />
-  //     </div>
-  //   );
-  // }
 
   const handleDelete = async (id) => {
     Swal.fire({
@@ -349,66 +363,61 @@ export default function FixedTransaction() {
               onChange={handleInputChange}
               name="description"
             />
-            <InputLabel htmlFor="outlined-uncontrolled">
-              Type
-              <Select
-                label="Type"
-                name="type"
-                value={inputTrans.type}
-                onChange={handleInputChange}
-              >
-                <MenuItem value="">
-                  <em>Select transaction type</em>
-                </MenuItem>
-                <MenuItem value="income">Income</MenuItem>
-                <MenuItem value="expense">Expense</MenuItem>
-              </Select>
-            </InputLabel>
-
-            <InputLabel htmlFor="outlined-uncontrolled">
-              Schedule
-              <Select
-                label="Schedule"
-                name="schedule"
-                value={inputTrans.schedule}
-                onChange={handleInputChange}
-                placeholder="Select transaction Schedule"
-              >
-                <MenuItem value="monthly">Monthly</MenuItem>
-                <MenuItem value="weekly">Weekly</MenuItem>
-                <MenuItem value="yearly">Yearly</MenuItem>
-              </Select>
-            </InputLabel>
-            <InputLabel htmlFor="outlined-uncontrolled">
-              Currency
-              <Select
-                labelId="currency-label"
-                id="currency"
-                name="currencies_id"
-                value={inputTrans.currencies_id}
-                onChange={(e) =>
-                  setInputTrans({
-                    ...inputTrans,
-                    currencies_id: e.target.value,
-                  })
-                }
-              >
-                {currencies.map((currency) => (
-                  <MenuItem key={currency.id} value={currency.id}>
-                    {currency.currency}
-                  </MenuItem>
-                ))}
-              </Select>
-            </InputLabel>
-
-            <TextField
-              id="ispaidInput"
-              label="is Paid"
-              color="primary"
-              value={inputTrans.is_paid}
+            <InputLabel htmlFor="outlined-uncontrolled">Type </InputLabel>
+            <Select
+              label="Type"
+              name="type"
+              value={inputTrans.type}
               onChange={handleInputChange}
-              name="is_paid"
-            />
+            >
+              <MenuItem value="">
+                <em>Select transaction type</em>
+              </MenuItem>
+              <MenuItem value="income">Income</MenuItem>
+              <MenuItem value="expense">Expense</MenuItem>
+            </Select>
+
+            <InputLabel htmlFor="outlined-uncontrolled">Schedule </InputLabel>
+            <Select
+              label="Schedule"
+              name="schedule"
+              value={inputTrans.schedule}
+              onChange={handleInputChange}
+              placeholder="Select transaction Schedule"
+            >
+              <MenuItem value="monthly">Monthly</MenuItem>
+              <MenuItem value="weekly">Weekly</MenuItem>
+              <MenuItem value="yearly">Yearly</MenuItem>
+            </Select>
+            <InputLabel htmlFor="outlined-uncontrolled">Currency </InputLabel>
+            <Select
+              labelId="currency-label"
+              id="currency"
+              name="currencies_id"
+              value={inputTrans.currencies_id}
+              onChange={(e) =>
+                setInputTrans({
+                  ...inputTrans,
+                  currencies_id: e.target.value,
+                })
+              }
+            >
+              {currencies.map((currency) => (
+                <MenuItem key={currency.id} value={currency.id}>
+                  {currency.currency}
+                </MenuItem>
+              ))}
+            </Select>
+            <div id="ispaidInput">
+              <h3>Is Paid</h3>
+              <Switch
+                value={isPaid}
+                name="is_paid"
+                label="is Paid"
+                color="primary"
+                onChange={handleIsPaidChange}
+              />
+            </div>
             <TextField
               id="amountInput"
               label="Amount"
@@ -428,57 +437,66 @@ export default function FixedTransaction() {
                 shrink: true,
               }}
             />
-            <TextField
+            <InputLabel htmlFor="outlined-uncontrolled">Admin </InputLabel>
+            <Select
+              labelId="Admin-label"
               id="adminInput"
               label="Admin"
               color="primary"
-              value={inputTrans.admins_id}
-              onChange={handleInputChange}
               name="admins_id"
-            />
-            <InputLabel htmlFor="outlined-uncontrolled">
-              Category
-              <Select
-                labelId="category-label"
-                id="category"
-                name="categories_id"
-                value={inputTrans.categories_id}
-                onChange={(e) =>
-                  setInputTrans({
-                    ...inputTrans,
-                    categories_id: e.target.value,
-                  })
-                }
-              >
-                {categories.map((category) => (
-                  <MenuItem key={category.id} value={category.id}>
-                    {category.category}
-                  </MenuItem>
-                ))}
-              </Select>
-            </InputLabel>
+              value={inputTrans.admins_id}
+              onChange={(e) =>
+                setInputTrans({
+                  ...inputTrans,
+                  admins_id: e.target.value,
+                })
+              }
+            >
+              {admins.map((admin) => (
+                <MenuItem key={admin.id} value={admin.id}>
+                  {admin.username}
+                </MenuItem>
+              ))}
+            </Select>
+            <InputLabel htmlFor="outlined-uncontrolled">Category </InputLabel>
+            <Select
+              labelId="category-label"
+              id="category"
+              name="categories_id"
+              value={inputTrans.categories_id}
+              onChange={(e) =>
+                setInputTrans({
+                  ...inputTrans,
+                  categories_id: e.target.value,
+                })
+              }
+            >
+              {categories.map((category) => (
+                <MenuItem key={category.id} value={category.id}>
+                  {category.category}
+                </MenuItem>
+              ))}
+            </Select>
 
-            <InputLabel htmlFor="outlined-uncontrolled">
-              Fixed Key
-              <Select
-                labelId="fixedkey-label"
-                id="fixedKeyInput"
-                name="fixed_keys_id"
-                value={inputTrans.fixed_keys_id}
-                onChange={(e) =>
-                  setInputTrans({
-                    ...inputTrans,
-                    fixed_keys_id: e.target.value,
-                  })
-                }
-              >
-                {fixedKeys.map((fixedKey) => (
-                  <MenuItem key={fixedKey.id} value={fixedKey.id}>
-                    {fixedKey.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </InputLabel>
+            <InputLabel htmlFor="outlined-uncontrolled">Fixed Key </InputLabel>
+            <Select
+              labelId="fixedkey-label"
+              id="fixedKeyInput"
+              name="fixed_keys_id"
+              value={inputTrans.fixed_keys_id}
+              onChange={(e) =>
+                setInputTrans({
+                  ...inputTrans,
+                  fixed_keys_id: e.target.value,
+                })
+              }
+            >
+              {fixedKeys.map((fixedKey) => (
+                <MenuItem key={fixedKey.id} value={fixedKey.id}>
+                  {fixedKey.name}
+                </MenuItem>
+              ))}
+            </Select>
 
             <Button
               variant="contained"
@@ -530,36 +548,32 @@ export default function FixedTransaction() {
               onChange={handleEditChange}
               name="description"
             />
-            <InputLabel htmlFor="outlined-uncontrolled">
-              Type
-              <Select
-                label="Type"
-                name="type"
-                value={editInput.type}
-                onChange={handleEditChange}
-              >
-                <MenuItem value="">
-                  <em>Select transaction type</em>
-                </MenuItem>
-                <MenuItem value="income">Income</MenuItem>
-                <MenuItem value="expense">Expense</MenuItem>
-              </Select>
-            </InputLabel>
+            <InputLabel htmlFor="outlined-uncontrolled">Type </InputLabel>
+            <Select
+              label="Type"
+              name="type"
+              value={editInput.type}
+              onChange={handleEditChange}
+            >
+              <MenuItem value="">
+                <em>Select transaction type</em>
+              </MenuItem>
+              <MenuItem value="income">Income</MenuItem>
+              <MenuItem value="expense">Expense</MenuItem>
+            </Select>
 
-            <InputLabel htmlFor="outlined-uncontrolled">
-              Schedule
-              <Select
-                label="Schedule"
-                name="schedule"
-                value={editInput.schedule}
-                onChange={handleEditChange}
-                placeholder="Select transaction Schedule"
-              >
-                <MenuItem value="monthly">Monthly</MenuItem>
-                <MenuItem value="weekly">Weekly</MenuItem>
-                <MenuItem value="yearly">Yearly</MenuItem>
-              </Select>
-            </InputLabel>
+            <InputLabel htmlFor="outlined-uncontrolled">Schedule </InputLabel>
+            <Select
+              label="Schedule"
+              name="schedule"
+              value={editInput.schedule}
+              onChange={handleEditChange}
+              placeholder="Select transaction Schedule"
+            >
+              <MenuItem value="monthly">Monthly</MenuItem>
+              <MenuItem value="weekly">Weekly</MenuItem>
+              <MenuItem value="yearly">Yearly</MenuItem>
+            </Select>
             <InputLabel htmlFor="outlined-uncontrolled">Currency </InputLabel>
             <Select
               labelId="currency-label"
@@ -579,15 +593,16 @@ export default function FixedTransaction() {
                 </MenuItem>
               ))}
             </Select>
-
-            <TextField
-              id="ispaidInput"
-              label="is Paid"
-              color="primary"
-              value={editInput.is_paid}
-              onChange={handleEditChange}
-              name="is_paid"
-            />
+            <div id="ispaidInput">
+              <h3>Is Paid</h3>
+              <Switch
+                name="is_paid"
+                label="is Paid"
+                color="primary"
+                value={updateIsPaid}
+                onChange={handleEditIsPaidChange}
+              />
+            </div>
             <TextField
               id="amountInput"
               label="Amount"
@@ -608,14 +623,27 @@ export default function FixedTransaction() {
                 shrink: true,
               }}
             />
-            <TextField
+            <InputLabel htmlFor="outlined-uncontrolled">Admin </InputLabel>
+            <Select
+              labelId="Admin-label"
               id="adminInput"
               label="Admin"
               color="primary"
-              value={editInput.admins_id}
-              onChange={handleEditChange}
               name="admins_id"
-            />
+              value={editInput.admins_id}
+              onChange={(e) =>
+                setEditInput({
+                  ...editInput,
+                  admins_id: e.target.value,
+                })
+              }
+            >
+              {admins.map((admin) => (
+                <MenuItem key={admin.id} value={admin.id}>
+                  {admin.username}
+                </MenuItem>
+              ))}
+            </Select>
             <InputLabel htmlFor="outlined-uncontrolled">Category </InputLabel>
             <Select
               labelId="category-label"
