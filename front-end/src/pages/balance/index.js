@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import ApexChart from "react-apexcharts";
 import "./balance.css";
+import Loding from "../../components/loding/Loding";
+
+import Cookie from "js-cookie";
 
 export function Balance() {
   const [chartOptions, setChartOptions] = useState({
@@ -38,6 +41,20 @@ export function Balance() {
   const handleSwitchChart = () => {
     setIsPolar(!isPolar);
   };
+  if (!chartOptions) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          height: "80%",
+          alignItems: "center",
+        }}
+      >
+        <Loding />
+      </div>
+    );
+  }
 
   return (
     <div style={{ animation: "fade 0.5s ease-in" }}>
@@ -82,7 +99,20 @@ export function BalanceYearly() {
   const [chartSeries, setChartSeries] = useState([
     1000, 2000, 1500, 3000, 2000, 2500, 1800, 2200, 2800, 1900, 2300, 2700,
   ]);
-
+  if (!chartSeries) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          height: "80%",
+          alignItems: "center",
+        }}
+      >
+        <Loding />
+      </div>
+    );
+  }
   return (
     <div style={{ animation: "fade 0.5s ease-in" }}>
       <ApexChart

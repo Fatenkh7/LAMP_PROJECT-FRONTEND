@@ -67,8 +67,15 @@ function ReportChart(props) {
   //get data
   
   const fetchData = async () => {
+    let token="";
+    token=Cookie.get("token");
+    let config={
+      headers:{
+        Authorization: `Bearer ${token}`
+      }
+    }
     try {
-      const response = await axios.get("http://127.0.0.1:8000/api/report");
+      const response = await axios.get("http://127.0.0.1:8000/api/report",config);
       setDataReport(response.data.message.data);
     } catch (error) {
       console.log(error);
@@ -89,9 +96,13 @@ function ReportChart(props) {
   };
 
   const handelSubmit = () => {
-
-
-    
+    let token="";
+    token=Cookie.get("token");
+    let config={
+      headers:{
+        Authorization: `Bearer ${token}`
+      }
+    }
     const data = {
       report: addDataReport.report,
       type_report: addDataReport.type_report,
@@ -100,7 +111,7 @@ function ReportChart(props) {
       start_date: addDataReport.start_date,
       end_date: addDataReport.end_date,
     };
-    axios.post("http://127.0.0.1:8000/api/report", data ).then((response) => {
+    axios.post("http://127.0.0.1:8000/api/report", data ,config ).then((response) => {
       console.log(response);
       fetchData();
     });
@@ -132,8 +143,15 @@ function ReportChart(props) {
       start_date: editDataReport.start_date,
       end_date: editDataReport.end_date,
     };
+    let token="";
+    token=Cookie.get("token");
+    let config={
+      headers:{
+        Authorization: `Bearer ${token}`
+      }
+    }
     axios
-      .patch(`http://127.0.0.1:8000/api/report/${editId}`, data)
+      .patch(`http://127.0.0.1:8000/api/report/${editId}`, data,config)
       .then((response) => {
         console.log(response);
         fetchData();
@@ -171,9 +189,15 @@ function ReportChart(props) {
   //get category id
   
   const fetchIdcategory = async () => {
-
+    let token="";
+    token=Cookie.get("token");
+    let config={
+      headers:{
+        Authorization: `Bearer ${token}`
+      }
+    }
     try {
-      const response = await axios.get("http://127.0.0.1:8000/api/category");
+      const response = await axios.get("http://127.0.0.1:8000/api/category" , config);
       setCategoryId(response.data.message);
       
     } catch (error) {

@@ -14,6 +14,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import ErrorBoundary from "../../components/componentDidCatch";
 import Swal from "sweetalert2";
 import axios from "axios";
+import Cookie from "js-cookie";
 
 export default function Currencies() {
   const [addPop, setAddPop] = useState(false);
@@ -73,8 +74,15 @@ export default function Currencies() {
 
   useEffect(() => {
     const fetchData = async () => {
+      let token="";
+      token=Cookie.get("token");
+      let config={
+        headers:{
+          Authorization: `Bearer ${token}`
+        }
+      }
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/currency");
+        const response = await axios.get("http://127.0.0.1:8000/api/currency" , config);
         setCurrencyData(response.data.message);
         console.log(response.data);
       } catch (error) {
@@ -93,12 +101,19 @@ export default function Currencies() {
   };
 
   const handleSubmit = () => {
+    let token="";
+    token=Cookie.get("token");
+    let config={
+      headers:{
+        Authorization: `Bearer ${token}`
+      }
+    }
     try {
       axios
         .post("http://127.0.0.1:8000/api/currency", {
           currency: currencyInput,
           rate: rateInput,
-        })
+        },config)
         .then((response) => {
           setCurrencyData([...currencyData, response.data.message.data]);
           setAddPop(false);
@@ -116,6 +131,13 @@ export default function Currencies() {
   };
 
   const handleDelete = async (id) => {
+    let token="";
+    token=Cookie.get("token");
+    let config={
+      headers:{
+        Authorization: `Bearer ${token}`
+      }
+    }
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -127,7 +149,7 @@ export default function Currencies() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`http://127.0.0.1:8000/api/currency/${id}`);
+          await axios.delete(`http://127.0.0.1:8000/api/currency/${id}`,config);
           setCurrencyData(
             currencyData.filter((currency) => currency.id !== id)
           );
@@ -146,6 +168,7 @@ export default function Currencies() {
     setRateInput("");
     setEditPop(false);
     try {
+      
       await handleEdit(submitEdit.id);
       Swal.fire({
         icon: "success",
@@ -160,11 +183,18 @@ export default function Currencies() {
   };
 
   const handleEdit = async (id) => {
+    let token="";
+    token=Cookie.get("token");
+    let config={
+      headers:{
+        Authorization: `Bearer ${token}`
+      }
+    }
     try {
       const response = await axios.patch(
         `http://127.0.0.1:8000/api/currency/${id}/`,
         { currency: currencyInput, rate: rateInput }
-      );
+      ,config);
       const updatedCurrency = response.data;
       const updatedData = currencyData.map((currency) =>
         currency.id === updatedCurrency.id ? updatedCurrency : currency

@@ -12,6 +12,7 @@ function DataTable(props) {
       sx={{
         border: "none",
       }}
+      headerStyle={{ backgroundColor: "#3d0066" }}
     />
   );
 }

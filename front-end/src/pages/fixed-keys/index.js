@@ -13,7 +13,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import Switch from '@mui/material/Switch';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-
+import Cookie from "js-cookie";
 
 
 export default function FixedKeys() {
@@ -87,10 +87,17 @@ export default function FixedKeys() {
   ];
   useEffect(() => {
   const getData = async () => {
+    let token="";
+    token=Cookie.get("token");
+    let config={
+      headers:{
+        Authorization: `Bearer ${token}`
+      }
+    }
     try {
-      const response = await axios.get("http://localhost:8000/api/fixedkey")
-      setFixedKey(response.data.message.data);
-      console.log(response.data.message.data)
+      const response = await axios.get("http://localhost:8000/api/fixedkey" , config)
+      setFixedKey(response.data.message);
+      console.log(response.data.message)
 
     } catch (e) {
       console.log(e)
@@ -99,6 +106,13 @@ export default function FixedKeys() {
 }, [])
 
   const handleDelete = async (id) => {
+    let token="";
+    token=Cookie.get("token");
+    let config={
+      headers:{
+        Authorization: `Bearer ${token}`
+      }
+    }
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -110,7 +124,7 @@ export default function FixedKeys() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`http://localhost:8000/api/fixedkey/${id}`);
+          await axios.delete(`http://localhost:8000/api/fixedkey/${id}`,config);
           setFixedKey(fixedKey.filter((fixedKey) => fixedKey.id !== id));
         } catch (error) {
           console.log(error);
@@ -129,12 +143,19 @@ export default function FixedKeys() {
     setIsactive(event.target.checked);
   };
   const handleSubmit = async () => {
+    let token="";
+    token=Cookie.get("token");
+    let config={
+      headers:{
+        Authorization: `Bearer ${token}`
+      }
+    }
     try {
       const response = await axios.post("http://127.0.0.1:8000/api/fixedkey", {
         name: nameInput,
         description: descriptionInput,
         is_active:isActive,
-      });
+      },config);
       setFixedKey([...fixedKey, response.data.message.data]);
       setAddPop(false);
       Swal.fire({
@@ -169,11 +190,18 @@ export default function FixedKeys() {
   };
   
   const handleEdit = async (id) => {
+    let token="";
+    token=Cookie.get("token");
+    let config={
+      headers:{
+        Authorization: `Bearer ${token}`
+      }
+    }
     try {
       const response = await axios.put(
         `http://localhost:8000/api/fixedkey/${id}`,
         {  name: nameInput, description: descriptionInput , is_active:isActive }
-      );
+      ,config);
       const updatedFixedKey = response.data;
       const updatedData = fixedKey.map((fixedKey) =>
         fixedKey.id === updatedFixedKey.id ? updatedFixedKey : fixedKey
