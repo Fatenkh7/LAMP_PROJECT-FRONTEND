@@ -3,6 +3,8 @@ import ApexChart from "react-apexcharts";
 import "./balance.css";
 import Loding from "../../components/loding/Loding";
 
+import Cookie from "js-cookie";
+
 export function Balance() {
   const [chartOptions, setChartOptions] = useState({
     chart: {

@@ -20,6 +20,7 @@ import Login from "./pages/login/index";
 ReactDOM.render(
   <BrowserRouter>
     <Routes>
+    <Route index path="/" element={<Login />} ></Route>
       <Route path="/" element={<App />}>
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="admins" element={<Admins />} />
@@ -36,7 +37,7 @@ ReactDOM.render(
         <Route path="balance" element={<Balance />} />
         <Route path="balance-yearly" element={<BalanceYearly />} />
       </Route>
-      <Route index path="/login" element={<Login />} />
+      
     </Routes>
   </BrowserRouter>,
   document.getElementById("root")

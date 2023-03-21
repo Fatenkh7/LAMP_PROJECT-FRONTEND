@@ -33,6 +33,8 @@ import {
 } from "@mui/material";
 import Loding from "../../components/loding/Loding";
 
+import Cookie from "js-cookie";
+
 export default function RecurringTransactions() {
   const [addPop, setAddPop] = useState(false);
   const [editPop, setEditPop] = useState(false);
@@ -158,9 +160,16 @@ export default function RecurringTransactions() {
   };
 
   const fetchData = async () => {
+    let token="";
+    token=Cookie.get("token");
+    let config={
+      headers:{
+        Authorization: `Bearer ${token}`
+      }
+    }
     try {
       const response = await axios.get(
-        "http://localhost:8000/api/recurringTransaction"
+        "http://localhost:8000/api/recurringTransaction",config
       );
       SetFetch(response.data.data.data);
       console.log(response.data.data.data);
@@ -187,8 +196,16 @@ export default function RecurringTransactions() {
       categories_id: addRecTrans.categories_id,
     };
 
+    let token="";
+    token=Cookie.get("token");
+    let config={
+      headers:{
+        Authorization: `Bearer ${token}`
+      }
+    }
+
     const response = axios
-      .post("http://localhost:8000/api/recurringTransaction", fetchedData)
+      .post("http://localhost:8000/api/recurringTransaction", fetchedData ,config)
       .then((response) => {
         console.log(response.data);
         fetchData();
@@ -204,6 +221,15 @@ export default function RecurringTransactions() {
   };
 
   const handleDelete = (id) => {
+
+    let token="";
+    token=Cookie.get("token");
+    let config={
+      headers:{
+        Authorization: `Bearer ${token}`
+      }
+    }
+
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -216,7 +242,7 @@ export default function RecurringTransactions() {
       if (result.isConfirmed) {
         try {
           await axios
-            .delete(`http://localhost:8000/api/recurringTransaction/${id}`)
+            .delete(`http://localhost:8000/api/recurringTransaction/${id}` , config)
             .then((response) => {
               SetFetch(Fetch);
               console.log(response.data);
@@ -248,9 +274,17 @@ export default function RecurringTransactions() {
       categories_id: editRecTrans.categories_id,
     };
 
+    let token="";
+    token=Cookie.get("token");
+    let config={
+      headers:{
+        Authorization: `Bearer ${token}`
+      }
+    }
+
     axios
       .patch(
-        `http://localhost:8000/api/recurringTransaction/${submitEdit}`,
+        `http://localhost:8000/api/recurringTransaction/${submitEdit}` ,config,
         editFetchedData
       )
       .then((response) => {
