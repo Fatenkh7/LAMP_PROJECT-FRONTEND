@@ -253,7 +253,6 @@ export default function Currencies() {
               },
             }}
             pageSizeOptions={[10]}
-            sx={{ border: "1px solid #3d0066", borderRadius: "20px" }}
           />
         </ErrorBoundary>
       </div>
