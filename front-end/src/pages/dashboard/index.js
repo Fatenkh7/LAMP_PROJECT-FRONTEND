@@ -75,9 +75,16 @@ function ProfitGoal() {
 
 
   const fetchFixedData = async () => {
+    let token="";
+    token=Cookie.get("token");
+    let config={
+      headers:{
+        Authorization: `Bearer ${token}`
+      }
+    }
 
     try {
-      const response = await axios.get("http://127.0.0.1:8000/api/fixedtransaction");
+      const response = await axios.get("http://127.0.0.1:8000/api/fixedtransaction",config);
       setFixed(response.data.data.data);
       console.log(response);
     } catch (error) {
@@ -140,7 +147,7 @@ console.log(recurring)
             textColor: '#3d0066',
             trailColor: '#d6d6d6',
             backgroundColor: '#3e98c7',
-      })} value={percentage} text={`${percentage}%`} />
+      })} value={percentage} text={`${percentage}%`} maxValue={300} />
 
 
 

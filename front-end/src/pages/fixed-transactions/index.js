@@ -15,6 +15,7 @@ import Switch from "@mui/material/Switch";
 import Swal from "sweetalert2";
 import Loding from "../../components/loding/Loding";
 import axios from "axios";
+import Cookie from "js-cookie";
 
 export default function FixedTransaction() {
   const [addPop, setAddPop] = useState(false);
@@ -141,8 +142,15 @@ export default function FixedTransaction() {
 
   useEffect(() => {
     const fetchCurrencies = () => {
+      let token="";
+      token=Cookie.get("token");
+      let config={
+        headers:{
+          Authorization: `Bearer ${token}`
+        }
+      }
       axios
-        .get("http://127.0.0.1:8000/api/currency")
+        .get("http://127.0.0.1:8000/api/currency",config)
         .then((response) => {
           setCurrencies(response.data.message);
           console.log(response.data.message);
@@ -157,8 +165,15 @@ export default function FixedTransaction() {
 
   useEffect(() => {
     const fetchCategories = () => {
+      let token="";
+      token=Cookie.get("token");
+      let config={
+        headers:{
+          Authorization: `Bearer ${token}`
+        }
+      }
       axios
-        .get("http://127.0.0.1:8000/api/category")
+        .get("http://127.0.0.1:8000/api/category" ,config)
         .then((response) => {
           setCategories(response.data.message);
           console.log(response.data.message);
@@ -173,8 +188,15 @@ export default function FixedTransaction() {
 
   useEffect(() => {
     const fetchAdmins = () => {
+      let token="";
+      token=Cookie.get("token");
+      let config={
+        headers:{
+          Authorization: `Bearer ${token}`
+        }
+      }
       axios
-        .get("http://127.0.0.1:8000/api/admin")
+        .get("http://127.0.0.1:8000/api/admin" ,config)
         .then((response) => {
           setAdmins(response.data.message);
           console.log(response.data.message);
@@ -189,8 +211,15 @@ export default function FixedTransaction() {
 
   useEffect(() => {
     const fetchFixedKeys = () => {
+      let token="";
+      token=Cookie.get("token");
+      let config={
+        headers:{
+          Authorization: `Bearer ${token}`
+        }
+      }
       axios
-        .get("http://127.0.0.1:8000/api/fixedkey")
+        .get("http://127.0.0.1:8000/api/fixedkey",config)
         .then((response) => {
           setFixedKeys(response.data.message);
           console.log(response.data.message);
@@ -205,8 +234,15 @@ export default function FixedTransaction() {
 
   useEffect(() => {
     const fetchDataTrans = () => {
+      let token="";
+      token=Cookie.get("token");
+      let config={
+        headers:{
+          Authorization: `Bearer ${token}`
+        }
+      }
       axios
-        .get("http://127.0.0.1:8000/api/fixedtransaction/all")
+        .get("http://127.0.0.1:8000/api/fixedtransaction/all",config)
         .then((response) => {
           setFixedTransData(response.data.message);
           console.log(response.data.message);
@@ -240,9 +276,16 @@ export default function FixedTransaction() {
       categories_id: inputTrans.categories_id,
       fixed_keys_id: inputTrans.fixed_keys_id,
     };
+    let token="";
+    token=Cookie.get("token");
+    let config={
+      headers:{
+        Authorization: `Bearer ${token}`
+      }
+    }
 
     const response = axios
-      .post("http://127.0.0.1:8000/api/fixedtransaction", fetchdata)
+      .post("http://127.0.0.1:8000/api/fixedtransaction", fetchdata , config)
       .then((response) => {
         console.log(response.data);
         // calling fetchdata() will result in an error since fetchdata is an object
@@ -283,12 +326,18 @@ export default function FixedTransaction() {
       categories_id: editInput.categories_id,
       fixed_keys_id: editInput.fixed_keys_id,
     };
-
+    let token="";
+    token=Cookie.get("token");
+    let config={
+      headers:{
+        Authorization: `Bearer ${token}`
+      }
+    }
     axios
       .patch(
         `http://localhost:8000/api/fixedtransaction/id/${submitEdit}`,
         editFetchedData
-      )
+      ,config)
       .then((response) => {
         console.log(response.data);
       });
@@ -302,6 +351,13 @@ export default function FixedTransaction() {
   };
 
   const handleDelete = async (id) => {
+    let token="";
+    token=Cookie.get("token");
+    let config={
+      headers:{
+        Authorization: `Bearer ${token}`
+      }
+    }
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -314,7 +370,7 @@ export default function FixedTransaction() {
       if (result.isConfirmed) {
         try {
           await axios.delete(
-            `http://127.0.0.1:8000/api/fixedtransaction/id/${id}`
+            `http://127.0.0.1:8000/api/fixedtransaction/id/${id}`,config
           );
           setFixedTransData(fixedTransData.filter((trans) => trans.id !== id));
         } catch (error) {
