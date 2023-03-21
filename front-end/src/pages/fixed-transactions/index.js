@@ -12,6 +12,7 @@ import MainButton from "../../components/main-button/index";
 import { Select, MenuItem, InputLabel } from "@mui/material";
 import Switch from "@mui/material/Switch";
 import Swal from "sweetalert2";
+import Loding from "../../components/loding/Loding";
 import axios from "axios";
 
 export default function FixedTransaction() {
@@ -326,6 +327,20 @@ export default function FixedTransaction() {
       }
     });
   };
+  if (!fixedTransData) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          height: "80%",
+          alignItems: "center",
+        }}
+      >
+        <Loding />
+      </div>
+    );
+  }
 
   return (
     <div className="admin-data">
