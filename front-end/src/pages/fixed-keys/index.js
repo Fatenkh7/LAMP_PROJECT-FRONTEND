@@ -89,8 +89,8 @@ export default function FixedKeys() {
   const getData = async () => {
     try {
       const response = await axios.get("http://localhost:8000/api/fixedkey")
-      setFixedKey(response.data.message.data);
-      console.log(response.data.message.data)
+      setFixedKey(response.data.message);
+      console.log(response.data.message)
 
     } catch (e) {
       console.log(e)
