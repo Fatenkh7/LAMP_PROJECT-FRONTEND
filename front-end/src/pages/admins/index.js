@@ -11,6 +11,7 @@ import "./style.css";
 import axios from "axios";
 import MaterialReactTable from "material-react-table";
 import Swal from "sweetalert2";
+import Loding from "../../components/loding/Loding";
 import {
   Box,
   Button,
@@ -255,9 +256,21 @@ function Admins() {
     console.log(editAdmin);
   };
 
-  if (!adminData) {
-    return "loading";
+  if (Fetch == "") {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          height: "80%",
+          alignItems: "center",
+        }}
+      >
+        <Loding />
+      </div>
+    );
   }
+  
 
   return (
     <div className="admin-data">
@@ -424,5 +437,6 @@ function Admins() {
     </div>
   );
 }
+
 
 export default Admins;

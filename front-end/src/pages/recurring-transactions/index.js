@@ -300,7 +300,7 @@ export default function RecurringTransactions() {
     console.log(editRecTrans);
   };
 
-  if (!Fetch) {
+  if (Fetch == "") {
     return (
       <div
         style={{
