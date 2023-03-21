@@ -19,7 +19,7 @@ import DataTable from "../../components/data-table/index";
 import Popup from "../../components/pop-up/Popup";
 import CloseIcon from "@mui/icons-material/Close";
 import TextField from "@mui/material/TextField";
-import { Box } from "@mui/material";
+import { Box, Switch } from "@mui/material";
 import MainButton from "../../components/main-button/index";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -32,6 +32,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import Loding from "../../components/loding/Loding";
+import { Select, InputLabel } from "@mui/material";
 
 import Cookie from "js-cookie";
 
@@ -44,7 +45,7 @@ export default function RecurringTransactions() {
     name: "",
     description: "",
     type: "",
-    is_paid: "",
+    is_paid: false,
     amount: "",
     start_date: "",
     end_date: "",
@@ -57,7 +58,7 @@ export default function RecurringTransactions() {
     name: "",
     description: "",
     type: "",
-    is_paid: "",
+    is_paid: false,
     amount: "",
     start_date: "",
     end_date: "",
@@ -65,6 +66,13 @@ export default function RecurringTransactions() {
     admins_id: "",
     categories_id: "",
   });
+  const [categories, setCategories] = useState([]);
+  const [currencies, setCurrencies] = useState([]);
+  const [admins, setAdmins] = useState([]);
+  const [isPaid, setIsPaid] = useState(false);
+  const updateIsPaid = (value) => {
+    setIsPaid(value);
+  };
 
   const closePop = () => {
     setAddPop(false);
@@ -111,15 +119,6 @@ export default function RecurringTransactions() {
       headerName: "Categories ID",
       width: 10,
     },
-    // {
-    //   field: "fullName",
-    //   headerName: "Full name",
-    //   description: "This column has a value getter and is not sortable.",
-    //   sortable: false,
-    //   width: 160,
-    //   valueGetter: (params) =>
-    //     `${params.row.firstName || ""} ${params.row.lastName || ""}`,
-    // },
     {
       field: "actions",
       headerName: "Actions",
@@ -148,6 +147,25 @@ export default function RecurringTransactions() {
       ),
     },
   ];
+
+  const handleIsPaidChange = (e) => {
+    const value = e.target.value;
+    if (e.target.checked === false) {
+      setIsPaid({ ...isPaid, [e.target.name]: 1 });
+    } else {
+      setIsPaid({ ...isPaid, [e.target.name]: 0 });
+    }
+    console.log(isPaid);
+  };
+
+  const handleEditIsPaidChange = (event) => {
+    if (event.target.checked === false) {
+      setIsPaid(1);
+    } else {
+      setIsPaid(0);
+    }
+    console.log(isPaid);
+  };
 
   const handleFormChange = (e) => {
     const value = e.target.value;
@@ -300,6 +318,55 @@ export default function RecurringTransactions() {
     console.log(editRecTrans);
   };
 
+  useEffect(() => {
+    const fetchCategories = () => {
+      axios
+        .get("http://127.0.0.1:8000/api/category")
+        .then((response) => {
+          setCategories(response.data.message);
+          // console.log(response.data.message.data);
+          // console.log(categories);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    };
+
+    fetchCategories();
+  }, []);
+
+  useEffect(() => {
+    const fetchCurrencies = () => {
+      axios
+        .get("http://127.0.0.1:8000/api/currency")
+        .then((response) => {
+          setCurrencies(response.data.message);
+          console.log(response.data.message);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    };
+
+    fetchCurrencies();
+  }, []);
+
+  useEffect(() => {
+    const fetchAdmins = () => {
+      axios
+        .get("http://127.0.0.1:8000/api/admin")
+        .then((response) => {
+          setAdmins(response.data.message.data);
+          console.log(response.data.message.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    };
+
+    fetchAdmins();
+  }, []);
+
   if (!Fetch) {
     return (
       <div
@@ -334,89 +401,151 @@ export default function RecurringTransactions() {
             autoComplete="off"
           >
             <h2>Add Recurring Transaction</h2>
-            <TextField
-              id="outlined-controlled"
-              label="Name"
-              color="secondary"
-              name="name"
-              onChange={handleFormChange}
-            />
-            <TextField
-              id="outlined-uncontrolled"
-              label="Description"
-              color="secondary"
-              name="description"
-              onChange={handleFormChange}
-              multiline
-            />
-            <TextField
-              id="outlined-uncontrolled"
-              label="Type"
-              name="type"
-              color="secondary"
-              onChange={handleFormChange}
-            />
-            <TextField
-              id="outlined-uncontrolled"
-              label="isPaid"
-              name="is_paid"
-              color="secondary"
-              onChange={handleFormChange}
-            />
-            <TextField
-              id="outlined-uncontrolled"
-              label="Amount"
-              name="amount"
-              color="secondary"
-              onChange={handleFormChange}
-            />
-            <TextField
-              id="outlined-uncontrolled"
-              label="Start Date"
-              name="start_date"
-              color="secondary"
-              onChange={handleFormChange}
-            />
-            <TextField
-              id="outlined-uncontrolled"
-              label="End Date"
-              name="end_date"
-              color="secondary"
-              onChange={handleFormChange}
-            />
-            <TextField
-              id="outlined-uncontrolled"
-              label="Currencies ID"
-              name="currencies_id"
-              color="secondary"
-              onChange={handleFormChange}
-            />
-            <TextField
-              id="outlined-uncontrolled"
-              label="Admins ID"
-              name="admins_id"
-              color="secondary"
-              onChange={handleFormChange}
-            />
-            <TextField
-              id="outlined-uncontrolled"
-              label="Categories ID"
-              name="categories_id"
-              color="secondary"
-              onChange={handleFormChange}
-            />
-            <Button
-              variant="contained"
-              disableElevation
-              style={{ margin: 0, padding: 10 }}
-              sx={{ backgroundColor: "#3d0066" }}
-              onClick={() => {
-                handleSubmit();
-                setAddPop(false);
-              }}
-            >
-              Submit
-            </Button>
+            <div className="pop-up-form-flex">
+              <TextField
+                id="outlined-controlled"
+                label="Name"
+                color="secondary"
+                name="name"
+                onChange={handleFormChange}
+              />
+              <TextField
+                id="outlined-uncontrolled"
+                label="Description"
+                color="secondary"
+                name="description"
+                onChange={handleFormChange}
+                multiline
+              />
+              <InputLabel htmlFor="outlined-uncontrolled">
+                Type
+                <Select
+                  label="Type"
+                  name="type"
+                  // value={inputTrans.type}
+                  onChange={handleFormChange}
+                >
+                  <MenuItem value="">
+                    <em>Select transaction type</em>
+                  </MenuItem>
+                  <MenuItem value="income">Income</MenuItem>
+                  <MenuItem value="expense">Expense</MenuItem>
+                </Select>
+              </InputLabel>
+              <div
+                id="ispaidInput"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <h3>Is Paid</h3>
+                <Switch
+                  value={isPaid}
+                  name="is_paid"
+                  label="is Paid"
+                  color="primary"
+                  onChange={handleIsPaidChange}
+                />
+              </div>
+              <TextField
+                id="outlined-uncontrolled"
+                label="Amount"
+                name="amount"
+                color="secondary"
+                onChange={handleFormChange}
+              />
+              <TextField
+                id="outlined-uncontrolled"
+                label="Start Date"
+                name="start_date"
+                color="secondary"
+                type="datetime-local"
+                onChange={handleFormChange}
+              />
+              <TextField
+                id="outlined-uncontrolled"
+                label="End Date"
+                name="end_date"
+                color="secondary"
+                type="datetime-local"
+                onChange={handleFormChange}
+              />
+              <InputLabel htmlFor="outlined-uncontrolled">
+                Currency
+                <Select
+                  labelId="currency-label"
+                  id="currency"
+                  name="currencies_id"
+                  onChange={(e) =>
+                    setAddRecTrans({
+                      ...addRecTrans,
+                      currencies_id: e.target.value,
+                    })
+                  }
+                >
+                  {currencies.map((currency) => (
+                    <MenuItem key={currency.id} value={currency.id}>
+                      {currency.currency}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </InputLabel>
+              <InputLabel htmlFor="outlined-uncontrolled">
+                Admin
+                <Select
+                  labelId="Admin-label"
+                  id="adminInput"
+                  label="Admin"
+                  color="primary"
+                  name="admins_id"
+                  onChange={(e) =>
+                    setAddRecTrans({
+                      ...addRecTrans,
+                      admins_id: e.target.value,
+                    })
+                  }
+                >
+                  {admins.map((admin) => (
+                    <MenuItem key={admin.id} value={admin.id}>
+                      {admin.username}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </InputLabel>
+              <InputLabel htmlFor="outlined-uncontrolled">
+                Category
+                <Select
+                  labelId="category-label"
+                  id="category"
+                  name="categories_id"
+                  onChange={(e) =>
+                    setAddRecTrans({
+                      ...addRecTrans,
+                      categories_id: e.target.value,
+                    })
+                  }
+                >
+                  {categories.map((category) => (
+                    <MenuItem key={category.id} value={category.id}>
+                      {category.category}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </InputLabel>
+              <Button
+                variant="contained"
+                disableElevation
+                style={{ margin: 0, padding: 10 }}
+                sx={{ backgroundColor: "#3d0066" }}
+                onClick={() => {
+                  handleSubmit();
+                  setAddPop(false);
+                }}
+              >
+                Submit
+              </Button>
+            </div>
           </Box>
         </Popup>
       )}
@@ -442,6 +571,7 @@ export default function RecurringTransactions() {
               label="Name"
               color="secondary"
               name="name"
+              focused
               onChange={handleEditChange}
             />
             <TextField
@@ -452,20 +582,37 @@ export default function RecurringTransactions() {
               onChange={handleEditChange}
               multiline
             />
-            <TextField
-              id="outlined-uncontrolled"
-              label="Type"
-              color="secondary"
-              name="type"
-              onChange={handleEditChange}
-            />
-            <TextField
-              id="outlined-uncontrolled"
-              label="isPaid"
-              color="secondary"
-              name="is_paid"
-              onChange={handleEditChange}
-            />
+            <InputLabel htmlFor="outlined-uncontrolled">
+              Type
+              <Select
+                label="Type"
+                name="type"
+                // value={inputTrans.type}
+                onChange={handleEditChange}
+              >
+                <MenuItem value="">
+                  <em>Select transaction type</em>
+                </MenuItem>
+                <MenuItem value="income">Income</MenuItem>
+                <MenuItem value="expense">Expense</MenuItem>
+              </Select>
+            </InputLabel>
+            <div
+              id="ispaidInput"
+              style={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <h3>Is Paid</h3>
+              <Switch
+                name="is_paid"
+                label="is Paid"
+                color="primary"
+                value={isPaid}
+                onChange={handleEditIsPaidChange}
+              />
+            </div>
             <TextField
               id="outlined-uncontrolled"
               label="Amount"
@@ -478,6 +625,7 @@ export default function RecurringTransactions() {
               label="Start Date"
               color="secondary"
               name="start_date"
+              type="datetime-local"
               onChange={handleEditChange}
             />
             <TextField
@@ -485,29 +633,71 @@ export default function RecurringTransactions() {
               label="End Date"
               color="secondary"
               name="end_date"
+              type="datetime-local"
               onChange={handleEditChange}
             />
-            <TextField
-              id="outlined-uncontrolled"
-              label="Currencies ID"
-              color="secondary"
-              name="currencies_id"
-              onChange={handleEditChange}
-            />
-            <TextField
-              id="outlined-uncontrolled"
-              label="Admins ID"
-              color="secondary"
-              name="admins_id"
-              onChange={handleEditChange}
-            />
-            <TextField
-              id="outlined-uncontrolled"
-              label="Categories ID"
-              color="secondary"
-              name="categories_id"
-              onChange={handleEditChange}
-            />
+            <InputLabel htmlFor="outlined-uncontrolled">
+              Currency
+              <Select
+                labelId="currency-label"
+                id="currency"
+                name="currencies_id"
+                onChange={(e) =>
+                  setEditRecTrans({
+                    ...editRecTrans,
+                    currencies_id: e.target.value,
+                  })
+                }
+              >
+                {currencies.map((currency) => (
+                  <MenuItem key={currency.id} value={currency.id}>
+                    {currency.currency}
+                  </MenuItem>
+                ))}
+              </Select>
+            </InputLabel>
+            <InputLabel htmlFor="outlined-uncontrolled">
+              Admin
+              <Select
+                labelId="Admin-label"
+                id="adminInput"
+                label="Admin"
+                color="primary"
+                name="admins_id"
+                onChange={(e) =>
+                  setEditRecTrans({
+                    ...editRecTrans,
+                    admins_id: e.target.value,
+                  })
+                }
+              >
+                {admins.map((admin) => (
+                  <MenuItem key={admin.id} value={admin.id}>
+                    {admin.username}
+                  </MenuItem>
+                ))}
+              </Select>
+            </InputLabel>
+            <InputLabel htmlFor="outlined-uncontrolled">
+              Category
+              <Select
+                labelId="category-label"
+                id="category"
+                name="categories_id"
+                onChange={(e) =>
+                  setEditRecTrans({
+                    ...editRecTrans,
+                    categories_id: e.target.value,
+                  })
+                }
+              >
+                {categories.map((category) => (
+                  <MenuItem key={category.id} value={category.id}>
+                    {category.category}
+                  </MenuItem>
+                ))}
+              </Select>
+            </InputLabel>
             <Button
               variant="contained"
               disableElevation
