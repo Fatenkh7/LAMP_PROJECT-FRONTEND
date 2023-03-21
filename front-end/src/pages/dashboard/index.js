@@ -8,9 +8,11 @@ import {CircularProgressbar ,buildStyles} from "react-circular-progressbar";
 import 'react-circular-progressbar/dist/styles.css';  
 import {Bar} from 'react-chartjs-2'
 import {Chart as ChartJS} from "chart.js/auto"
+import axios from "axios";
+import Cookie from "js-cookie";
 
 
-import { useState } from "react";
+import { useState ,useEffect } from "react";
 import {
   ArgumentAxis,
   ValueAxis,
@@ -18,115 +20,110 @@ import {
   LineSeries,
 } from '@devexpress/dx-react-chart-material-ui';
 import { Animation } from '@devexpress/dx-react-chart';
+import Loding from "../../components/loding/Loding";
 
-const Data = [
-  { argument: '2000', value: 1200 },
-  { argument: '2005', value: 2000 },
-  { argument: '2010', value: 1700 },
-  { argument: '2015', value: 2500 },
-  { argument: '2020', value: 1200 },
-  { argument: '2023', value: 10000 },
-];
 
-const admins =[
-  {name:"mazen"},
-  {name:"mohamd"},
-  {name:"abdlatif"},
-  {name:"faten"},
-  {name:"mazen"},
-  {name:"mohamd"},
-  {name:"abdlatif"},
-  {name:"faten"},  
-  {name:"mazen"},
-  {name:"mohamd"},
-  {name:"abdlatif"},
-  {name:"faten"},
-];
 
-const userdata = [{
-  id:1,
-  year:2012,
-  usergain:200,
-  userlose:40
-},{
-  id:2,
-  year:2013,
-  usergain:300,
-  userlose:30
-},{
-  id:3,
-  year:2014,
-  usergain:250,
-  userlose:150
-},{
-  id:4,
-  year:2015,
-  usergain:100,
-  userlose:86
-},{
-  id:5,
-  year:2016,
-  usergain:150,
-  userlose:178
-},{
-  id:6,
-  year:2017,
-  usergain:600,
-  userlose:100
-},{
-  id:7,
-  year:2018,
-  usergain:200,
-  userlose:20
-},{
-  id:8,
-  year:2019,
-  usergain:100,
-  userlose:90
-},{
-  id:9,
-  year:2020,
-  usergain:50,
-  userlose:80
-},{
-  id:10,
-  year:2021,
-  usergain:100,
-  userlose:73
-},{id:11,
-year:2022,
-usergain:30,
-userlose:270
-},{
-  id:12,
-year:2023,
-usergain:150,
-userlose:110
-}]
-console.log()
+
 
 function ProfitGoal() {
 
   /*************************** */
-  const [userData,setUserData] = useState({
-    labels:userdata.map((data)=>data.year),
-    
-    datasets :[{
-      label:'fixed transaction',
-      data:userdata.map((data)=>data.usergain),
-      backgroundColor:"#3d0066"
-    },{
-      label:'Recurring transaction',
-      data:userdata.map((data)=>data.userlose),
-      backgroundColor:"#1f0099"
-    }]
-  })
-  console.log(userData)
+  const [recurring,setRecurring] =useState(null)
+   
+   const [fixed,setFixed] = useState(null)
   /*************************** */
+
+  const [admin,setAdmin] =useState(null)
+
+  const fetchData = async () => {
+    let token="";
+    token=Cookie.get("token");
+    let config={
+      headers:{
+        Authorization: `Bearer ${token}`
+      }
+    }
+
+    try {
+      const response = await axios.get("http://127.0.0.1:8000/api/admin",config);
+      setAdmin(response.data.message.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
+
+  const fetchRecurringData = async () => {
+    let token="";
+    token=Cookie.get("token");
+    let config={
+      headers:{
+        Authorization: `Bearer ${token}`
+      }
+    }
+
+    try {
+      const response = await axios.get("http://127.0.0.1:8000/api/recurringTransaction",config);
+      setRecurring(response.data.data.data);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
+  const fetchFixedData = async () => {
+
+    try {
+      const response = await axios.get("http://127.0.0.1:8000/api/fixedtransaction");
+      setFixed(response.data.data.data);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+console.log(fixed)
+
+console.log(recurring)
+  useEffect(() => {
+    fetchData();
+    fetchRecurringData()
+    fetchFixedData()
+  }, []);
+
+
+   
+
+  const Data = [
+    { argument: '2000', value: 1200 },
+    { argument: '2005', value: 2000 },
+    { argument: '2010', value: 1700 },
+    { argument: '2015', value: 2500 },
+    { argument: '2020', value: 1200 },
+    { argument: '2023', value: 10000 },
+  ];
+
 
 
   const percentage = 66
 
+
+  if (!admin || !recurring || !fixed ) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          height: "80%",
+          alignItems: "center",
+        }}
+      >
+        <Loding />
+      </div>
+    );
+  }
   return (
     
     <Box sx={{
@@ -181,9 +178,9 @@ function ProfitGoal() {
             </Box>
         </Box>
         < div className="scroll-admins" style={{width:'100%' ,height:'100%',display:'flex' ,alignItems:"center", flexDirection:"column" }}>
-        {admins.map((ele)=>{
+        {admin.map((ele)=>{
           return <Box sx={{display:'flex' ,justifyContent:'center',  alignItems:'center',borderBottom:'1px solid #c9c9c9', backgroundColor:"f0f0f0" ,height:'40px' , width:"90%" }}>
-            <p style={{fontSize:'25px'}}>{ele.name}</p>
+            <p style={{fontSize:'25px'}}>{ele.first_name}</p>
           </Box>
         })}
         </div>
@@ -193,7 +190,19 @@ function ProfitGoal() {
     <div className="Fourth-Section" style={{display:"flex" , justifyContent:'center' , alignItems:'center'}}>
     <Box sx={{backgroundColor:'white' ,height: ' 83.5%' , width :'90%', borderRadius:'5px'  ,display :'flex' ,flexDirection:'column' , alignItems:'center', boxShadow : '0.2px 0.5px 4px'}}>
       
-        <Bar data={userData} height={400} width={900}/>
+    <Bar data={{
+    labels:fixed.map((data)=>data.date_time),
+    
+    datasets :[{
+      label:'fixed transaction',
+      data:fixed.map((data)=>data.amount),
+      backgroundColor:"#3d0066"
+    },{
+      label:'Recurring transaction',
+      data:recurring.map((data)=>data.amount),
+      backgroundColor:"#1f0099"
+    }]
+  }} height={400} width={900}/>
       
     </Box>
     </div>

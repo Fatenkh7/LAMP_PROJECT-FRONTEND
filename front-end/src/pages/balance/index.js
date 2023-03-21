@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import ApexChart from "react-apexcharts";
 import "./balance.css";
 
+import Cookie from "js-cookie";
+
 export function Balance() {
   const [chartOptions, setChartOptions] = useState({
     chart: {
