@@ -25,3 +25,8 @@
   /* color: rgb(221, 221, 221); */
   color: #3d0066;
 }
+
+.MuiDataGrid-columnHeaders {
+  background-color: #3d0066;
+  color: rgb(201, 201, 201);
+}

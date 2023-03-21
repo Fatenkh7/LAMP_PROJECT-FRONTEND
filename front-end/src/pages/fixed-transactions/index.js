@@ -10,7 +10,7 @@ import { Box } from "@mui/material";
 import Popup from "../../components/pop-up/Popup";
 import MainButton from "../../components/main-button/index";
 import { Select, MenuItem, InputLabel } from "@mui/material";
-import { FormControl } from "react-bootstrap";
+// import { FormControl } from "react-bootstrap";
 import Swal from "sweetalert2";
 import axios from "axios";
 
@@ -29,7 +29,7 @@ export default function FixedTransaction() {
     description: "",
     type: "",
     schedule: "",
-    is_paid: false,
+    is_paid: 0,
     amount: "",
     date_time: "",
     currencies_id: "",
@@ -43,7 +43,7 @@ export default function FixedTransaction() {
     description: "",
     type: "",
     schedule: "",
-    is_paid: false,
+    is_paid: 0,
     amount: "",
     date_time: "",
     currencies_id: "",
@@ -330,167 +330,169 @@ export default function FixedTransaction() {
             noValidate
             autoComplete="off"
           >
-            <h2>Add Fixed Transaction</h2>
-            <TextField
-              id="titleInput"
-              label="Title"
-              color="primary"
-              value={inputTrans.title}
-              onChange={handleInputChange}
-              name="title"
-            />
-            <TextField
-              id="descriptionInput"
-              label="Description"
-              color="primary"
-              multiline
-              value={inputTrans.description}
-              onChange={handleInputChange}
-              name="description"
-            />
-            <InputLabel htmlFor="outlined-uncontrolled">
-              Type
-              <Select
-                label="Type"
-                name="type"
-                value={inputTrans.type}
+            <div className="pop-up-form-flex">
+              <h2>Add Fixed Transaction</h2>
+              <TextField
+                id="titleInput"
+                label="Title"
+                color="primary"
+                value={inputTrans.title}
                 onChange={handleInputChange}
-              >
-                <MenuItem value="">
-                  <em>Select transaction type</em>
-                </MenuItem>
-                <MenuItem value="Income">Income</MenuItem>
-                <MenuItem value="Expense">Expense</MenuItem>
-              </Select>
-            </InputLabel>
-
-            <InputLabel htmlFor="outlined-uncontrolled">
-              Schedule
-              <Select
-                label="Schedule"
-                name="schedule"
-                value={inputTrans.schedule}
+                name="title"
+              />
+              <TextField
+                id="descriptionInput"
+                label="Description"
+                color="primary"
+                multiline
+                value={inputTrans.description}
                 onChange={handleInputChange}
-                placeholder="Select transaction Schedule"
-              >
-                <MenuItem value="Monthly">Monthly</MenuItem>
-                <MenuItem value="Weekly">Weekly</MenuItem>
-                <MenuItem value="Yearly">Yearly</MenuItem>
-              </Select>
-            </InputLabel>
-            <InputLabel htmlFor="outlined-uncontrolled">
-              Currency
-              <Select
-                labelId="currency-label"
-                id="currency"
-                name="currencies_id"
-                value={inputTrans.currencies_id}
-                onChange={(e) =>
-                  setInputTrans({
-                    ...inputTrans,
-                    currencies_id: e.target.value,
-                  })
-                }
-              >
-                {currencies.map((currency) => (
-                  <MenuItem key={currency.id} value={currency.id}>
-                    {currency.currency}
+                name="description"
+              />
+              <InputLabel htmlFor="outlined-uncontrolled">
+                Type
+                <Select
+                  label="Type"
+                  name="type"
+                  value={inputTrans.type}
+                  onChange={handleInputChange}
+                >
+                  <MenuItem value="">
+                    <em>Select transaction type</em>
                   </MenuItem>
-                ))}
-              </Select>
-            </InputLabel>
+                  <MenuItem value="Income">Income</MenuItem>
+                  <MenuItem value="Expense">Expense</MenuItem>
+                </Select>
+              </InputLabel>
 
-            <TextField
-              id="ispaidInput"
-              label="is Paid"
-              color="primary"
-              value={inputTrans.is_paid}
-              onChange={handleInputChange}
-              name="is_paid"
-            />
-            <TextField
-              id="amountInput"
-              label="Amount"
-              color="primary"
-              value={inputTrans.amount}
-              onChange={handleInputChange}
-              name="amount"
-            />
-            <TextField
-              margin="dense"
-              label="Date"
-              name="date_time"
-              fullWidth
-              onChange={handleInputChange}
-              type="datetime-local"
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-            <TextField
-              id="adminInput"
-              label="Admin"
-              color="primary"
-              value={inputTrans.admins_id}
-              onChange={handleInputChange}
-              name="admins_id"
-            />
-            <InputLabel htmlFor="outlined-uncontrolled">
-              Category
-              <Select
-                labelId="category-label"
-                id="category"
-                name="categories_id"
-                value={inputTrans.categories_id}
-                onChange={(e) =>
-                  setInputTrans({
-                    ...inputTrans,
-                    categories_id: e.target.value,
-                  })
-                }
+              <InputLabel htmlFor="outlined-uncontrolled">
+                Schedule
+                <Select
+                  label="Schedule"
+                  name="schedule"
+                  value={inputTrans.schedule}
+                  onChange={handleInputChange}
+                  placeholder="Select transaction Schedule"
+                >
+                  <MenuItem value="Monthly">Monthly</MenuItem>
+                  <MenuItem value="Weekly">Weekly</MenuItem>
+                  <MenuItem value="Yearly">Yearly</MenuItem>
+                </Select>
+              </InputLabel>
+              <InputLabel htmlFor="outlined-uncontrolled">
+                Currency
+                <Select
+                  labelId="currency-label"
+                  id="currency"
+                  name="currencies_id"
+                  value={inputTrans.currencies_id}
+                  onChange={(e) =>
+                    setInputTrans({
+                      ...inputTrans,
+                      currencies_id: e.target.value,
+                    })
+                  }
+                >
+                  {currencies.map((currency) => (
+                    <MenuItem key={currency.id} value={currency.id}>
+                      {currency.currency}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </InputLabel>
+
+              <TextField
+                id="ispaidInput"
+                label="is Paid"
+                color="primary"
+                value={inputTrans.is_paid}
+                onChange={handleInputChange}
+                name="is_paid"
+              />
+              <TextField
+                id="amountInput"
+                label="Amount"
+                color="primary"
+                value={inputTrans.amount}
+                onChange={handleInputChange}
+                name="amount"
+              />
+              <TextField
+                margin="dense"
+                label="Date"
+                name="date_time"
+                fullWidth
+                onChange={handleInputChange}
+                type="datetime-local"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+              <TextField
+                id="adminInput"
+                label="Admin"
+                color="primary"
+                value={inputTrans.admins_id}
+                onChange={handleInputChange}
+                name="admins_id"
+              />
+              <InputLabel htmlFor="outlined-uncontrolled">
+                Category
+                <Select
+                  labelId="category-label"
+                  id="category"
+                  name="categories_id"
+                  value={inputTrans.categories_id}
+                  onChange={(e) =>
+                    setInputTrans({
+                      ...inputTrans,
+                      categories_id: e.target.value,
+                    })
+                  }
+                >
+                  {categories.map((category) => (
+                    <MenuItem key={category.id} value={category.id}>
+                      {category.category}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </InputLabel>
+
+              <InputLabel htmlFor="outlined-uncontrolled">
+                Fixed Key
+                <Select
+                  labelId="fixedkey-label"
+                  id="fixedKeyInput"
+                  name="fixed_keys_id"
+                  value={inputTrans.fixed_keys_id}
+                  onChange={(e) =>
+                    setInputTrans({
+                      ...inputTrans,
+                      fixed_keys_id: e.target.value,
+                    })
+                  }
+                >
+                  {fixedKeys.map((fixedKey) => (
+                    <MenuItem key={fixedKey.id} value={fixedKey.id}>
+                      {fixedKey.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </InputLabel>
+
+              <Button
+                variant="contained"
+                disableElevation
+                style={{ height: 55 }}
+                sx={{ backgroundColor: "#3d0066" }}
+                onClick={() => {
+                  handleSubmit();
+                  setAddPop(false);
+                }}
               >
-                {categories.map((category) => (
-                  <MenuItem key={category.id} value={category.id}>
-                    {category.category}
-                  </MenuItem>
-                ))}
-              </Select>
-            </InputLabel>
-
-            <InputLabel htmlFor="outlined-uncontrolled">
-              Fixed Key
-              <Select
-                labelId="fixedkey-label"
-                id="fixedKeyInput"
-                name="fixed_keys_id"
-                value={inputTrans.fixed_keys_id}
-                onChange={(e) =>
-                  setInputTrans({
-                    ...inputTrans,
-                    fixed_keys_id: e.target.value,
-                  })
-                }
-              >
-                {fixedKeys.map((fixedKey) => (
-                  <MenuItem key={fixedKey.id} value={fixedKey.id}>
-                    {fixedKey.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </InputLabel>
-
-            <Button
-              variant="contained"
-              disableElevation
-              style={{ height: 55 }}
-              sx={{ backgroundColor: "#3d0066" }}
-              onClick={() => {
-                handleSubmit();
-                setAddPop(false);
-              }}
-            >
-              Submit
-            </Button>
+                Submit
+              </Button>
+            </div>
           </Box>
         </Popup>
       )}

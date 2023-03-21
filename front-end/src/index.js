@@ -14,6 +14,7 @@ import ProfitGoal from "./pages/profit-goals/index";
 import Reports from "./pages/reports/index";
 import Dashboard from "./pages/dashboard/index";
 import { Balance, BalanceYearly } from "./pages/balance/index";
+import Loding from "../src/components/loding/Loding.js";
 
 import Login from "./pages/login/index";
 
