@@ -14,11 +14,13 @@ import Switch from '@mui/material/Switch';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import Cookie from "js-cookie";
+import Loding from "../../components/loding/Loding";
 
 
 export default function FixedKeys() {
   const [addPop, setAddPop] = useState(false);
   const [editPop, setEditPop] = useState(false);
+  const [getFixedKey , setGetFixedKey] = useState(null);
   const [fixedKey, setFixedKey] = useState({
     name: "",
     description: "",
@@ -96,7 +98,7 @@ export default function FixedKeys() {
     }
     try {
       const response = await axios.get("http://localhost:8000/api/fixedkey" , config)
-      setFixedKey(response.data.message);
+      setGetFixedKey(response.data.message);
       console.log(response.data.message)
 
     } catch (e) {
@@ -212,6 +214,21 @@ export default function FixedKeys() {
     }
   };
   
+
+  if (!getFixedKey) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          height: "80%",
+          alignItems: "center",
+        }}
+      >
+        <Loding />
+      </div>
+    );
+  }
   
   return (
     <div className='fixedkeys-container'>
@@ -226,7 +243,7 @@ export default function FixedKeys() {
           </Button>
         </div>
         <DataGrid
-          rows={fixedKey}
+          rows={getFixedKey}
           columns={columns}
           pageSize={5}
           rowsPerPageOptions={[5]}

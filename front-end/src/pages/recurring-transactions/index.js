@@ -318,6 +318,7 @@ export default function RecurringTransactions() {
     console.log(editRecTrans);
   };
 
+
   useEffect(() => {
     const fetchCategories = () => {
       axios
@@ -367,7 +368,7 @@ export default function RecurringTransactions() {
     fetchAdmins();
   }, []);
 
-  if (!Fetch) {
+  if (Fetch == " ") {
     return (
       <div
         style={{

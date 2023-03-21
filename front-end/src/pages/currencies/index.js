@@ -15,6 +15,7 @@ import ErrorBoundary from "../../components/componentDidCatch";
 import Swal from "sweetalert2";
 import axios from "axios";
 import Cookie from "js-cookie";
+import Loding from "../../components/loding/Loding";
 
 export default function Currencies() {
   const [addPop, setAddPop] = useState(false);
@@ -205,6 +206,21 @@ export default function Currencies() {
     }
   };
 
+  if (currencyData == "") {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          height: "80%",
+          alignItems: "center",
+          
+        }}
+      >
+        <Loding />
+      </div>
+    );
+  }else{
   return (
     <div className="currencies-main-container">
       <div
@@ -324,4 +340,5 @@ export default function Currencies() {
       )}
     </div>
   );
+}
 }

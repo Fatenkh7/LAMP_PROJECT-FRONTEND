@@ -392,7 +392,7 @@ export default function FixedTransaction() {
       }
     });
   };
-  if (!fixedTransData) {
+  if (fixedTransData == "") {
     return (
       <div
         style={{
