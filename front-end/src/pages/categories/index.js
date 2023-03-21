@@ -32,6 +32,14 @@ export default function Categories() {
   });
 
   function Delete(param) {
+
+    let token="";
+    token=Cookie.get("token");
+    let config={
+      headers:{
+        Authorization: `Bearer ${token}`
+      }
+    }
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -43,7 +51,7 @@ export default function Categories() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`http://localhost:8000/api/category/id/${param}`)
+          .delete(`http://localhost:8000/api/category/id/${param}`,config)
           .then((response) => {
             console.log(response.status, response.data);
             fetchData();
@@ -146,8 +154,15 @@ export default function Categories() {
       category_description: DataCategory.category_description,
       admins_id: DataCategory.admins_id,
     };
+    let token="";
+    token=Cookie.get("token");
+    let config={
+      headers:{
+        Authorization: `Bearer ${token}`
+      }
+    }
     axios
-      .post("http://localhost:8000/api/category", userData)
+      .post("http://localhost:8000/api/category", userData , config)
       .then((response) => {
         console.log(response.status, response.data);
         fetchData();
@@ -162,11 +177,18 @@ export default function Categories() {
   };
   //fetch for edit data
   const edit = () => {
+    let token="";
+    token=Cookie.get("token");
+    let config={
+      headers:{
+        Authorization: `Bearer ${token}`
+      }
+    }
     axios
       .patch(`http://localhost:8000/api/category/id/${id}`, {
         category: editCategory.category,
         category_description: editCategory.category_description,
-      })
+      },config)
       .then((response) => {
         console.log(response.status, response.data);
         fetchData();
