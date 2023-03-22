@@ -33,11 +33,18 @@ function ProfitCards (props) {
             <Box sx={{padding : '10px 10px 10px 10px'}} >
                 <Box sx={{display:'flex'  , height :'50px' , backgroundColor:'white' , borderRadius:'10px' , position : 'absolute', top:'-25px' , boxShadow:'2px 2px 2px #888888' }}>
                     <Button  sx={{color : '#c5b3d1', borderColor:'#c5b3d1' }}  onClick={isVisible}>{showORhide}</Button>
-                    <Button onClick={props.edit} sx={{color:"#c5b3d1"}}><EditIcon sx={{color:"#c5b3d1"}}/></Button>
-                    <Button sx={{color:"#c5b3d1"}}><DeleteIcon sx={{color:"#c5b3d1"}}/></Button>
+                    <Button onClick={props.edit}   onMouseEnter={()=>{props.getId(props.id)}} sx={{color:"#c5b3d1"}}><EditIcon sx={{color:"#c5b3d1"}}/></Button>
+                    <Button sx={{color:"#c5b3d1"}} 
+                    onMouseEnter={()=>{props.getId(props.id)}} onClick={()=>{props.handelDelete()}} ><DeleteIcon sx={{color:"#c5b3d1"}}/></Button>
                 </Box>
                 <h3 style={{marginTop:30}}>title : {props.title}</h3>
-                {isvisible && <p>{props.description}</p>}
+                {isvisible &&<div> <p> <strong>Description : </strong>{props.description}</p>
+                                    <p> <strong>Amount : {props.amount} </strong> </p>
+                                    <p> <strong>Currency : {props.curencies}</strong> </p>
+                                    <p> <strong>Admin : {props.admin} </strong> </p>
+                                    <p> <strong>Start date : {props.startDate} </strong> </p>
+                                    <p> <strong>End date : {props.endDate} </strong> </p>
+                                    </div>}
             </Box>
             </div>
         </Box>
