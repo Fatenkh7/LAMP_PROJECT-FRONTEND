@@ -7,7 +7,7 @@ import { Button } from "@mui/material";
 import axios from "axios";
 import Reports from "./index.js";
 import Swal from "sweetalert2";
-
+import Cookie from "js-cookie";
 function Report(props) {
   const [report, setReport] = useState(false);
   const [padding, setPadding] = useState("20px");
@@ -27,7 +27,14 @@ function Report(props) {
 
   //delete
   const handelDelete = () => {
-    axios.delete(`http://127.0.0.1:8000/api/report/${id}`).then((response) => {
+    let token="";
+    token=Cookie.get("token");
+    let config={
+      headers:{
+        Authorization: `Bearer ${token}`
+      }
+    }
+    axios.delete(`http://127.0.0.1:8000/api/report/${id}`,config).then((response) => {
       console.log(response);
       props.useEffect();
     });
