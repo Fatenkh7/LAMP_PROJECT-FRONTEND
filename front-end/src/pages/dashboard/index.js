@@ -47,13 +47,14 @@ function ProfitGoal() {
 
     try {
       const response = await axios.get("http://127.0.0.1:8000/api/admin",config);
-      setAdmin(response.data.message.data);
+      setAdmin(response.data.message);
+      console.log(response)
     } catch (error) {
       console.log(error);
     }
   };
 
-
+console.log(admin)
 
   const fetchRecurringData = async () => {
     let token="";
@@ -91,9 +92,8 @@ function ProfitGoal() {
       console.log(error);
     }
   };
-console.log(fixed)
 
-console.log(recurring)
+
   useEffect(() => {
     fetchData();
     fetchRecurringData()
@@ -117,7 +117,7 @@ console.log(recurring)
   const percentage = 66
 
 
-  if (!admin || !recurring || !fixed ) {
+  if (!admin  || !recurring  || !fixed  ) {
     return (
       <div
         style={{
@@ -147,7 +147,7 @@ console.log(recurring)
             textColor: '#3d0066',
             trailColor: '#d6d6d6',
             backgroundColor: '#3e98c7',
-      })} value={percentage} text={`${percentage}%`} maxValue={300} />
+      })} value={percentage} text={`${percentage}%`}/>
 
 
 

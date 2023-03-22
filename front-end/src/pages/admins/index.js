@@ -126,7 +126,7 @@ function Admins() {
 
     try {
       const response = await axios.get("http://127.0.0.1:8000/api/admin",config);
-      SetFetch(response.data.message.data);
+      SetFetch(response.data.message);
       console.log(response);
     } catch (error) {
       console.log(error);
