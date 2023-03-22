@@ -61,7 +61,8 @@ const NavBar = () => {
         })}
       </nav>
       <nav className="sidebar-bottom-nav">
-        <NavLink to="/login" className="sidebar-logout spacing hover" onClick={()=>{Cookie.remove("token")}}>
+        <NavLink to="/login" className="sidebar-logout spacing hover" onClick={()=>{Cookie.remove("token")
+      window.location.href = 'http://localhost:3000'}}>
           <p>
             <LogoutRoundedIcon />
           </p>
